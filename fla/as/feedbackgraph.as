@@ -42,6 +42,14 @@ _root.GraphDisplay.show = function()
 {
 	_root.GraphDisplay._x = 0;
 	
+	// label buttons
+	if (_root.GraphDisplay.supressweekdecay) _root.GraphDisplay.nodecay.label = 'decay';
+	else _root.GraphDisplay.nodecay.label = 'logdecay';
+	if (_root.GraphDisplay.supressweektween) _root.GraphDisplay.untween.label = 'tween';
+	else _root.GraphDisplay.untween.label = 'untween';
+	if (_root.GraphDisplay.weekdecaylog)  _root.GraphDisplay.nodecay.label = 'nodecay';
+	
+	
 	leftedge_graph = _root.GraphDisplay.GraphMarker._x;
 	rightedge_graph = leftedge_graph + _root.GraphDisplay.GraphMarker._width;
 	topedge_graph = _root.GraphDisplay.GraphMarker._y;
@@ -97,16 +105,22 @@ _root.GraphDisplay.hide = function()
 	_root.GraphDisplay._x = -800;
 }
 
-_root.GraphDisplay.removetween = function()
+_root.GraphDisplay.settween = function()
 {
-	_root.supressweektween = true;
+	_root.GraphDisplay.supressweektween = !_root.GraphDisplay.supressweektween;
 	_root.tweenweeks();
 	_root.GraphDisplay.show();
 }
-
-_root.GraphDisplay.replacetween = function()
+_root.GraphDisplay.setdecay = function()
 {
-	_root.supressweektween = false;
+	if (_root.GraphDisplay.weekdecaylog and !_root.GraphDisplay.supressweekdecay)
+	{
+		_root.GraphDisplay.weekdecaylog = false;
+		_root.GraphDisplay.supressweekdecay = true;
+	}
+	else if (!_root.GraphDisplay.supressweekdecay) _root.GraphDisplay.weekdecaylog = true;
+	else _root.GraphDisplay.supressweekdecay = false;
+
 	_root.tweenweeks();
 	_root.GraphDisplay.show();
 }
