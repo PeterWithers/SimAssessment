@@ -228,6 +228,7 @@ function PresetsOnChangeHandler()
 function SetUpPresets(dropdowntopopulate)
 {
 	dropdowntopopulate.removeAll();
+	/*
 	cfmSetup = new Array();
 	cfmSetup[0] = {ass_id: 7, ass_name: 'Project', due_week: 2, feedback: 1, marker: 'Self', weighting: 3, which_ass: 1, goal_ids: '2'};
 	cfmSetup[1] = {ass_id: 12, ass_name: 'Case studies', due_week: 3, feedback: 1, marker: 'Self', weighting: 3, which_ass: 2, goal_ids: '2'};
@@ -263,16 +264,53 @@ function SetUpPresets(dropdowntopopulate)
 	MultiSetup[8] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: 2,  which_ass: 9, goal_ids: '8,14'};
 	MultiSetup[9] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: 2,  which_ass: 10, goal_ids: '8,14'};
 	MultiSetup[10] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: 2,  which_ass: 11, goal_ids: '8,14'};
-	
+	*/
 	PetersKsGoodSetup = new Array();
 	PetersKsGoodSetup[0] = { goal_ids: "4", which_ass: 1, weighting: 1, marker: "Self", feedback: 3, due_week: 4, ass_name: "Short answer question", ass_id: 5 };
 	PetersKsGoodSetup[1] = { goal_ids: "7", which_ass: 2, weighting: 2, marker: "Peer", feedback: 4, due_week: 8, ass_name: "Class presentation", ass_id: 9 };
 	PetersKsGoodSetup[2] = { goal_ids: "10", which_ass: 3, weighting: 3, marker: "Teacher", feedback: 2, due_week: 12, ass_name: "Report", ass_id: 3 };
+
+	OverAssessment = new Array();
+	OverAssessment [0] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 3, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 1, goal_ids: '2'};
+	OverAssessment [1] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 8, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 2, goal_ids: '2'};
+	OverAssessment [2] = { ass_id: 3, ass_name: 'Report', due_week: 9, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 3, goal_ids: '5'};
+	OverAssessment [3] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 11, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 4, goal_ids: '2'};
+	OverAssessment [4] = { ass_id: 3, ass_name: 'Report', due_week: 13, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 5, goal_ids: '1'};
+	OverAssessment [5] = { ass_id: 1, ass_name: 'Essay', due_week: 14, feedback: 1, marker: 'Teacher', weighting: 3, which_ass: 6, goal_ids: '5'};
+
+	LackOfFeedback = new Array();
+	LackOfFeedback [0] = { ass_id: 5, ass_name: 'Short answer question', due_week: 3, feedback: 2, marker: 'Teacher', weighting: 1, which_ass: 1, goal_ids: '3'};
+	LackOfFeedback [1] = { ass_id: 2, ass_name: 'Problem', due_week: 14, feedback: 1, marker: 'Teacher', weighting: 5, which_ass: 2, goal_ids: '10'};
+
+	WeeklyQuiz = new Array();
+	WeeklyQuiz [0] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 1, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 1, goal_ids: '2'};
+	WeeklyQuiz [1] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 2, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 2, goal_ids: '2'};
+	WeeklyQuiz [2] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 3, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 3, goal_ids: '2'};
+	WeeklyQuiz [3] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 4, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 4, goal_ids: '2'};
+	WeeklyQuiz [4] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 5, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 5, goal_ids: '2'};
+	WeeklyQuiz [5] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 6, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 6, goal_ids: '2'};
+	WeeklyQuiz [6] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 7, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 7, goal_ids: '2'};
+	WeeklyQuiz [7] = { ass_id: 2, ass_name: 'Problem', due_week: 7, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 8, goal_ids: '4'};
+	WeeklyQuiz [8] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 8, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 9, goal_ids: '2'};
+	WeeklyQuiz [9] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 9, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 10, goal_ids: '2'};
+	WeeklyQuiz [10] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 10, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 11, goal_ids: '2'};
+	WeeklyQuiz [11] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 11, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 12, goal_ids: '2'};
+	WeeklyQuiz [12] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 12, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 13, goal_ids: '2'};
+	WeeklyQuiz [13] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 13, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 14, goal_ids: '2'};
+	WeeklyQuiz [14] = { ass_id: 3, ass_name: 'Report', due_week: 13, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 15, goal_ids: '5'};
+	WeeklyQuiz [15] = { ass_id: 4, ass_name: 'Multiple choice questions', due_week: 14, feedback: 1, marker: 'Teacher', weighting: 1, which_ass: 16, goal_ids: '2'};
+	WeeklyQuiz [16] = { ass_id: 2, ass_name: 'Problem', due_week: 14, feedback: 1, marker: 'Teacher', weighting: 3, which_ass: 17, goal_ids: '8'};
+
 	
-	dropdowntopopulate.addItem('Blank Setup', 1);
-	dropdowntopopulate.addItem('Good Setup', GoodSetup);
-	dropdowntopopulate.addItem('Bad Setup', BadSetup);
-	dropdowntopopulate.addItem('Good Setup (Peter K)', PetersKsGoodSetup);
+//	dropdowntopopulate.addItem('Blank Setup', 1);
+//	dropdowntopopulate.addItem('Good Setup', GoodSetup);
+//	dropdowntopopulate.addItem('Bad Setup', BadSetup);
+	dropdowntopopulate.addItem('Good Setup', PetersKsGoodSetup);	
+	dropdowntopopulate.addItem('Over-Assessment', OverAssessment);
+	dropdowntopopulate.addItem('Lack of Feedback', LackOfFeedback);
+	dropdowntopopulate.addItem('Weekly Quiz', WeeklyQuiz);
+
+	
 //	dropdowntopopulate.addItem('Multi per Week', MultiSetup);
 	//Presets.addItem('cfm setup', cfmSetup);
 	//Presets.addItem('Happy Setup', happySetup);
