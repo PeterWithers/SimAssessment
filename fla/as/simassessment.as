@@ -18,6 +18,10 @@ _root.email._x = _root.emailXPosition - 800;
 function IntroductionStart()
 {
 	trace('IntroductionStart()');
+	
+	// increment RequiredCFCResults because InitSemester is called to give loading box on IntroductionFinish
+	//_root.RequiredCFCResults++;
+	
 	if (_root.UserName == null)
 	{
 		// go to frame two so that frame one scripts get called later
@@ -84,7 +88,7 @@ function IntroductionFinish()
 	_root.WeekOfAssignments = 1;
 	_root.timetable.SetupTimetableDisplay();
 	_root.IntroductionStudentHandDown();
-//	_root.InitSemester();
+	//_root.InitSemester();
 }
 
 _root.messagepopup.messagetext.text = ''
@@ -255,6 +259,7 @@ function PhoneClick()
 	if (_root.DisableControls == true) return;
 	if (Key.isDown(Key.CONTROL))
 	{
+		_root.CloseDialogues();
 		_root.ShowDebugInfo();
 	}else{
 		_root.CloseDialogues();
@@ -264,6 +269,19 @@ function PhoneClick()
 	_root.Phone.Light.gotoAndStop('off');
 	_root.Classroom._visible = false;
 }
+function GraphClick()
+{
+	if (_root.DisableControls == true) return;
+	if (Key.isDown(Key.CONTROL))
+	{
+		_root.CloseDialogues();
+		_root.GraphDisplay.show();
+	}
+}
+_root.feedbackgraph.onRelease = _root.GraphClick;
+_root.GraphDisplay.ok.onRelease = _root.CloseDialogues;
+_root.GraphDisplay.hide();
+
 function ComputerMailClick()
 {
 	if (_root.DisableControls == true) return;
@@ -381,6 +399,9 @@ function CloseDialogues()
 	
 	// close help box
 	_root.HelpBox._visible = false;
+	
+	// close graph display
+	_root.GraphDisplay.hide();
 }
 
 StopSemester();
