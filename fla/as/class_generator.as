@@ -42,8 +42,10 @@ function SetUpWeek()
 		_root.ShowOfHands = (AssessmentWeeksArray[0] <= _root.CurrentWeekInSemester);
 		trace('_root.ShowOfHands'+_root.ShowOfHands);
 //		avg_level_of_assessment = _root.PreCalculatedStatesForSemester[AssessmentIndex].total_level_of_assessment / WeekSearchCount;
-		gererateClassState(_root.PreCalculatedStatesForSemester[AssessmentIndex].feedback, AssessmentIndex != 0, _root.PreCalculatedStatesForSemester[AssessmentIndex].student_workload, AssessmentThisWeek);
-		SetupMentorCommentsForWeek(_root.PreCalculatedStatesForSemester[AssessmentIndex].approach_to_learning, _root.PreCalculatedStatesForSemester[AssessmentIndex].goal_alignment, AssessmentThisWeek);
+
+		gererateClassState(_root.TweenedWeeklyStates[_root.CurrentWeekInSemester].feedback, AssessmentIndex != 0, _root.TweenedWeeklyStates[_root.CurrentWeekInSemester].student_workload, AssessmentThisWeek);
+
+		SetupMentorCommentsForWeek(_root.TweenedWeeklyStates[_root.CurrentWeekInSemester].approach_to_learning, _root.TweenedWeeklyStates[_root.CurrentWeekInSemester].goal_alignment, AssessmentThisWeek);
 	}
 }
 function GoBackOneWeek()
@@ -141,7 +143,7 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 			
 			if(AssessmentThisWeek)
 			{
-				trace([_root.CurrentWeekInSemester] + ' : ' + [Math.round(modified_student_workload)] + ' : ' + [Math.round(modified_feedback)] + ' : ' + [_root.StudentsInClassroom[class_counter].type]);
+				trace('CurrentWeekInSemester: ' + [_root.CurrentWeekInSemester] + ' modified_student_workload: ' + [Math.round(modified_student_workload)] + ' modified_feedback: ' + [Math.round(modified_feedback)] + ' type: ' + [_root.StudentsInClassroom[class_counter].type]);
 				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester] = new Array();
 				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)] = new Array();
 				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] = new Array();
