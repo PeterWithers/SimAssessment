@@ -182,6 +182,50 @@ function SetUpEngineTestPresets(dropdowntopopulate)
 	IntenseSpacingWorkload3[6] = {ass_id: 1, ass_name: 'Essay', due_week: 14, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 7, goal_ids: '2'};
 	dropdowntopopulate.addItem('IntenWorkload3', IntenseSpacingWorkload3);		
 	
+	///////////////////////////
+	dropdowntopopulate.addItem('--------', 1);	
+	
+	StudentEmotionGrid1 = new Array();
+	StudentEmotionGrid1[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 1, marker: 'Peer', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	StudentEmotionGrid1[1] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 1, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	StudentEmotionGrid1[2] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 8, feedback: 1, marker: 'Self', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	StudentEmotionGrid1[3] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 1, marker: 'Self', weighting: '40% and 60%',  which_ass: 4, goal_ids: '2'};
+	StudentEmotionGrid1[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 1, marker: 'Self', weighting: '60% and 80%',  which_ass: 5, goal_ids: '2'};
+	dropdowntopopulate.addItem('EmotionGrid1', StudentEmotionGrid1);	
+		
+	StudentEmotionGrid2 = new Array();
+	StudentEmotionGrid2[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 2, marker: 'Peer', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	StudentEmotionGrid2[1] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 2, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	StudentEmotionGrid2[2] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 8, feedback: 2, marker: 'Self', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	StudentEmotionGrid2[3] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 2, marker: 'Self', weighting: '40% and 60%',  which_ass: 4, goal_ids: '2'};
+	StudentEmotionGrid2[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 2, marker: 'Self', weighting: '60% and 80%',  which_ass: 5, goal_ids: '2'};
+	dropdowntopopulate.addItem('EmotionGrid2', StudentEmotionGrid2);	
+		
+	StudentEmotionGrid3 = new Array();
+	StudentEmotionGrid3[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	StudentEmotionGrid3[1] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	StudentEmotionGrid3[2] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 8, feedback: 3, marker: 'Self', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	StudentEmotionGrid3[3] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 3, marker: 'Self', weighting: '40% and 60%',  which_ass: 4, goal_ids: '2'};
+	StudentEmotionGrid3[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Self', weighting: '60% and 80%',  which_ass: 5, goal_ids: '2'};
+	dropdowntopopulate.addItem('EmotionGrid3', StudentEmotionGrid3);	
+		
+	StudentEmotionGrid4 = new Array();
+	StudentEmotionGrid4[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 4, marker: 'Peer', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	StudentEmotionGrid4[1] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 4, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	StudentEmotionGrid4[2] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 8, feedback: 4, marker: 'Self', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	StudentEmotionGrid4[3] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 4, marker: 'Self', weighting: '40% and 60%',  which_ass: 4, goal_ids: '2'};
+	StudentEmotionGrid4[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 4, marker: 'Self', weighting: '60% and 80%',  which_ass: 5, goal_ids: '2'};
+	dropdowntopopulate.addItem('EmotionGrid4', StudentEmotionGrid4);	
+		
+	StudentEmotionGrid5 = new Array();
+	StudentEmotionGrid5[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 5, marker: 'Peer', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	StudentEmotionGrid5[1] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 5, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	StudentEmotionGrid5[2] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 8, feedback: 5, marker: 'Self', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	StudentEmotionGrid5[3] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 5, marker: 'Self', weighting: '40% and 60%',  which_ass: 4, goal_ids: '2'};
+	StudentEmotionGrid5[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 5, marker: 'Self', weighting: '60% and 80%',  which_ass: 5, goal_ids: '2'};
+	dropdowntopopulate.addItem('EmotionGrid5', StudentEmotionGrid5);			
+	
+	
 	//////////////////////////////
 			
 //	'Multiple choice questions'
