@@ -174,6 +174,7 @@ function calculate_Status(result)
 function calculate_Result(result)
 {
 	_root.PreCalculatedStatesForSemester = result;
+	_root.supressweektween = false;
 	_root.tweenweeks();
 	_root.calculation_engine_returned = true;
 	_root.InitSemester();
