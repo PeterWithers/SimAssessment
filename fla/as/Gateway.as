@@ -32,6 +32,7 @@ function openGateway()
 		_root.MessageBox('Opening Gateway');
 		NetServices.setDefaultGatewayUrl(_root.xmlGatewayUrl);
 		gatewayConnection = NetServices.createGatewayConnection(); 
+		timetableconfigService = gatewayConnection.getService(xmlGatewayPath+'/timetableconfig', this);
 		mentorService = gatewayConnection.getService(xmlGatewayPath+'/mentor', this);
 		studentService = gatewayConnection.getService(xmlGatewayPath+'/student', this);
 		commentsService = gatewayConnection.getService(xmlGatewayPath+'/comments', this);
