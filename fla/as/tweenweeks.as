@@ -26,8 +26,10 @@ function tweenweeks()
 		
 		WeeklyStates[weekcount] = new Object();
 		
-		if (sessionass_week_list_index == 0)
+		// for the first week if there is no provided value set the data to zero
+		if (sessionass_week_list_index == 0 and weekcount == 1)
 		{
+			trace('first week has no data; setting to zero');
 			for (tweenableindex in TweenableList)
 			{
 				tweenable = TweenableList[tweenableindex];
@@ -35,8 +37,10 @@ function tweenweeks()
 				trace('weekcount: ' + weekcount + ' list_index: ' + sessionass_week_list_index + ' ' +  tweenable + ': unset :' + WeeklyStates[weekcount][tweenable]);
 			}		
 		}
-		else
+		// for weeks with an assignment use the provided value
+		else if (sessionass_week_list[sessionass_week_list_index - 1] == weekcount)
 		{
+			trace('assignment week: ' + weekcount);
 			for (tweenableindex in TweenableList)
 			{
 				tweenable = TweenableList[tweenableindex];
@@ -44,11 +48,49 @@ function tweenweeks()
 				trace('weekcount: ' + weekcount + ' list_index: ' + sessionass_week_list_index + ' ' +  tweenable + ': ' + WeeklyStates[weekcount][tweenable]);
 			}
 		}
-		
-	//	currentweek - lastweek / nextweek - lastweek 
-	//	lastweekValue nextweekValue
-		
-		
+		else
+		{
+			trace('tweened week: ' + weekcount);
+			for (tweenableindex in TweenableList)
+			{
+				tweenable = TweenableList[tweenableindex];
+				
+				lastvalue = WeeklyStates[weekcount - 1][tweenable];
+				
+				// get last value
+				if (sessionass_week_list_index != 0)
+				{
+					lastvalue = _root.PreCalculatedStatesForSemester[sessionass_week_list_index][tweenable];
+					lastassignmetweek = sessionass_week_list[sessionass_week_list_index - 1];
+				}
+				else
+				{
+					lastvalue = 0;
+					lastassignmetweek = 1;
+				}
+				// get next value
+				if (_root.PreCalculatedStatesForSemester.length > sessionass_week_list_index + 1)
+				{
+					nextvalue = _root.PreCalculatedStatesForSemester[sessionass_week_list_index + 1][tweenable];
+					nextassignmentweek = (sessionass_week_list[sessionass_week_list_index]);
+				}
+				else
+				{
+					nextvalue = 0;
+					nextassignmentweek = 14;
+				}
+				
+				percentagetweened = (weekcount - lastassignmetweek) / (nextassignmentweek - lastassignmetweek) * 100;
+			
+				currentvalue = lastvalue + (nextvalue - lastvalue) * percentagetweened / 100;
+				
+				trace('lastvalue: ' + lastvalue + ' lastassignmetweek: ' + lastassignmetweek + '  nextvalue: ' + nextvalue + ' nextassignmentweek: ' + nextassignmentweek + ' percentagetweened: ' + percentagetweened);
+				
+				trace('lastvalue: ' + lastvalue + '  nextvalue: ' + nextvalue + ' currentvalue: ' + currentvalue + ' percentagetweened: ' + percentagetweened);
+				
+				WeeklyStates[weekcount][tweenable] = currentvalue;
+			}
+		}		
 	}
 	
 	// arrray of all weeks and their states
