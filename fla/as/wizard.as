@@ -107,6 +107,13 @@ function WhatDoYouWantBox()
 			_root.EnableControlsFunction();
 			_root.SetUpClass();
 			_root.RemoveMessageBox();
+			_root.calculation_engine_called = false;
+			_root.StopSemester();
+			//	_root.ClearPreviousWeeks();
+			_root.WeekOfAssignments = 1;
+			_root.Presets.setSelectedIndex( 0 );
+			_root.Call_calculation_engineService();
+			_root.timetable.SetupTimetableDisplay();
 		}
 		if (_root.messagepopup.preset._currentframe > 1) 
 		{

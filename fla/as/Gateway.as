@@ -68,7 +68,10 @@ function Call_calculation_engineService()
 			_root.calculation_engineService.calculate(_root.WeekOfAssignments); _root.RequiredCFCResults++;
 			_root.ErrorMessageShowing = false;
 		}
-	}else _root.StopSemester();
+	} else {
+		_root.StopSemester();
+		_root.gererateClassState(0, 0, 0, 0);
+	}
 }
 function get_subjects_Status(result)
 {
