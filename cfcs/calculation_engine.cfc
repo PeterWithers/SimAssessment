@@ -159,23 +159,6 @@
 					FROM new_level_assignment
 					WHERE id in (#get_ass[attributescounter].goal_ids#)
 					</CFQUERY>
-				</cfif>
-				<!--- the script below is to calculate goal alignment --->
-				<cfscript>	
-				if (qAlign2.value lt qAlign1.value)//if task goal is less than subject goal =>i.e. not aligned
-					goal_alignment = goal_alignment - 1;
-				
-				if (goal_alignment lt -4)
-					goal_alignment = -4;
-				</cfscript>
-			</cfloop>
-		
-			<cfif goal_alignment lt 0>
-				<cfset sessionunaligned_assessment = sessionunaligned_assessment + 1>
-			</cfif>
-			
-			<Cfset goal_alignment = goal_alignment + 5>
-			
 			<!--- script below is to calculate all required variables--->
 			<cfscript>
 				//================================================================
@@ -268,6 +251,23 @@
 			<!---
 			end calculation of public confidence
 			 ============================================================================== --->
+				</cfif>
+				<!--- the script below is to calculate goal alignment --->
+				<cfscript>	
+				if (qAlign2.value lt qAlign1.value)//if task goal is less than subject goal =>i.e. not aligned
+					goal_alignment = goal_alignment - 1;
+				
+				if (goal_alignment lt -4)
+					goal_alignment = -4;
+				</cfscript>
+			</cfloop>
+		
+			<cfif goal_alignment lt 0>
+				<cfset sessionunaligned_assessment = sessionunaligned_assessment + 1>
+			</cfif>
+			
+			<Cfset goal_alignment = goal_alignment + 5>
+			
 			<cfscript>
 			// calculate the accumulated outcomes of all assignments
 			sessiontotal_level_of_assessment = #sessiontotal_level_of_assessment# + #qLargest_level.value#;
