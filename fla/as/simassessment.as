@@ -8,6 +8,7 @@
 #include "as/email.as"
 #include "as/SaveLoad.as"
 #include "as/help.as"
+#include "as/tweenweeks.as"
 
 
 _root.introduction.loadMovie('introduction.swf');
