@@ -42,7 +42,7 @@ function AssignmentInstanceDataIntoSelectData()
 	
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(_root.timetable.LastSelectedAssignmentInstanceIndex).data = 
 	{
-		ASS_ID: _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ASS_ID, 
+		ASS_ID: _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_id, 
 		ASS_NAME: _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_name, 
 		DUE_WEEK: _global.weechoo, 
 		FEEDBACK: _root.timetable.EditAssignment.FeedbackType.getSelectedItem().data.feedback_id, 

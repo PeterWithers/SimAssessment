@@ -22,6 +22,8 @@ on(release)
 
 	WeekOfAssignmentsUpdated.sortOn('DUE_WEEK', Array.NUMERIC);
 	_root.WeekOfAssignments = WeekOfAssignmentsUpdated;
+	
+	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++) _root.WeekOfAssignments[AssignmentsForWeek].WHICH_ASS = AssignmentsForWeek + 1;
 
 	SetupTimetableDisplay();
 }
