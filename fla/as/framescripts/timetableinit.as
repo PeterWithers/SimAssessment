@@ -5,10 +5,9 @@ _root.timetable.EditAssignment._visible = false;
 function SetWeekTextLable(AssignmentsForWeek)
 {
 	trace('SetWeekTextLable('+AssignmentsForWeek+')');
-/*	if (_root.EngineTest == true) 
+	if (_root.EngineTest == true) 
 	EngineTestTimetableText = ' ' + _root.WeekOfAssignments[AssignmentsForWeek].ass_id + ':' + _root.WeekOfAssignments[AssignmentsForWeek].which_ass;
-	else */
-	EngineTestTimetableText = '';
+	else EngineTestTimetableText = '';
 	set ("WTTfirst" + _root.WeekOfAssignments[AssignmentsForWeek].due_week, _root.WeekOfAssignments[AssignmentsForWeek].ass_name + EngineTestTimetableText);
 	set ("WTTsecond" + _root.WeekOfAssignments[AssignmentsForWeek].due_week, (_root.WeekOfAssignments[AssignmentsForWeek].weighting+"  " + _root.WeekOfAssignments[AssignmentsForWeek].marker + "-marked"));
 }
