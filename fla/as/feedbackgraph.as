@@ -75,15 +75,16 @@ _root.GraphDisplay.show = function()
 		currentrowheight_graph = bottomedge_graph - rowheight_graph * currentrow_graph;
 		linecolour_graph = linecolour_graph + 0x005522;
 		_root.GraphDisplay.graph.lineStyle (5, linecolour_graph, 100);
-		_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph, currentrowheight_graph);
-		for (weekgraphpoint = 0; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + _root.CalculatedWeeklyStates[weekgraphpoint + 1][tweenable] * 10);
+//		_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph, currentrowheight_graph);
+		_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + _root.TweenedWeeklyStates[1][tweenable] * 10);
+		for (weekgraphpoint = 1; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable] * 10);
 		_root.GraphDisplay.graph.lineStyle (20, linecolour_graph, 100);
 		for (AssignmentWeek in _root.AssignmentWeeks) 
 		{
 			weekgraphpoint = _root.AssignmentWeeks[AssignmentWeek] - 1;
 			trace('weekgraphpoint: ' + weekgraphpoint);
 			Xcurrent = leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint;
-			Ycurrent = currentrowheight_graph + _root.CalculatedWeeklyStates[weekgraphpoint + 1][tweenable] * 10;
+			Ycurrent = currentrowheight_graph + _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable] * 10;
 			_root.GraphDisplay.graph.moveTo(Xcurrent, Ycurrent);
 			_root.GraphDisplay.graph.lineTo (Xcurrent, Ycurrent + 1);
 		}
@@ -94,5 +95,19 @@ _root.GraphDisplay.show = function()
 _root.GraphDisplay.hide = function()
 {
 	_root.GraphDisplay._x = -800;
+}
+
+_root.GraphDisplay.removetween = function()
+{
+	_root.supressweektween = true;
+	_root.tweenweeks();
+	_root.GraphDisplay.show();
+}
+
+_root.GraphDisplay.replacetween = function()
+{
+	_root.supressweektween = false;
+	_root.tweenweeks();
+	_root.GraphDisplay.show();
 }
 
