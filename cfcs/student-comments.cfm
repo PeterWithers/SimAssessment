@@ -1,3 +1,7 @@
+<a href="student-comments.cfm">Edit Student Comments</a>&nbsp;|&nbsp;<a href="mentor-comments.cfm">Edit Mentor Comments</a>&nbsp;|&nbsp;<a href="report-comments.cfm">Edit Report Comments</a>
+<br>
+<br>
+
 <!--- <CFQUERY NAME="qComments" DATASOURCE="sim_assess">
 	SELECT student_workload_value, feedback_value, description, description2, description3
 	FROM comments
