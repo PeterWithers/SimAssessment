@@ -9,6 +9,13 @@
 #include "as/feedbackgraph.as"
 
 _root.messagepopup.messagetext.text = ''
+function OkMessageBox(messagetext)
+{
+	_root.messagepopup.gotoAndStop('ok');
+	_root.messagepopup._visible = true;
+	_root.messagepopup.messagetext.text = messagetext;
+	_root.messagepopup.start.onRelease = function() {_root.messagepopup._visible = false;}
+}
 function MessageBox(messagetext)
 {
 	_root.messagepopup.gotoAndStop('loading');
