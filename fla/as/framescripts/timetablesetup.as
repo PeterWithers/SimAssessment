@@ -139,7 +139,8 @@ AssignmentObjectForWeek = null;
 // count the Assignments in this week
 // and put them into the AssignmentInstanceSelect 
 _root.timetable.EditAssignment.AssignmentInstanceSelect.removeAll();
-for (AssignmentsForWeek in _root.WeekOfAssignments)
+for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
+//for (AssignmentsForWeek in _root.WeekOfAssignments)
 {
 	if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].due_week)
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.addItem('temp name', _root.WeekOfAssignments[AssignmentsForWeek]);
@@ -148,6 +149,9 @@ _root.timetable.UpdateSelectAddingNewItem();
 
 _root.timetable.PopulateSubjectInputs(_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(0).data);
 
+// set the curent assignment
+_root.timetable.EditAssignment.AssignmentInstanceSelect.setSelectedIndex(_root.timetable['tab' + _global.weechoo].current - 1);
+// _root.timetable['tab' + _global.weechoo].count - _
 // store the last selection;
 _root.timetable.LastSelectedAssignmentInstanceIndex =_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedIndex();
 

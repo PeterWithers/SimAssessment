@@ -7,23 +7,28 @@ on(release)
 	
 	_root.CloseDialogues();
 	_root.calculation_engine_called = false;
-
-	WeekOfAssignmentsUpdated = new Array();
+	splicebegin = null;
+	splicecount = 0;
+	
+	// find the previous record of the weeks assignment
 	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
 	{
 		trace('AssignmentsForWeek: ' + AssignmentsForWeek);
 		trace('due_week: ' + _root.WeekOfAssignments[AssignmentsForWeek].due_week); 
 		if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].due_week)
-			trace('one to remove');
-		else
-			WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length] = _root.WeekOfAssignments[AssignmentsForWeek];
+		{
+			trace('Remove AssignmentsForWeek: ' + AssignmentsForWeek);
+			if (splicebegin == null) splicebegin = AssignmentsForWeek;
+			splicecount++;
+		}
 	}
+	
+	// remove the previous record of the weeks assignment
+	_root.WeekOfAssignments.splice(splicebegin, splicecount);
 
-	for (AssignmentInstanceCounter = 0; AssignmentInstanceCounter < _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1; AssignmentInstanceCounter++)
- 		WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length] = _root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).data;
-
-	WeekOfAssignmentsUpdated.sortOn('due_week', Array.NUMERIC);
-	_root.WeekOfAssignments = WeekOfAssignmentsUpdated;
+	// add the assignments from the select box data, excluding the 'new' element
+	for (AssignmentInstanceCounter = _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 2; AssignmentInstanceCounter >= 0; AssignmentInstanceCounter--)
+ 		_root.WeekOfAssignments.splice(splicebegin, 0, _root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).data);
 	
 	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++) _root.WeekOfAssignments[AssignmentsForWeek].which_ass = AssignmentsForWeek + 1;
 
