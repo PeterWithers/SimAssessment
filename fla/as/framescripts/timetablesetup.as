@@ -3,6 +3,14 @@ trace(this);
 
 function AssignmentInstanceDataIntoSelectData()
 {
+	// check that the item is not new
+	if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().label == '1 of 1 (new)')
+	{
+		// store the last selection;
+		_root.timetable.LastSelectedAssignmentInstanceIndex =_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedIndex();
+		return(1);
+	}
+
 	// check that the select boxes are populated
 	if (_root.timetable.EditAssignment.AssessmentType.getSelectedIndex() == 0)	
 	{
@@ -72,7 +80,7 @@ function UpdateSelectAddingNewItem()
 	for (AssignmentInstanceCounter = 0; AssignmentInstanceCounter < _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength(); AssignmentInstanceCounter++)
  		_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).label = (AssignmentInstanceCounter + 1) + ' of ' + _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength();
 	// if none then provide a blank
-	if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() == 0) _root.timetable.EditAssignment.AssignmentInstanceSelect.addItem('1 of 1', null);
+	if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() == 0) _root.timetable.EditAssignment.AssignmentInstanceSelect.addItem('1 of 1 (new)', null);
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.addItem('new', null);
 }
 	
@@ -84,7 +92,8 @@ function AssignmentInstanceSelectChange()
 	{
 		if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().label == 'new') _root.timetable.UpdateSelectAddingNewItem();
 		// clear and load the selections settings
-		_root.timetable.PopulateSubjectInputs(_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().data);
+		if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().label != '1 of 1 (new)')
+			_root.timetable.PopulateSubjectInputs(_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().data);
 	}else
 		if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedIndex() != _root.timetable.LastSelectedAssignmentInstanceIndex)
 			_root.timetable.EditAssignment.AssignmentInstanceSelect.setSelectedIndex(_root.timetable.LastSelectedAssignmentInstanceIndex);

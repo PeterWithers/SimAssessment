@@ -2,6 +2,10 @@ on(release)
 {
 	if (_root.DisableControls == true) return;
 	
+	// remove the (new) so that AssignmentInstanceSelect will update the current selection
+	if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().label == '1 of 1 (new)')
+		_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().label = '1 of 1';
+		
 	// call the AssignmentInstanceSelect change handler to update the current selection
 	if (!_root.timetable.AssignmentInstanceDataIntoSelectData()) return;
 	
@@ -22,6 +26,8 @@ on(release)
 			splicecount++;
 		}
 	}
+
+	if (_root.WeekOfAssignments == 1) _root.WeekOfAssignments = new Array();
 	
 	// remove the previous record of the weeks assignment
 	_root.WeekOfAssignments.splice(splicebegin, splicecount);
