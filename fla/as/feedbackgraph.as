@@ -38,5 +38,88 @@ _root.feedbackgraph.CalculateGradulatedScale = function(NewScale, OldScale)
 	return ((NewScale - OldScale) * _root.feedbackgraph.GradientsDone / _root.feedbackgraph.Gradients + OldScale);
 }
 
+_root.GraphDisplay.show = function()
+{
+	_root.GraphDisplay._x = 0;
+	
+	TweenableList = new Array();
+	for (returnvalues in _root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1])
+	{
+		if (!isNaN(_root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1][returnvalues])) TweenableList.push(returnvalues);
+	}
+	trace('TweenableList: ' + TweenableList.toString());
+	
+	WeeklyStates = new Array();
+	laststate = 0;
+	if (isNaN(_root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionass_weeks_list))
+		sessionass_week_list = _root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionass_weeks_list.split(',');
+	else
+	{
+		sessionass_week_list = new Array();
+		sessionass_week_list[0] = _root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionass_weeks_list;
+	}
+	trace('sessionass_week_list: ' + sessionass_week_list.toString());
+	trace('sessionass_week_list: ' + sessionass_week_list);
 
+	sessionass_week_list_index = 0;
+	for (weekcount = 1; weekcount <= 14; weekcount++)
+	{
+		if (sessionass_week_list[sessionass_week_list_index] == weekcount and sessionass_week_list.length > sessionass_week_list_index) sessionass_week_list_index++;
+		
+		WeeklyStates[weekcount] = new Object();
+		
+		if (sessionass_week_list_index == 0)
+		{
+			for (tweenableindex in TweenableList)
+			{
+				tweenable = TweenableList[tweenableindex];
+				WeeklyStates[weekcount][tweenable] = 0; //weekcount % 2;
+				trace('weekcount: ' + weekcount + ' list_index: ' + sessionass_week_list_index + ' ' +  tweenable + ': unset :' + WeeklyStates[weekcount][tweenable]);
+			}		
+		}
+		else
+		{
+			for (tweenableindex in TweenableList)
+			{
+				tweenable = TweenableList[tweenableindex];
+				WeeklyStates[weekcount][tweenable] = _root.PreCalculatedStatesForSemester[sessionass_week_list_index][tweenable];
+				trace('weekcount: ' + weekcount + ' list_index: ' + sessionass_week_list_index + ' ' +  tweenable + ': ' + WeeklyStates[weekcount][tweenable]);
+			}
+		}
+	}
+	
+	leftedge_graph = _root.GraphDisplay.GraphMarker._x;
+	rightedge_graph = leftedge_graph + _root.GraphDisplay.GraphMarker._width;
+	topedge_graph = _root.GraphDisplay.GraphMarker._y;
+	bottomedge_graph = topedge_graph + _root.GraphDisplay.GraphMarker._height;
+	width_graph = rightedge_graph - leftedge_graph;
+	height_graph = bottomedge_graph - topedge_graph;
+
+	_root.GraphDisplay.createEmptyMovieClip ("graph", 1);
+	
+	_root.GraphDisplay.graph._x = _root.GraphDisplay._x;
+//	_root.GraphDisplay.graph._y = _root.GraphDisplay._y
+	
+	offset_graph = width_graph / 28;
+	linecolour_graph = 0x99FF00;
+	totalrows_graph = TweenableList.length
+	rowheight_graph = height_graph / totalrows_graph;
+	
+	for (currentrow_graph = 1; currentrow_graph <= totalrows_graph; currentrow_graph++)
+	{
+		tweenable = TweenableList[currentrow_graph - 1];
+		currentrowheight_graph = bottomedge_graph - rowheight_graph * currentrow_graph;
+		linecolour_graph = linecolour_graph + 0x005522;
+		_root.GraphDisplay.graph.lineStyle (5, linecolour_graph, 100);
+		_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph, currentrowheight_graph);
+		for (weekgraphpoint = 0; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + WeeklyStates[weekgraphpoint + 1][tweenable] * 10);
+		//for (weekgraphpoint = 0; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (weekgraphpoint % 2) * 10);
+	}
+}
+
+_root.GraphDisplay.hide = function()
+{
+	_root.GraphDisplay._x = -800;
+//	_root.GraphDisplay.graph.
+}
 
