@@ -41,6 +41,7 @@ on(release)
 			{
 				WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length] = _root.WeekOfAssignments[AssignmentsForWeek];
 				WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length - 1].which_ass = WeekOfAssignmentsUpdated.length;
+				WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length - 1].ass_id = WeekOfAssignmentsUpdated.length;
 			}
 		}
 //		WeekOfAssignmentsUpdated.sortOn('due_week');

@@ -19,11 +19,11 @@ on(release)
 	{
 		trace('AssignmentsForWeek: ' + AssignmentsForWeek);
 		trace('due_week: ' + _root.WeekOfAssignments[AssignmentsForWeek].due_week); 
-		if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].due_week)
+		if (_global.weechoo <= _root.WeekOfAssignments[AssignmentsForWeek].due_week)
 		{
-			trace('Remove AssignmentsForWeek: ' + AssignmentsForWeek);
+			trace('Add Assignment at: ' + AssignmentsForWeek);
 			if (splicebegin == null) splicebegin = AssignmentsForWeek;
-			splicecount++;
+			if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].due_week) splicecount++;
 		}
 	}
 
@@ -36,7 +36,11 @@ on(release)
 	for (AssignmentInstanceCounter = _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 2; AssignmentInstanceCounter >= 0; AssignmentInstanceCounter--)
  		_root.WeekOfAssignments.splice(splicebegin, 0, _root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).data);
 	
-	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++) _root.WeekOfAssignments[AssignmentsForWeek].which_ass = AssignmentsForWeek + 1;
+	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
+	{
+		_root.WeekOfAssignments[AssignmentsForWeek].which_ass = AssignmentsForWeek + 1;
+		_root.WeekOfAssignments[AssignmentsForWeek].ass_id = AssignmentsForWeek + 1;
+	}
 
 	SetupTimetableDisplay();
 }
