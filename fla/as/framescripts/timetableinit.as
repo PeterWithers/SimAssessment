@@ -32,7 +32,7 @@ function SetupTimetableDisplay()
 		}
 	}
 	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
-//	for (AssignmentsForWeek in _root.WeekOfAssignments)
+//	for (AssignmentsForWeek in _root.WeekOfAssignments) //
 	{		
 		due_week = _root.WeekOfAssignments[AssignmentsForWeek].due_week;
 		trace('due_week: ' + due_week);
