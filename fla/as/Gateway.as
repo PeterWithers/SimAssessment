@@ -174,7 +174,14 @@ function calculate_Status(result)
 function calculate_Result(result)
 {
 	_root.PreCalculatedStatesForSemester = result;
-	_root.supressweektween = false;
+	
+	_root.GraphDisplay.tweeningvalues = result.tweeningvalues;
+	_root.PreCalculatedStatesForSemester.tweeningvalues = null;
+	
+	_root.GraphDisplay.supressweektween = _root.GraphDisplay.tweeningvalues.tween != 'true';
+	_root.GraphDisplay.supressweekdecay = _root.GraphDisplay.tweeningvalues.decay != 'true';
+	_root.GraphDisplay.weekdecaylog = _root.GraphDisplay.tweeningvalues.logdecay == 'true';
+	
 	_root.tweenweeks();
 	_root.calculation_engine_returned = true;
 	_root.InitSemester();
