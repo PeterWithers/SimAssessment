@@ -13,12 +13,12 @@ var archivref=new Array();
 var archivcont=new Array();
 var archiv=new Array(archivwhen,archivfrom,archivref,archivcont);
 
-
+/*
 // write "welcome" email
-emailwhen.push("week 1");
-emailfrom.push("course coordinator");
-emailref.push("welcome");
-emailcont.push("hi there, welcome to a new exciting semester. Anmutig becirct Circe den energischen Freier. Some text in here (and a paragraph too).<p></p><p></p>Glückverheissend huldigt ihre Jugend kindlicher Lust. Mannhaft nahet Odysseus. Preist Quellen reizvoller Sünden. Tauche unter vergehe. Wo Xerxes yberall wandelt. Anmutig becirct Circe den energischen Freier. Glückverheissend huldigt ihre Jugend kindlicher Lust.<p></p><p></p>Mannhaft nahet Odysseus. Preist Quellen reizvoller Sünden. Tauche unter vergehe. Wo Xerxes yberall wandelt. Anmutig becirct Circe den energischen Freier. Glückverheissend huldigt ihre Jugend kindlicher Lust. Mannhaft nahet Odysseus. Preist Quellen reizvoller Sünden.  Wo Xerxes yberall wandelt. Anmutig becirct Circe den energischen Freier. Glückverheissend huldigt ihre Jugend kindlicher Lust. Mannhaft nahet Odysseus. <p></p><p></p> Anmutig becirct Circe den energischen Freier. Some text in here (and a paragraph too). Preist Quellen reizvoller Sünden. <p></p><p></p>Tauche unter vergehe. Wo Xerxes yberall wandelt.");
+email.emailwhen.push("week 1");
+email.emailfrom.push("course coordinator");
+email.emailref.push("welcome");
+email.emailcont.push("hi there, welcome to a new exciting semester. Anmutig becirct Circe den energischen Freier. Some text in here (and a paragraph too).<p></p><p></p>Glückverheissend huldigt ihre Jugend kindlicher Lust. Mannhaft nahet Odysseus. Preist Quellen reizvoller Sünden. Tauche unter vergehe. Wo Xerxes yberall wandelt. Anmutig becirct Circe den energischen Freier. Glückverheissend huldigt ihre Jugend kindlicher Lust.<p></p><p></p>Mannhaft nahet Odysseus. Preist Quellen reizvoller Sünden. Tauche unter vergehe. Wo Xerxes yberall wandelt. Anmutig becirct Circe den energischen Freier. Glückverheissend huldigt ihre Jugend kindlicher Lust. Mannhaft nahet Odysseus. Preist Quellen reizvoller Sünden.  Wo Xerxes yberall wandelt. Anmutig becirct Circe den energischen Freier. Glückverheissend huldigt ihre Jugend kindlicher Lust. Mannhaft nahet Odysseus. <p></p><p></p> Anmutig becirct Circe den energischen Freier. Some text in here (and a paragraph too). Preist Quellen reizvoller Sünden. <p></p><p></p>Tauche unter vergehe. Wo Xerxes yberall wandelt.");
 // write "first" email
 emailwhen.push("week 1");
 emailfrom.push("student");
@@ -50,4 +50,4 @@ emailfrom.push("student");
 emailref.push("test 7");
 emailcont.push("Just empty.");
 
-
+*/

@@ -115,9 +115,9 @@ function printoutlistb() {
 
 // switch to wait until email pops back - should be a function
 keepstat=_global.stat; _global.stat=0; trace ("switch to stop while email active");
-_root.time.stop();
-_root.clock.rotates=0;
-_root.simmenu.indicator.gotoAndStop(10+stat*10);
+//_root.time.stop();
+//_root.clock.rotates=0;
+//_root.simmenu.indicator.gotoAndStop(10+stat*10);
 // printout list A and list B
 this.printoutlista();
 this.printoutlistb();
