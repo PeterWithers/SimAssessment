@@ -6,12 +6,18 @@ function SetUpClass()
 	_root.StudentsInClassroom = new Array();
 	for (Student in _root.Classroom)
 	{
-		_root.StudentsInClassroom.push(_root.Classroom[Student]);
-		_root.Classroom[Student].personality = Math.ceil(Math.random() * 15);
+		if (_root.Classroom[Student].student != null)
+		{
+			_root.StudentsInClassroom.push(_root.Classroom[Student]);
+			_root.Classroom[Student].personality = Math.ceil(Math.random() * 15);
+			// the following has been added to use the description, description1, description2 fields that Lawrence added.
+			// there is a lack of clarity on how this fits with the personality 
+			_root.Classroom[Student].type = Math.ceil(Math.random() * 3);
+//			trace('_root.Classroom[Student].type ' + _root.Classroom[Student].type);
+//			trace('_root.Classroom[Student].student ' + _root.Classroom[Student].student);
+		}
 	}	
 	_root.NumberOfStudents = _root.StudentsInClassroom.length;
-
-
 //	sessiondefault_class = new Array();
 //	for (studentcounter = 0; studentcounter < NumberOfStudents; studentcounter++)
 //	{
@@ -78,9 +84,9 @@ function GoForwardOneWeek()
 		_root.ProccessingOneAtATime = false;
 	}
 }
-function gererateClassState(attributesFEEDBACK, attributesSEMESTER_RUNNING, attributesSTUDENT_WORKLOAD, AssessmentThisWeek)	
+function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attributesstudent_workload, AssessmentThisWeek)	
 {
-	trace('gererateClassState(' + attributesFEEDBACK + ' , ' + attributesSEMESTER_RUNNING + ' , ' + attributesSTUDENT_WORKLOAD + ')');
+	trace('gererateClassState(' + attributesfeedback + ' , ' + attributesSEMESTER_RUNNING + ' , ' + attributesstudent_workload + ')');
     happyCount = 0;
    	stressedCount = 0;
 	neutralCount = 0;
@@ -108,7 +114,7 @@ function gererateClassState(attributesFEEDBACK, attributesSEMESTER_RUNNING, attr
 			if (Math.round(modified_feedback) == 0) modified_feedback = 1;
 			else if (Math.round(modified_feedback) > 5) modified_feedback = 5;
 				
-	//		<!--- find the appropriate picture for class --->
+	//		<!--- find the appropriate comment for student --->
 			qStudentcomment = _root.StudentCommentsArray[Math.round(modified_student_workload)][Math.round(modified_feedback)];
 					
 			if (modified_student_emotion >= 3)
@@ -144,28 +150,32 @@ function gererateClassState(attributesFEEDBACK, attributesSEMESTER_RUNNING, attr
 
 			if(AssessmentThisWeek)
 			{
-				trace('made changes here to the email code\n and you should probably test it a bit more.');
-				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester] == null)_root.StudentDoneWeeks[_root.CurrentWeekInSemester] = new Array();			
-				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][_root.CurrentWeekInSemester] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][_root.CurrentWeekInSemester] = new Array();
+				trace([_root.CurrentWeekInSemester] + ' : ' + [Math.round(modified_student_workload)] + ' : ' + [Math.round(modified_feedback)] + ' : ' + [_root.StudentsInClassroom[class_counter].type]);
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester] = new Array();
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)] = new Array();
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] = new Array();
 				
-				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] == null)
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)][_root.StudentsInClassroom[class_counter].type] == null)
 				{
-					_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] = 1;
-	
-					if (qStudentcomment.description != null and qStudentcomment.description != '')
+					_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)][_root.StudentsInClassroom[class_counter].type] = 1;
+					trace('using comment');	
+					if (qStudentcomment.description != null and qStudentcomment.description != '' and _root.StudentsInClassroom[class_counter].type == 1)
 					{
 						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description + '\n\nStudent'});
 						_root.computer.emailindicator.gotoAndPlay('new');
+						_root.StudentsInClassroom[class_counter].student.SomethingToSay = true;
 					}
-					if (qStudentcomment.description1 != null and qStudentcomment.description1 != '')
+					if (qStudentcomment.description1 != null and qStudentcomment.description1 != '' and _root.StudentsInClassroom[class_counter].type == 2)
 					{
 						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description2 + '\n\nStudent'});
-						_root.computer.emailindicator.gotoAndPlay('new');
+						_root.computer.emailindicator.gotoAndPlay('new');						
+						_root.StudentsInClassroom[class_counter].student.SomethingToSay = true;
 					}
-					if (qStudentcomment.description2 != null and qStudentcomment.description2 != '')
+					if (qStudentcomment.description2 != null and qStudentcomment.description2 != '' and _root.StudentsInClassroom[class_counter].type == 3)
 					{			
 						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description3 + '\n\nStudent'});
-						_root.computer.emailindicator.gotoAndPlay('new');
+						_root.computer.emailindicator.gotoAndPlay('new');						
+						_root.StudentsInClassroom[class_counter].student.SomethingToSay = true;
 					}
 				}
 			}
