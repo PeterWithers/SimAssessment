@@ -43,7 +43,7 @@ function SetUpWeek()
 
 		gererateClassState(_root.TweenedWeeklyStates[_root.CurrentWeekInSemester].feedback, AssessmentIndex != 0, _root.TweenedWeeklyStates[_root.CurrentWeekInSemester].student_workload, AssessmentThisWeek);
 
-		SetupMentorCommentsForWeek(_root.TweenedWeeklyStates[_root.CurrentWeekInSemester].teacher_workload, _root.TweenedWeeklyStates[_root.CurrentWeekInSemester].goal_alignment, AssessmentThisWeek);
+		SetupMentorCommentsForWeek(AssessmentThisWeek);
 	}
 }
 function GoBackOneWeek()
