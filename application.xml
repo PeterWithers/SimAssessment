@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<Timetable>
+	<GatewayUrl>http://terracresta/flashservices/gateway</GatewayUrl>
+	<GatewayPath>uts/SimAssessment/cfcs</GatewayPath>
+	<Debug>false</Debug>
+</Timetable>
