@@ -5,7 +5,7 @@
 		<cfset CFCresult = StructNew()>
 		<cfscript>
 			// reset all accumulated variables			
-			sessiontotal_level_of_assessment = 0;
+//			sessiontotal_level_of_assessment = 0;
 			sessiontotal_spacing_of_assessment = 0;
 			sessiontotal_weighting = 0;
 			sessiontotal_progression = 0;			
@@ -24,18 +24,15 @@
 		<cfset sessionsubject = "SimAssessment">
 		<cfset sessionsubjectid = "2">
 
-		<cfloop index="attributescounter" from="1" to="#ArrayLen(AssignmentSetupArray)#">
-			<cfif 0 EQ listfind(sessionass_weeks_list, AssignmentSetupArray[attributescounter].due_week)>
+		<cfloop index="AssignmentCounter" from="1" to="#ArrayLen(AssignmentSetupArray)#">
+			<cfif 0 EQ listfind(sessionass_weeks_list, AssignmentSetupArray[AssignmentCounter].due_week)>
 				<cfset cur_stateStruct = StructNew()>
-				<cfset result = StructInsert(CFCresult, "#attributescounter#", cur_stateStruct)>
-				
-				<cfset result = StructInsert(cur_stateStruct, "attributescounter_#attributescounter#", AssignmentSetupArray[attributescounter].due_week)>
+				<cfset result = StructInsert(CFCresult, "#StructCount(CFCresult) + 1#", cur_stateStruct)>				
+				<!--- <cfset result = StructInsert(cur_stateStruct, "AssignmentCounter_#AssignmentCounter#", AssignmentSetupArray[AssignmentCounter].due_week)> --->
 			</cfif>
-			<cfset result = StructInsert(CFCresult, "attributescounter_#attributescounter#", AssignmentSetupArray[attributescounter].due_week)>
-			<cfset attributescur_state = attributescounter>
 			
 			<cfparam name="AssignmentIdList" default="">
-			<cfset AssignmentIdList = listappend(AssignmentIdList, AssignmentSetupArray[attributescounter].ass_id)>
+			<cfset AssignmentIdList = listappend(AssignmentIdList, AssignmentSetupArray[AssignmentCounter].ass_id)>
 			
 <!--- NOTES :
 
@@ -59,24 +56,24 @@
 		
 			<!--- the script below is to count the spacing of assignments: --->
 			<cfscript>
-			prior_ass = #attributescur_state# - 1;
+			prior_ass = #AssignmentCounter# - 1;
 			If (prior_ass eq 0)
-				spacing_of_ass = #AssignmentSetupArray[attributescounter].due_week#;
+				spacing_of_ass = #AssignmentSetupArray[AssignmentCounter].due_week#;
 			else
-				spacing_of_ass = #AssignmentSetupArray[attributescounter].due_week# - #AssignmentSetupArray[prior_ass].due_week#;
+				spacing_of_ass = #AssignmentSetupArray[AssignmentCounter].due_week# - #AssignmentSetupArray[prior_ass].due_week#;
 			</cfscript>
 			<!--- end script to calculate the spacing of assignments --->
 			
 			<!--- set the progression --->
-			<cfif AssignmentSetupArray[attributescounter].feedback eq 5>
+			<cfif AssignmentSetupArray[AssignmentCounter].feedback eq 5>
 				<cfset progression = 5>
-			<cfelseif AssignmentSetupArray[attributescounter].feedback eq 4>
+			<cfelseif AssignmentSetupArray[AssignmentCounter].feedback eq 4>
 				<cfset progression = 4>
-			<cfelseif AssignmentSetupArray[attributescounter].feedback eq 3>
+			<cfelseif AssignmentSetupArray[AssignmentCounter].feedback eq 3>
 				<cfset progression = 3>
-			<cfelseif AssignmentSetupArray[attributescounter].feedback eq 2>
+			<cfelseif AssignmentSetupArray[AssignmentCounter].feedback eq 2>
 				<cfset progression = 2>
-			<cfelseif AssignmentSetupArray[attributescounter].feedback eq 1>
+			<cfelseif AssignmentSetupArray[AssignmentCounter].feedback eq 1>
 				<cfset progression = 1>
 			</cfif>
 			
@@ -84,7 +81,7 @@
 			<CFQUERY NAME="qNewFeedback" DATASOURCE="sim_assess">
 			SELECT feedback_value
 			FROM new_feedback_type
-			WHERE feedback_id = #AssignmentSetupArray[attributescounter].feedback#
+			WHERE feedback_id = #AssignmentSetupArray[AssignmentCounter].feedback#
 			</CFQUERY>
 
 			<!--- find the value of assignment workload --->
@@ -92,24 +89,24 @@
 			SELECT value
 			FROM new_goal_alignment2
 			WHERE name = 'Assignment Workload'
-			AND ass_id = #AssignmentSetupArray[attributescounter].ass_id#
+			AND ass_id = #AssignmentSetupArray[AssignmentCounter].ass_id#
 			</CFQUERY>
 
 			<!--- find the weighting value --->
-			<CFIF trim("#AssignmentSetupArray[attributescounter].weighting#") eq 1>
+			<CFIF trim("#AssignmentSetupArray[AssignmentCounter].weighting#") eq 1>
 				<cfset weighting = 1>
 				<cfset weighting_for_student_emotion = 1>
 				<!--- weighting_for_student_emotion is a variable to calculate student emotion.. look below at the student emotion calculation section --->
-			<cfelseif trim("#AssignmentSetupArray[attributescounter].weighting#") eq 2>
+			<cfelseif trim("#AssignmentSetupArray[AssignmentCounter].weighting#") eq 2>
 				<cfset weighting = 2>
 				<cfset weighting_for_student_emotion = 0.5>
-			<cfelseif trim("#AssignmentSetupArray[attributescounter].weighting#") eq 3>
+			<cfelseif trim("#AssignmentSetupArray[AssignmentCounter].weighting#") eq 3>
 				<cfset weighting = 3>
 				<cfset weighting_for_student_emotion = 0>
-			<cfelseif trim("#AssignmentSetupArray[attributescounter].weighting#") eq 4>
+			<cfelseif trim("#AssignmentSetupArray[AssignmentCounter].weighting#") eq 4>
 				<cfset weighting = 4>
 				<cfset weighting_for_student_emotion = -0.5>
-			<cfelseif trim("#AssignmentSetupArray[attributescounter].weighting#") eq 5>
+			<cfelseif trim("#AssignmentSetupArray[AssignmentCounter].weighting#") eq 5>
 				<cfset weighting = 5>	
 				<cfset weighting_for_student_emotion = -1>
 			</CFIF>
@@ -137,7 +134,7 @@
 				(FacultyTypeTasks.subjectlevel - AssignmentTypeTasks.workload) as workload
 				FROM FacultyTypeTasks, AssignmentTypeTasks
 				WHERE FACULTY_ID = #sessionsubjectid#
-				and Assignment_id = #AssignmentSetupArray[attributescounter].ass_id#
+				and Assignment_id = #AssignmentSetupArray[AssignmentCounter].ass_id#
 			</CFQUERY>
 			
 			<cfscript>
@@ -152,48 +149,22 @@
 				if (FacultyAssignmentTypeTasks.workload gt 0) goal_alignment = goal_alignment + 1;
 				goal_alignment = goal_alignment * 0.625;	
 			</cfscript>
-			
-			<!--- 	
-			<CFQUERY NAME="AssignmentTypeTasks" DATASOURCE="sim_assess">
-				SELECT *
-				FROM AssignmentTypeTasks
-				WHERE Assignment_id = #AssignmentSetupArray[attributescounter].ass_id#
-			</CFQUERY>
-			
-			<cfparam name="goal_autonomy" default="">
-			<cfset goal_autonomy = listappend(goal_autonomy, AssignmentTypeTasks.autonomy)>
-			<cfparam name="goal_citizenship" default="">
-			<cfset goal_citizenship = listappend(goal_citizenship, AssignmentTypeTasks.citizenship)>
-			<cfparam name="goal_communicative" default="">
-			<cfset goal_communicative = listappend(goal_communicative, AssignmentTypeTasks.communicative)>
-			<cfparam name="goal_contextual" default="">
-			<cfset goal_contextual = listappend(goal_contextual, AssignmentTypeTasks.contextual)>
-			<cfparam name="goal_knowledgeliteracy" default="">
-			<cfset goal_knowledgeliteracy = listappend(goal_knowledgeliteracy, AssignmentTypeTasks.knowledgeliteracy)>
-			<cfparam name="goal_responsive" default="">
-			<cfset goal_responsive = listappend(goal_responsive, AssignmentTypeTasks.responsive)>
-			<cfparam name="goal_technical" default="">
-			<cfset goal_technical = listappend(goal_technical, AssignmentTypeTasks.technical)>
-			<cfparam name="goal_workload" default="">
-			<cfset goal_workload = listappend(goal_workload, AssignmentTypeTasks.workload)>
-			 --->
-			
 			 
 			<!---  calculation for goal_value.  --->
 			<cfset goal_value = 0>
-			<cfset goal_value_list = "">
-			<cfif AssignmentSetupArray[attributescounter].goal_ids neq "">
+			<!--- <cfset goal_value_list = ""> --->
+			<cfif AssignmentSetupArray[AssignmentCounter].goal_ids neq "">
 				<CFQUERY NAME="goal_value_query" DATASOURCE="sim_assess">
 					SELECT value
 					FROM new_level_assignment 
-					WHERE id in (<cfqueryparam value="#AssignmentSetupArray[attributescounter].goal_ids#" cfsqltype="CF_SQL_INTEGER" separator="," list="Yes">)
+					WHERE id in (<cfqueryparam value="#AssignmentSetupArray[AssignmentCounter].goal_ids#" cfsqltype="CF_SQL_INTEGER" separator="," list="Yes">)
 				</CFQUERY>
 				<cfoutput query="goal_value_query">
 					<cfset goal_value = goal_value + value * value>				
 				</cfoutput>
 				<cfset goal_value = goal_value / goal_value_query.recordcount>
 				<cfset goal_value = sqr(goal_value)>
-				<cfset goal_value_list = valuelist(goal_value_query.value)>
+				<!--- <cfset goal_value_list = valuelist(goal_value_query.value)> --->
 			</cfif>
 			<!---  end calculation to calculate goal_value  --->
 			
@@ -202,7 +173,7 @@
 				//================================================================
 				//now we calculate ambient workload based on the week in the semester
 				//=================================================================
-				switch (AssignmentSetupArray[attributescounter].due_week)
+				switch (AssignmentSetupArray[AssignmentCounter].due_week)
 				{
 					case 1:
 					case 2:
@@ -218,19 +189,19 @@
 				//================================================================
 				//the code below is to calculate the student emotion.
 				//================================================================
-				if (Trim(#AssignmentSetupArray[attributescounter].marker#) eq "Teacher")
+				if (Trim(#AssignmentSetupArray[AssignmentCounter].marker#) eq "Teacher")
 				{
 					marker_for_student_emotion = 0.5;
 					marker_factor_for_public_confidence = 1;
 					marker_factor_for_teacher_workload = -0.5;
 				}
-				else if (Trim(#AssignmentSetupArray[attributescounter].marker#) eq "Peer")
+				else if (Trim(#AssignmentSetupArray[AssignmentCounter].marker#) eq "Peer")
 				{
 					marker_for_student_emotion = 0;
 					marker_factor_for_public_confidence = 0;
 					marker_factor_for_teacher_workload = 0;
 				}
-				else if (Trim(#AssignmentSetupArray[attributescounter].marker#) eq "Self")
+				else if (Trim(#AssignmentSetupArray[AssignmentCounter].marker#) eq "Self")
 				{
 					marker_for_student_emotion = -0.5;
 					marker_factor_for_public_confidence = -1;
@@ -238,7 +209,7 @@
 				}
 
 				penalty_factor = 1;
-				penalty = (AssignmentSetupArray[attributescounter].which_ass * penalty_factor) - 4;
+				penalty = (AssignmentSetupArray[AssignmentCounter].which_ass * penalty_factor) - 4;
 				avg_assessment_time = 14 / (ArrayLen(AssignmentSetupArray) + 1);
 				assessment_time_factor = spacing_of_ass - avg_assessment_time - penalty;
 				student_emotion = ambient_workload + assessment_time_factor + marker_for_student_emotion * 10 + weighting_for_student_emotion * 10 + qAss_workload.value;			
@@ -253,7 +224,7 @@
 					student_emotion = -10;
 					
 	
-				student_workload = abs(((student_emotion + 10) / 4) - 5); // + (AssignmentSetupArray[attributescounter].which_ass * 0.7);
+				student_workload = abs(((student_emotion + 10) / 4) - 5); // + (AssignmentSetupArray[AssignmentCounter].which_ass * 0.7);
 				
 				//end calculation to calculate student workload
 				//==============================================================================
@@ -262,7 +233,7 @@
 				//==============================================================================	
 				//new calculation for teacher workload
 				penalty_factor = 3;
-				penalty = (AssignmentSetupArray[attributescounter].which_ass * penalty_factor) - 4;
+				penalty = (AssignmentSetupArray[AssignmentCounter].which_ass * penalty_factor) - 4;
 				avg_assessment_time = 14 / (ArrayLen(AssignmentSetupArray) + 1);
 				assessment_time_factor = spacing_of_ass - avg_assessment_time - penalty;
 				teacher_workload = assessment_time_factor - qNewFeedback.feedback_value + marker_factor_for_teacher_workload;
@@ -287,7 +258,7 @@
 				//==============================================================================
 				//new calculation to calculate public confidence
 				penalty_factor = 0.5;
-				penalty = (AssignmentSetupArray[attributescounter].which_ass * penalty_factor) - 4;
+				penalty = (AssignmentSetupArray[AssignmentCounter].which_ass * penalty_factor) - 4;
 				avg_assessment_time = 14 / (ArrayLen(AssignmentSetupArray) + 1);
 				assessment_time_factor = spacing_of_ass - avg_assessment_time - penalty;
 				public_confidence = assessment_time_factor + marker_factor_for_public_confidence;
@@ -312,7 +283,7 @@
 			
 			<cfscript>
 				// calculate the accumulated outcomes of all assignments
-				//sessiontotal_level_of_assessment = #sessiontotal_level_of_assessment# + #qLargest_level.value#; this might not be set
+//				sessiontotal_level_of_assessment = #sessiontotal_level_of_assessment# + #qLargest_level.value#; //this might not be set
 				sessiontotal_spacing_of_assessment = #sessiontotal_spacing_of_assessment# + #spacing_of_ass#;
 				sessiontotal_weighting = #sessiontotal_weighting# + #weighting#;			
 				sessiontotal_progression = #sessiontotal_progression# + #progression#;
@@ -329,9 +300,9 @@
 			<cfif round(approach_to_learning) eq 0><cfset approach_to_learning = 1></cfif>
 			
 			<cfscript>
-				if (not StructKeyExists(cur_stateStruct, "sessiontotal_level_of_assessment"))
+				if (not StructKeyExists(cur_stateStruct, "student_workload"))
 				{
-					result = StructInsert(cur_stateStruct, "sessiontotal_level_of_assessment", sessiontotal_level_of_assessment); 
+//					result = StructInsert(cur_stateStruct, "sessiontotal_level_of_assessment", sessiontotal_level_of_assessment); 
 	//				result = StructInsert(cur_stateStruct, "sessiontotal_spacing_of_assessment", sessiontotal_spacing_of_assessment);
 	//				result = StructInsert(cur_stateStruct, "sessiontotal_weighting", sessiontotal_weighting);	
 	//				result = StructInsert(cur_stateStruct, "sessiontotal_progression", sessiontotal_progression);
@@ -343,32 +314,32 @@
 					result = StructInsert(cur_stateStruct, "goal_alignment", goal_alignment);
 					result = StructInsert(cur_stateStruct, "approach_to_learning", approach_to_learning);	
 					result = StructInsert(cur_stateStruct, "goal_value", goal_value);	
-					result = StructInsert(cur_stateStruct, "goal_value_list", goal_value_list);			
-					result = StructInsert(cur_stateStruct, "student_workload_temp", student_workload_temp);							
+					//result = StructInsert(cur_stateStruct, "goal_value_list", goal_value_list);			
+//					result = StructInsert(cur_stateStruct, "student_workload_temp", student_workload_temp);							
 				} else {
-					sessiontotal_level_of_assessment = sessiontotal_level_of_assessment & "," & StructFind(cur_stateStruct, "sessiontotal_level_of_assessment");
-					student_workload = student_workload & "," & StructFind(cur_stateStruct, "student_workload");
-					teacher_workload = teacher_workload & "," & StructFind(cur_stateStruct, "teacher_workload");
-					feedback = feedback & "," & StructFind(cur_stateStruct, "feedback");
-					public_confidence = public_confidence & "," & StructFind(cur_stateStruct, "public_confidence");
-					student_emotion = student_emotion & "," & StructFind(cur_stateStruct, "student_emotion");
-					goal_alignment = goal_alignment & "," & StructFind(cur_stateStruct, "goal_alignment");
-					approach_to_learning = approach_to_learning & "," & StructFind(cur_stateStruct, "approach_to_learning");
-					goal_value = goal_value & "," & StructFind(cur_stateStruct, "goal_value");
-					goal_value_list = goal_value_list & "," & StructFind(cur_stateStruct, "goal_value_list");
-					student_workload_temp = student_workload_temp & "," & StructFind(cur_stateStruct, "student_workload_temp");
+//					temp_sessiontotal_level_of_assessment = sessiontotal_level_of_assessment & "," & StructFind(cur_stateStruct, "sessiontotal_level_of_assessment");
+					temp_student_workload = student_workload & "," & StructFind(cur_stateStruct, "student_workload");
+					temp_teacher_workload = teacher_workload & "," & StructFind(cur_stateStruct, "teacher_workload");
+					temp_feedback = feedback & "," & StructFind(cur_stateStruct, "feedback");
+					temp_public_confidence = public_confidence & "," & StructFind(cur_stateStruct, "public_confidence");
+					temp_student_emotion = student_emotion & "," & StructFind(cur_stateStruct, "student_emotion");
+					temp_goal_alignment = goal_alignment & "," & StructFind(cur_stateStruct, "goal_alignment");
+					temp_approach_to_learning = approach_to_learning & "," & StructFind(cur_stateStruct, "approach_to_learning");
+					temp_goal_value = goal_value & "," & StructFind(cur_stateStruct, "goal_value");
+//					temp_goal_value_list = goal_value_list & "," & StructFind(cur_stateStruct, "goal_value_list");
+//					temp_student_workload_temp = student_workload_temp & "," & StructFind(cur_stateStruct, "student_workload_temp");
 				
-					result = StructUpdate(cur_stateStruct, "sessiontotal_level_of_assessment", sessiontotal_level_of_assessment); 
-					result = StructUpdate(cur_stateStruct, "student_workload", student_workload);
-					result = StructUpdate(cur_stateStruct, "teacher_workload", teacher_workload);
-					result = StructUpdate(cur_stateStruct, "feedback", feedback);
-					result = StructUpdate(cur_stateStruct, "public_confidence", public_confidence);
-					result = StructUpdate(cur_stateStruct, "student_emotion", student_emotion); 
-					result = StructUpdate(cur_stateStruct, "goal_alignment", goal_alignment);
-					result = StructUpdate(cur_stateStruct, "approach_to_learning", approach_to_learning);	
-					result = StructUpdate(cur_stateStruct, "goal_value", goal_value);	
-					result = StructUpdate(cur_stateStruct, "goal_value_list", goal_value_list);			
-					result = StructUpdate(cur_stateStruct, "student_workload_temp", student_workload_temp);							
+//					result = StructUpdate(cur_stateStruct, "sessiontotal_level_of_assessment", temp_sessiontotal_level_of_assessment); 
+					result = StructUpdate(cur_stateStruct, "student_workload", temp_student_workload);
+					result = StructUpdate(cur_stateStruct, "teacher_workload", temp_teacher_workload);
+					result = StructUpdate(cur_stateStruct, "feedback", temp_feedback);
+					result = StructUpdate(cur_stateStruct, "public_confidence", temp_public_confidence);
+					result = StructUpdate(cur_stateStruct, "student_emotion", temp_student_emotion); 
+					result = StructUpdate(cur_stateStruct, "goal_alignment", temp_goal_alignment);
+					result = StructUpdate(cur_stateStruct, "approach_to_learning", temp_approach_to_learning);	
+					result = StructUpdate(cur_stateStruct, "goal_value", temp_goal_value);	
+//					result = StructUpdate(cur_stateStruct, "goal_value_list", temp_goal_value_list);			
+//					result = StructUpdate(cur_stateStruct, "student_workload_temp", temp_student_workload_temp);							
 				}			
 					
 				// we save the variables into session variables in order to draw the graph.
@@ -397,37 +368,12 @@
 					sessionpublic_confidence_values = #public_confidence#;
 				else
 					sessionpublic_confidence_values = ListAppend("#sessionpublic_confidence_values#", "#public_confidence#", ",");
-				if (attributescounter eq ArrayLen(AssignmentSetupArray) or AssignmentSetupArray[attributescounter].due_week neq AssignmentSetupArray[attributescounter + 1].due_week)
+					
+				CurrentWeekInList = 0;
+				if (sessionass_weeks_list neq "") CurrentWeekInList = listfind(sessionass_weeks_list, AssignmentSetupArray[AssignmentCounter].due_week);
+				if (CurrentWeekInList eq 0)
 				{
-					if (sessionass_weeks_list eq "")
-						sessionass_weeks_list = #AssignmentSetupArray[attributescounter].due_week#; //#qWeek.due_week#; 
-					else
-						sessionass_weeks_list = ListAppend("#sessionass_weeks_list#", "#AssignmentSetupArray[attributescounter].due_week#", ","); //#qWeek.due_week#", ",");
-				}	
-				
-				if (not StructKeyExists(cur_stateStruct, "sessionapproach_to_learning_values"))
-				{
-	//				result = StructInsert(cur_stateStruct, "sessiongoal_alignment_values", sessiongoal_alignment_values);
-					result = StructInsert(cur_stateStruct, "sessionapproach_to_learning_values", sessionapproach_to_learning_values);
-					result = StructInsert(cur_stateStruct, "sessionstudent_workload_values", sessionstudent_workload_values);					
-					result = StructInsert(cur_stateStruct, "sessionteacher_workload_values", sessionteacher_workload_values);
-					result = StructInsert(cur_stateStruct, "sessionfeedback_values", sessionfeedback_values);
-					result = StructInsert(cur_stateStruct, "sessionpublic_confidence_values", sessionpublic_confidence_values);
-					result = StructInsert(cur_stateStruct, "sessionass_weeks_list", sessionass_weeks_list);
-				} else {
-					sessionapproach_to_learning_values = sessionapproach_to_learning_values & "," & StructFind(cur_stateStruct, "sessionapproach_to_learning_values");
-					sessionstudent_workload_values = sessionstudent_workload_values & "," & StructFind(cur_stateStruct, "sessionstudent_workload_values");
-					sessionteacher_workload_values = sessionteacher_workload_values & "," & StructFind(cur_stateStruct, "sessionteacher_workload_values");
-					sessionfeedback_values = sessionfeedback_values & "," & StructFind(cur_stateStruct, "sessionfeedback_values");
-					sessionpublic_confidence_values = sessionpublic_confidence_values & "," & StructFind(cur_stateStruct, "sessionpublic_confidence_values");
-					sessionass_weeks_list = sessionass_weeks_list & "," & StructFind(cur_stateStruct, "sessionass_weeks_list");
-				
-					result = StructUpdate(cur_stateStruct, "sessionapproach_to_learning_values", sessionapproach_to_learning_values); 
-					result = StructUpdate(cur_stateStruct, "sessionstudent_workload_values", sessionstudent_workload_values); 
-					result = StructUpdate(cur_stateStruct, "sessionteacher_workload_values", sessionteacher_workload_values); 
-					result = StructUpdate(cur_stateStruct, "sessionfeedback_values", sessionfeedback_values); 
-					result = StructUpdate(cur_stateStruct, "sessionpublic_confidence_values", sessionpublic_confidence_values); 
-					result = StructUpdate(cur_stateStruct, "sessionass_weeks_list", sessionass_weeks_list); 
+					sessionass_weeks_list = ListAppend("#sessionass_weeks_list#", "#AssignmentSetupArray[AssignmentCounter].due_week#", ",");
 				}
 			</cfscript>
 			<!--- end calculation --->
@@ -476,19 +422,24 @@
 //			ReportGoalAlignment = goal_alignment;
 			
 			// to be better tested
-			ReportLevelOfAssessment = sessiontotal_level_of_assessment / attributescur_state;
-			ReportWeighting = sessiontotal_weighting / attributescur_state;
-			ReportSpacingOfAssessments = sessiontotal_spacing_of_assessment / attributescur_state;
-			ReportProgression = sessiontotal_progression / attributescur_state;
+//			ReportLevelOfAssessment = sessiontotal_level_of_assessment / AssignmentCounter;
+			ReportWeighting = sessiontotal_weighting / AssignmentCounter;
+			ReportSpacingOfAssessments = sessiontotal_spacing_of_assessment / AssignmentCounter;
+			ReportProgression = sessiontotal_progression / AssignmentCounter;
 			
 			// not used
 			//ReportAssessmentCount = ReportArrayLen(AssignmentSetupArray);
 			</cfscript>
 			
 			<!--- add the report values to the return struct --->		
-			<cfset reportvalues = StructNew()>			
+			<cfset reportvalues = StructNew()>		
+			<cfset result = StructInsert(reportvalues, "approach_to_learning_values", sessionapproach_to_learning_values)>
+			<cfset result = StructInsert(reportvalues, "student_workload_values", sessionstudent_workload_values)>				
+			<cfset result = StructInsert(reportvalues, "teacher_workload_values", sessionteacher_workload_values)>
+			<cfset result = StructInsert(reportvalues, "feedback_values", sessionfeedback_values)>
+			<cfset result = StructInsert(reportvalues, "public_confidence_values", sessionpublic_confidence_values)>				
 			<cfset result = StructInsert(reportvalues, "ReportWeighting", ReportWeighting)>
-			<cfset result = StructInsert(reportvalues, "ReportLevelOfAssessment", ReportLevelOfAssessment)>
+			<!--- <cfset result = StructInsert(reportvalues, "ReportLevelOfAssessment", ReportLevelOfAssessment)> --->
 			<cfset result = StructInsert(reportvalues, "ReportSpacingOfAssessments", ReportSpacingOfAssessments)>
 			<cfset result = StructInsert(reportvalues, "ReportProgression", ReportProgression)>
 			<!---  report goals deviation from subject norms --->
@@ -525,6 +476,7 @@
 			<cfset result = StructInsert(reportvalues, "ReportPublicConfidence", ReportPublicConfidence)>
  			<cfset result = StructInsert(reportvalues, "ReportGoalAlignment", ReportGoalAlignment)> 
 			<cfset result = StructInsert(CFCresult, "reportvalues", reportvalues)>
+			<cfset result = StructInsert(CFCresult, "assignment_weeks_list", sessionass_weeks_list)>
 			<!--- end add the report values to the return struct --->
 		</cfif>
 		
