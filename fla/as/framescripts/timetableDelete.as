@@ -32,7 +32,7 @@ on(release)
 		_root.calculation_engine_called = false;
 		_root.PreCalculatedStatesForSemester = null;
 		_root.TweenedWeeklyStates = null;
-		_root.AssignmentWeeks = null;
+		_root.AssessmentWeeksArray = null;
 	
 		WeekOfAssignmentsUpdated = new Array();
 		for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)

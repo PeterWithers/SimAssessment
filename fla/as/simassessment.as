@@ -135,7 +135,7 @@ function ShowDebugInfo()
 		_root.mentorpopup.mentorSpeech.text = _root.mentorpopup.mentorSpeech.text + '\n\n';
 	}
 	_root.mentorpopup.mentorSpeech.text = _root.mentorpopup.mentorSpeech.text + '\nEngine Output\n\n';
-	for (PreCalculatedAssessments = 1; PreCalculatedAssessments < _root.PreCalculatedStatesForSemester.length; PreCalculatedAssessments++)
+	for (PreCalculatedAssessments = 1; PreCalculatedAssessments < _root.AssessmentWeeksArray.length; PreCalculatedAssessments++)
 	{
 		_root.mentorpopup.mentorSpeech.text = _root.mentorpopup.mentorSpeech.text + 'CalculatedAssessment [' + PreCalculatedAssessments + ']\n';
 		for (PreCalculatedAssessmentThings in _root.PreCalculatedStatesForSemester[PreCalculatedAssessments])
@@ -242,8 +242,8 @@ function RecalculateExistingWeeks()
 	TempLastPlayerButtonPress = _root.LastPlayerButtonPress
 	TempCurrentWeekInSemester = _root.CurrentWeekInSemester;
 	_root.ClearPreviousWeeks();
-	trace('calculation_engine_called == ' + _root.calculation_engine_called + ' and _root.calculation_engine_returned == ' + _root.calculation_engine_returned);
-	trace('TempCurrentWeekInSemester: ' + TempCurrentWeekInSemester + ' _root.CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
+//	trace('calculation_engine_called == ' + _root.calculation_engine_called + ' and _root.calculation_engine_returned == ' + _root.calculation_engine_returned);
+//	trace('TempCurrentWeekInSemester: ' + TempCurrentWeekInSemester + ' _root.CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
 	while (_root.calculation_engine_called == true and _root.calculation_engine_returned == true and TempCurrentWeekInSemester > _root.CurrentWeekInSemester)
 	{
 		_root.GoForwardOneWeek();

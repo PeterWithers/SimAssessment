@@ -203,12 +203,12 @@ _root.GraphDisplay.show = function()
 
 			// draw the data nodes
 			_root.GraphDisplay.graph.lineStyle (20, linecolour_graph, 100);
-			for (AssignmentWeek in _root.AssignmentWeeks) 
+			for (AssignmentWeek in _root.AssessmentWeeksArray) 
 			{
-				weekgraphpoint = _root.AssignmentWeeks[AssignmentWeek] - 1;
+				weekgraphpoint = _root.AssessmentWeeksArray[AssignmentWeek] - 1;
 				if (weekgraphpoint >= 0)
 				{
-					trace('weekgraphpoint: ' + weekgraphpoint);
+//					trace('weekgraphpoint: ' + weekgraphpoint);
 					Xcurrent = leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint;
 					Ycurrent = currentrowheight_graph + (5 - _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable]) * 10;
 					_root.GraphDisplay.graph.moveTo(Xcurrent, Ycurrent);

@@ -133,7 +133,7 @@ function IntroductionWizard()
 			_root.calculation_engine_called = false;
 			_root.PreCalculatedStatesForSemester = null;
 			_root.TweenedWeeklyStates = null;
-			_root.AssignmentWeeks = null;
+			_root.AssessmentWeeksArray = null;
 	
 			_root.StopSemester();
 			//	_root.ClearPreviousWeeks();
@@ -152,7 +152,7 @@ function IntroductionWizard()
 			_root.calculation_engine_called = false;
 			_root.PreCalculatedStatesForSemester = null;
 			_root.TweenedWeeklyStates = null;
-			_root.AssignmentWeeks = null;
+			_root.AssessmentWeeksArray = null;
 	
 			_root.StopSemester();
 			//	_root.ClearPreviousWeeks();

@@ -1,5 +1,5 @@
 #include "NetServices.as"
-// #include "NetDebug.as"
+ #include "NetDebug.as"
 
 function InitSemester()
 {
@@ -88,6 +88,14 @@ function calculate_Result(result)
 	_root.GraphDisplay.tweeningvalues = result.tweeningvalues;
 	_root.PreCalculatedStatesForSemester.tweeningvalues = null;
 	
+	if (isNaN(_root.PreCalculatedStatesForSemester.assignment_weeks_list))
+		_root.AssessmentWeeksArray = _root.PreCalculatedStatesForSemester.assignment_weeks_list.split(',');
+	else
+	{
+		_root.AssessmentWeeksArray = new Array();
+		_root.AssessmentWeeksArray[0] = _root.PreCalculatedStatesForSemester.assignment_weeks_list;
+	}	
+	
 	_root.GraphDisplay.supressweektween = _root.GraphDisplay.tweeningvalues.tween != 'true';
 	_root.GraphDisplay.supressweekdecay = _root.GraphDisplay.tweeningvalues.decay != 'true';
 	_root.GraphDisplay.weekdecaylog = _root.GraphDisplay.tweeningvalues.logdecay == 'true';
@@ -95,10 +103,6 @@ function calculate_Result(result)
 	_root.tweenweeks();
 	_root.calculation_engine_returned = true;
 	_root.InitSemester();
-	
-//	_root.DataGrid.dataProvider = result;
-//	_root.DataHolder.dataProvider = result;
-//	_root.DataSet.dataProvider = result;
 }
 
 function get_subjects_Status(result)

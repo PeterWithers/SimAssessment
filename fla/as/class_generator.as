@@ -27,26 +27,23 @@ function SetUpWeek()
 	trace('CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
 	if (_root.CurrentWeekInSemester == 15)
 	{
-		FinalAssessmentData = _root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1];
-		_root.GenerateReport(FinalAssessmentData);
+		_root.GenerateReport();
 		_root.intray.report.gotoAndPlay(2);
 		_root.ShowOfHands = false;
 		_root.StopSemester();
 	}else{
 		_root.intray.report.gotoAndStop(1);
-		AssessmentWeeksArray = _root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionass_weeks_list.split(',');
-		if (AssessmentWeeksArray == null)return;
-		AssessmentIndex = AssessmentWeeksArray.length;
-		while (AssessmentWeeksArray[AssessmentIndex - 1] > _root.CurrentWeekInSemester and AssessmentIndex > 0)AssessmentIndex--;
+		if (_root.AssessmentWeeksArray == null)return;
+		AssessmentIndex = _root.AssessmentWeeksArray.length;
+		while (_root.AssessmentWeeksArray[AssessmentIndex - 1] > _root.CurrentWeekInSemester and AssessmentIndex > 0)AssessmentIndex--;
 		trace('AssessmentIndex: ' + AssessmentIndex);
-		AssessmentThisWeek = (AssessmentWeeksArray[AssessmentIndex - 1] == _root.CurrentWeekInSemester);
-		_root.ShowOfHands = (AssessmentWeeksArray[0] <= _root.CurrentWeekInSemester);
+		AssessmentThisWeek = (_root.AssessmentWeeksArray[AssessmentIndex - 1] == _root.CurrentWeekInSemester);
+		_root.ShowOfHands = (_root.AssessmentWeeksArray[0] <= _root.CurrentWeekInSemester);
 		trace('_root.ShowOfHands'+_root.ShowOfHands);
-//		avg_level_of_assessment = _root.PreCalculatedStatesForSemester[AssessmentIndex].total_level_of_assessment / WeekSearchCount;
 
 		gererateClassState(_root.TweenedWeeklyStates[_root.CurrentWeekInSemester].feedback, AssessmentIndex != 0, _root.TweenedWeeklyStates[_root.CurrentWeekInSemester].student_workload, AssessmentThisWeek);
 
-		SetupMentorCommentsForWeek(_root.TweenedWeeklyStates[_root.CurrentWeekInSemester].approach_to_learning, _root.TweenedWeeklyStates[_root.CurrentWeekInSemester].goal_alignment, AssessmentThisWeek);
+		SetupMentorCommentsForWeek(_root.TweenedWeeklyStates[_root.CurrentWeekInSemester].teacher_workload, _root.TweenedWeeklyStates[_root.CurrentWeekInSemester].goal_alignment, AssessmentThisWeek);
 	}
 }
 function GoBackOneWeek()
