@@ -22,7 +22,7 @@ function SetUpClass()
 function SetUpWeek()
 {
 	//	gererateClassState(2.79166666667, true, 2.20833333333);
-	_root.timetable.crossout.gotoAndStop(_root.CurrentWeekInSemester);
+	_root.timetable.crossout.gotoAndStop(_root.CurrentWeekInSemester+1);
 	trace('CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
 	if (_root.CurrentWeekInSemester == 15)
 	{
@@ -51,7 +51,7 @@ function GoBackOneWeek()
 	if (_root.calculation_engine_called == true and _root.calculation_engine_returned == true)
 	{
 		_root.CurrentWeekInSemester--;
-		if (_root.CurrentWeekInSemester < 1)_root.CurrentWeekInSemester = 1;
+		if (_root.CurrentWeekInSemester < 0)_root.CurrentWeekInSemester = 0;
 		SetUpWeek();
 	}else if (_root.calculation_engine_called == false) _root.Call_calculation_engineService();
 }

@@ -295,10 +295,10 @@ function ClearPreviousWeeks()
 	_root.MentorDoneWeeks = new Array();
 	_root.StudentDoneWeeks = new Array();	
 	_root.computer.emailindicator.gotoAndStop('static');
-//	_root.SetUpClass();
 	_root.Phone.Light.gotoAndStop('off');
 	_root.UpDateEmailCounters();
-	_root.GoForwardOneWeek();
+//	_root.GoForwardOneWeek();
+	_root.SetUpClass();
 }
 function RecalculateExistingWeeks()
 {

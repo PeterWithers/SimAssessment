@@ -4,7 +4,7 @@
 function InitSemester()
 {
 	_root.RequiredCFCResults--;
-	if (!(_root.CurrentWeekInSemester >= 1 and _root.CurrentWeekInSemester <= 14)) _root.CurrentWeekInSemester = 1;
+	if (_root.CurrentWeekInSemester < 0 or _root.CurrentWeekInSemester > 15) _root.CurrentWeekInSemester = 0;
 	dots = _root.RequiredCFCResults;
 	dotsout = '';
 	while (dots > 0)
