@@ -35,7 +35,10 @@ on(release)
 	// add the assignments from the select box data, excluding the 'new' element
 	for (AssignmentInstanceCounter = _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 2; AssignmentInstanceCounter >= 0; AssignmentInstanceCounter--)
  		_root.WeekOfAssignments.splice(splicebegin, 0, _root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).data);
-	
+
+	// sort assignments by due week and previous assignment number (which_ass)
+	_root.WeekOfAssignments.sortOn( [ "due_week" , "which_ass" ], Array.NUMERIC );
+
 	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
 	{
 		_root.WeekOfAssignments[AssignmentsForWeek].which_ass = AssignmentsForWeek + 1;

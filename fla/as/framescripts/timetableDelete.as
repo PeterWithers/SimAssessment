@@ -44,8 +44,14 @@ on(release)
 				WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length - 1].ass_id = WeekOfAssignmentsUpdated.length;
 			}
 		}
-//		WeekOfAssignmentsUpdated.sortOn('due_week');
 		_root.WeekOfAssignments = WeekOfAssignmentsUpdated;
+		
+		// sort assignments by due week and previous assignment number (which_ass)
+		_root.WeekOfAssignments.sortOn( [ "due_week" , "which_ass" ], Array.NUMERIC );
+		for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
+		{
+			_root.WeekOfAssignments[AssignmentsForWeek].which_ass = AssignmentsForWeek + 1;
+		}		
 		SetupTimetableDisplay();
 	}
 }
