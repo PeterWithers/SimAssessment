@@ -9,88 +9,15 @@
 #include "as/SaveLoad.as"
 #include "as/help.as"
 #include "as/tweenweeks.as"
-
+#include "as/wizard.as"
+#include "as/EngineTestPresets.as"
+#include "as/introduction.as"
 
 _root.introduction.loadMovie('introduction.swf');
 _root.introduction._visible = false;
 _root.HelpMode = '';
 _root.emailXPosition = _root.email._x;
 _root.email._x = _root.emailXPosition - 800;
-function IntroductionStart()
-{
-	trace('IntroductionStart()');
-	
-	// increment RequiredCFCResults because InitSemester is called to give loading box on IntroductionFinish
-	//_root.RequiredCFCResults++;
-	
-	if (_root.UserName == null)
-	{
-		// go to frame two so that frame one scripts get called later
-		_root.introduction.gotoAndStop(2);
-		_root.introduction._visible = false;
-		return;
-	}
-	_root.DisableControlsFunction();
-	_root.IntroductionRunning = true;
-//	_root.RequiredCFCResults++;
-
-	// just incase the indroduction took longer to load than the cfcs
-//	_root.RemoveMessageBox();
-
-	_root.introduction.SkipButton.onRelease = _root.IntroductionFinish;
-	_root.introduction.nextButton.onRelease = _root.IntroductionCallback;
-//	for (things in _root.introduction) trace(things);
-}	
-function IntroductionCallback()
-{ 
-	trace('IntroductionCallback()');
-    clearInterval(_root.IntroductionIntervalID);
-	_root.CloseDialogues();
-	_root.introduction.play();
-}
-function IntroductionPauseSeconds(seconds)
-{
-	if (_root.UserName == null)
-	{
-		return;
-	}
-	trace('IntroductionPauseSeconds(' + seconds + ')');
-	_root.introduction.stop();	
-	_root.IntroductionIntervalID = setInterval(_root.IntroductionCallback, seconds * 1000);
-}
-function IntroductionLoadTimetable()
-{
-	_root.WeekOfAssignments = _root.GoodSetup;
-	_root.timetable.SetupTimetableDisplay();
-}
-function IntroductionShowAssessment()
-{
-	_global.weechoo = 8;
-	_root.timetable.gotoAndStop("setup");
-}
-function IntroductionStudentHandUp(comment)
-{
-	_root.Classroom.ExemplaryStudent.student.gotoAndPlay(121);
-	_root.Classroom.ExemplaryStudent.feedback = comment;
-}
-function IntroductionStudentHandDown()
-{
-	_root.Classroom.ExemplaryStudent.student.gotoAndPlay(10);
-}
-function IntroductionFinish()
-{
-	trace('IntroductionFinish()');
-	clearInterval(_root.IntroductionIntervalID);
-	_root.EnableControlsFunction();
-	_root.IntroductionRunning = false;
-	_root.introduction.unloadMovie();
-	
-	// clear the timetable
-	_root.WeekOfAssignments = 1;
-	_root.timetable.SetupTimetableDisplay();
-	_root.IntroductionStudentHandDown();
-	//_root.InitSemester();
-}
 
 _root.messagepopup.messagetext.text = ''
 function OkMessageBox(messagetext)
@@ -142,30 +69,6 @@ function ErrorMessageBox(messagetext)
 			_root.RemoveMessageBox();
 		}
 	}else _root.messagepopup.ok._visible = false;
-}
-function UserNameRequestBox()
-{
-	_root.messagepopup.gotoAndStop('welcome');
-	_root.messagepopup.UserName.text = 'Please enter your name here';
-	_root.DisableControlsFunction();
-	_root.messagepopup.UserName.onSetFocus = function()
-	{
-		_root.messagepopup.UserName.text = '';
-		_root.messagepopup.UserName.onSetFocus = null;
-	}
-	_root.messagepopup.OKWelcome.onRelease = function()
-	{
-		_root.EnableControlsFunction();
-		if(_root.messagepopup.UserName.text == '') _root.UserNameRequestBox();
-		else if(_root.messagepopup.UserName.text != 'Please enter your name here')
-		{
-			_root.UserName = _root.messagepopup.UserName.text;
-			_root.SetUpClass();
-			_root.RemoveMessageBox();
-			_root.introduction.gotoAndPlay(1);
-			_root.introduction._visible = true;
-		}
-	}
 }
 function RemoveMessageBox()
 {
@@ -272,6 +175,11 @@ function PhoneClick()
 }
 function GraphClick()
 {
+	if (Key.isDown(Key.CONTROL) and Key.isDown(Key.ALT))
+	{
+		_root.LoadEngineTestPresets();		
+		return;
+	}
 	if (_root.DisableControls == true) return;
 	if (Key.isDown(Key.CONTROL))
 	{
