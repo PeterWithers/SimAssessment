@@ -9,6 +9,9 @@
 #include "as/SaveLoad.as"
 #include "as/help.as"
 
+
+_root.introduction.loadMovie('introduction.swf');
+
 _root.messagepopup.messagetext.text = ''
 function OkMessageBox(messagetext)
 {
