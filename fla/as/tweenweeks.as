@@ -28,19 +28,6 @@ function tweenweeks()
 		
 		WeeklyStates[weekcount] = new Object();
 		
-		// for the first week if there is no provided value set the data to zero
-		/*if (sessionass_week_list_index == 0 and weekcount == 1)
-		{
-			trace('first week has no data; setting to zero');
-			for (tweenableindex in TweenableList)
-			{
-				tweenable = TweenableList[tweenableindex];
-				WeeklyStates[weekcount][tweenable] = 0; //weekcount % 2;
-				trace('weekcount: ' + weekcount + ' list_index: ' + sessionass_week_list_index + ' ' +  tweenable + ': unset :' + WeeklyStates[weekcount][tweenable]);
-			}		
-		}
-		else */
-		
 		// for weeks with an assignment use the provided value
 		if (sessionass_week_list[sessionass_week_list_index - 1] == weekcount)
 		{
@@ -92,7 +79,7 @@ function tweenweeks()
 				
 				// add linear tween 
 				if (_root.GraphDisplay.supressweektween == true) currentvalue = Number(lastvalue);
-				else currentvalue = Number(lastvalue) + (nextvalue - lastvalue) * percentagebetween / 100;
+				else currentvalue = Number(lastvalue) + (Number(nextvalue) - Number(lastvalue)) * percentagebetween / 100;
 				// end add linear tween 
 				
 				// add the lack of assignment decay
