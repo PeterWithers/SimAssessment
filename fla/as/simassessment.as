@@ -311,7 +311,7 @@ function RecalculateExistingWeeks()
 	while (_root.calculation_engine_called == true and _root.calculation_engine_returned == true and TempCurrentWeekInSemester > _root.CurrentWeekInSemester)
 	{
 		_root.GoForwardOneWeek();
-		_root.CurrentWeekInSemester++;
+		trace('TempCurrentWeekInSemester: ' + TempCurrentWeekInSemester + ' _root.CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
 	}	
 }
 function StepSemesterBack()
