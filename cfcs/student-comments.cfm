@@ -52,7 +52,7 @@
 		<br>
 		Comment C<br>
 		#description2#<br>
-	</cfoutput><br>
+	</cfoutput><br><br><br>
 	<CFQUERY NAME="StudentCommentsUpdate" DATASOURCE="sim_assess">
 		update StudentComments
 		set 
