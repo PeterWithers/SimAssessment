@@ -73,6 +73,31 @@ function Call_calculation_engineService()
 		_root.gererateClassState(0, 0, 0, 0);
 	}
 }
+
+function calculate_Status(result)
+{
+	_root.ErrorMessageBox('calculate\n' + result.description);
+}
+function calculate_Result(result)
+{
+	_root.PreCalculatedStatesForSemester = result;
+	
+	_root.GraphDisplay.tweeningvalues = result.tweeningvalues;
+	_root.PreCalculatedStatesForSemester.tweeningvalues = null;
+	
+	_root.GraphDisplay.supressweektween = _root.GraphDisplay.tweeningvalues.tween != 'true';
+	_root.GraphDisplay.supressweekdecay = _root.GraphDisplay.tweeningvalues.decay != 'true';
+	_root.GraphDisplay.weekdecaylog = _root.GraphDisplay.tweeningvalues.logdecay == 'true';
+	
+	_root.tweenweeks();
+	_root.calculation_engine_returned = true;
+	_root.InitSemester();
+	
+//	_root.DataGrid.dataProvider = result;
+//	_root.DataHolder.dataProvider = result;
+//	_root.DataSet.dataProvider = result;
+}
+
 function get_subjects_Status(result)
 {
 	_root.ErrorMessageBox('get_subjects\n' + result.description);
@@ -170,29 +195,6 @@ function get_class_characteristic_Result(result)
 		_root.Class_CharacteristicsArray[result.items[resultrow].id] = result.items[resultrow];
 	}	
 	_root.InitSemester();
-}
-function calculate_Status(result)
-{
-	_root.ErrorMessageBox('calculate\n' + result.description);
-}
-function calculate_Result(result)
-{
-	_root.PreCalculatedStatesForSemester = result;
-	
-	_root.GraphDisplay.tweeningvalues = result.tweeningvalues;
-	_root.PreCalculatedStatesForSemester.tweeningvalues = null;
-	
-	_root.GraphDisplay.supressweektween = _root.GraphDisplay.tweeningvalues.tween != 'true';
-	_root.GraphDisplay.supressweekdecay = _root.GraphDisplay.tweeningvalues.decay != 'true';
-	_root.GraphDisplay.weekdecaylog = _root.GraphDisplay.tweeningvalues.logdecay == 'true';
-	
-	_root.tweenweeks();
-	_root.calculation_engine_returned = true;
-	_root.InitSemester();
-	
-//	_root.DataGrid.dataProvider = result;
-//	_root.DataHolder.dataProvider = result;
-//	_root.DataSet.dataProvider = result;
 }
 
 function get_mentorcomments_Status(result)
