@@ -385,6 +385,45 @@
 					
 		</cfloop>
 
+		<cfscript>
+		ReportApproachToLearning = approach_to_learning;
+		ReportFeedback = feedback;
+		ReportStudentWorkload = student_workload;
+		ReportTeacherWorkload = teacher_workload;
+		ReportPublicConfidence = public_confidence;
+		ReportGoalAlignment = goal_alignment;
+		
+		// to be better tested
+		ReportLevelOfAssessment = sessiontotal_level_of_assessment / attributescur_state;
+		ReportWeighting = sessiontotal_weighting / attributescur_state;
+		ReportSpacingOfAssessments = sessiontotal_spacing_of_assessment / attributescur_state;
+		ReportProgression = sessiontotal_progression / attributescur_state;
+		
+		// not used
+		//ReportAssessmentCount = ReportArrayLen(get_ass);
+		</cfscript>
+		
+		<!--- add the report values to the return struct --->		
+		<cfset reportvalues = StructNew()>
+		<cfset result = StructInsert(reportvalues, "ReportWeighting", ReportWeighting)>
+		<cfset result = StructInsert(reportvalues, "ReportLevelOfAssessment", ReportLevelOfAssessment)>
+		<cfset result = StructInsert(reportvalues, "ReportSpacingOfAssessments", ReportSpacingOfAssessments)>
+		<cfset result = StructInsert(reportvalues, "ReportProgression", ReportProgression)>
+		<!---  not used atm: 
+		ReportDepthOfFeedback, 
+		ReportStyleOfFeedback, 
+		ReportMarker, 
+		ReportNumberOfAssessment, 
+		 --->
+		<cfset result = StructInsert(reportvalues, "ReportApproachToLearning", ReportApproachToLearning)>
+		<cfset result = StructInsert(reportvalues, "ReportFeedback", ReportFeedback)>
+		<cfset result = StructInsert(reportvalues, "ReportStudentWorkload", ReportStudentWorkload)>
+		<cfset result = StructInsert(reportvalues, "ReportTeacherWorkload", ReportTeacherWorkload)>
+		<cfset result = StructInsert(reportvalues, "ReportPublicConfidence", ReportPublicConfidence)>
+		<cfset result = StructInsert(reportvalues, "ReportGoalAlignment", ReportGoalAlignment)>
+		<cfset result = StructInsert(CFCresult, "reportvalues", reportvalues)>
+		<!--- end add the report values to the return struct --->
+		
 		<!--- add the tweening values to the return struct --->		
 		<cfset tweeningvalues = StructNew()>
 		<!--- insert rhe variables that you want to decay here 

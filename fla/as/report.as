@@ -6,61 +6,59 @@ function GenerateReport(FinalAssessmentData)
 		_root.Classroom[Student].gotoAndStop('neutral');
 		_root.Classroom[Student].feedback = 'What does the report say?';
 	}	*/
-	/*
-	Goal Alignment 
-	Approach to Learning
-	Feedback
-	Student Workload
-	Teacher Workload
-	Public Confidence
-	Level of Assessment
-	Number of Assessment
-	Spacing of Assessments
-	Marker
-	Weighting
-	Progression
-	Style of Feedback
-	Depth of Feedback
-	*/
+		
+	for (ReportItem in _root.PreCalculatedStatesForSemester.reportvalues)
+	{
+		_root.PreCalculatedStatesForSemester.reportvalues[ReportItem] = Math.round(_root.PreCalculatedStatesForSemester.reportvalues[ReportItem]);
+		if (_root.PreCalculatedStatesForSemester.reportvalues[ReportItem] > 5) _root.PreCalculatedStatesForSemester.reportvalues[ReportItem] = 5;
+		if (_root.PreCalculatedStatesForSemester.reportvalues[ReportItem] < 1) _root.PreCalculatedStatesForSemester.reportvalues[ReportItem] = 1;
+	}
+			
+		
+	// items and order as used in the cfm version are: Approach to Learning,Feedback,Student Workload,Teacher Workload,Public Confidence,Goal Alignment		
+	_root.FinalReportText = "";
+
+	_root.FinalReportText = _root.FinalReportText + 
+	'Approach to Learning\n' + _root.PreCalculatedStatesForSemester.reportvalues.ReportApproachToLearning + "\n" +
+		_root.FinalReportArray['Approach to Learning'][_root.PreCalculatedStatesForSemester.reportvalues.ReportApproachToLearning] + '\n\n';
+
+	_root.FinalReportText = _root.FinalReportText + 
+	'Feedback\n' + _root.PreCalculatedStatesForSemester.reportvalues.ReportFeedback + "\n" +
+		_root.FinalReportArray['Feedback'][_root.PreCalculatedStatesForSemester.reportvalues.ReportFeedback] + '\n\n';
+
+	_root.FinalReportText = _root.FinalReportText + 
+	'Student Workload\n' + _root.PreCalculatedStatesForSemester.reportvalues.ReportStudentWorkload + "\n" +
+		_root.FinalReportArray['Student Workload'][_root.PreCalculatedStatesForSemester.reportvalues.ReportStudentWorkload] + '\n\n';
+
+	_root.FinalReportText = _root.FinalReportText + 
+	'Teacher Workload\n' + _root.PreCalculatedStatesForSemester.reportvalues.ReportTeacherWorkload + "\n" +
+		_root.FinalReportArray['Teacher Workload'][_root.PreCalculatedStatesForSemester.reportvalues.ReportTeacherWorkload] + '\n\n';
+
+	_root.FinalReportText = _root.FinalReportText + 
+	'Public Confidence\n' + _root.PreCalculatedStatesForSemester.reportvalues.ReportPublicConfidence + "\n" +
+		_root.FinalReportArray['Public Confidence'][_root.PreCalculatedStatesForSemester.reportvalues.ReportPublicConfidence] + '\n\n';
+
+	_root.FinalReportText = _root.FinalReportText + 
+	'Goal Alignment\n' + _root.PreCalculatedStatesForSemester.reportvalues.ReportGoalAlignment + "\n" +
+		_root.FinalReportArray['Goal Alignment'][_root.PreCalculatedStatesForSemester.reportvalues.ReportGoalAlignment] + '\n\n';
 	
-	_root.FinalReportText = 
-	'Goal Alignment\n' +
-	_root.FinalReportArray['Goal Alignment'][FinalAssessmentData.goal_alignment] + '\n\n' +
-	'Approach to Learning\n'+
-	_root.FinalReportArray['Approach to Learning'][Math.round(FinalAssessmentData.approach_to_learning)] + '\n\n' +
-	'Feedback\n'+
-	_root.FinalReportArray['Feedback'][Math.round(FinalAssessmentData.feedback)] + '\n\n' +
-	'Student Workload\n'+
-	_root.FinalReportArray['Student Workload'][Math.round(FinalAssessmentData.student_workload)] + '\n\n' +
-	'Teacher Workload\n'+
-	_root.FinalReportArray['Teacher Workload'][Math.round(FinalAssessmentData.teacher_workload)] + '\n\n' +
-	'Public Confidence\n'+
-	_root.FinalReportArray['Public Confidence'][Math.round(FinalAssessmentData.public_confidence)] + '\n\n'; // +
-/*	'Level of Assessment\n'+
-//	_root.FinalReportArray['Level of Assessment'][
-	 + '\n\n' +
-	'Number of Assessment\n'+
-//	_root.FinalReportArray['Number of Assessment'][
-	 + '\n\n' +
-	'Spacing of Assessments\n'+
-//	_root.FinalReportArray['Spacing of Assessments'][
-	 + '\n\n' +
-	'Marker\n'+
-	//_root.FinalReportArray['Marker'][
-	 + '\n\n' +
-	'Weighting\n'+
-	//_root.FinalReportArray['Weighting'][
-	 + '\n\n' +
-	'Progression\n'+
-	//_root.FinalReportArray['Progression'][
-	 + '\n\n' +
-	'Style of Feedback\n'+
-	//_root.FinalReportArray['Style of Feedback'][
-	 + '\n\n' +
-	'Depth of Feedback\n'+
-	//_root.FinalReportArray['Depth of Feedback'][
-	 + '\n\n' ;*/
-//	trace(_root.FinalReportText);
+	// the following are not used in the cfm version
+	_root.FinalReportText = _root.FinalReportText + 
+	'Depth of Feedback\n' + _root.FinalReportArray['Depth of Feedback'][_root.PreCalculatedStatesForSemester.reportvalues.ReportDepthOfFeedback] + '\n\n';	
+	_root.FinalReportText = _root.FinalReportText + 
+	'Style of Feedback\n' + _root.FinalReportArray['Style of Feedback'][_root.PreCalculatedStatesForSemester.reportvalues.ReportStyleOfFeedback] + '\n\n';
+	_root.FinalReportText = _root.FinalReportText + 
+	'Progression\n' + _root.FinalReportArray['Progression'][_root.PreCalculatedStatesForSemester.reportvalues.ReportProgression] + '\n\n';
+	_root.FinalReportText = _root.FinalReportText + 
+	'Weighting\n' + _root.FinalReportArray['Weighting'][_root.PreCalculatedStatesForSemester.reportvalues.ReportWeighting] + '\n\n';
+	_root.FinalReportText = _root.FinalReportText + 
+	'Marker\n' + _root.FinalReportArray['Marker'][_root.PreCalculatedStatesForSemester.reportvalues.ReportMarker] + '\n\n';
+	_root.FinalReportText = _root.FinalReportText + 
+	'Spacing of Assessments\n' + _root.FinalReportArray['Spacing of Assessments'][_root.PreCalculatedStatesForSemester.reportvalues.ReportSpacingOfAssessments] + '\n\n';
+	_root.FinalReportText = _root.FinalReportText + 
+	'Number of Assessment\n' + _root.FinalReportArray['Number of Assessment'][_root.PreCalculatedStatesForSemester.reportvalues.ReportNumberOfAssessment] + '\n\n';
+	_root.FinalReportText = _root.FinalReportText +
+	'Level of Assessment\n' + _root.FinalReportArray['Level of Assessment'][_root.PreCalculatedStatesForSemester.reportvalues.ReportLevelOfAssessment] + '\n\n';
 }
 		
 		
