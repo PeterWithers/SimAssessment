@@ -1,10 +1,15 @@
 on(release) 
 {
 	if (_root.DisableControls == true) return;
+	
+	// move selected item to end of the list
 	for (AssignmentInstanceCounter = _root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedIndex(); AssignmentInstanceCounter < _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1; AssignmentInstanceCounter++)
  		_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).data = _root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter + 1).data;
+
+	// remove the item and the "new" from the select
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.removeItemAt(_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1);
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.removeItemAt(_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1);
+	
 	if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() > 0)
 	{
 		_root.timetable.UpdateSelectAddingNewItem();
@@ -18,6 +23,7 @@ on(release)
 		}
 		// clear and load the selections settings
 		_root.timetable.PopulateSubjectInputs(_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(NextSelectedAssignmentInstanceIndex).data);
+		
 		// set the selection
 		_root.timetable.EditAssignment.AssignmentInstanceSelect.setSelectedIndex(NextSelectedAssignmentInstanceIndex);
 	}else{	
@@ -32,7 +38,10 @@ on(release)
 			if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].due_week)
 				trace('one to remove');
 			else
+			{
 				WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length] = _root.WeekOfAssignments[AssignmentsForWeek];
+				WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length - 1].which_ass = WeekOfAssignmentsUpdated.length;
+			}
 		}
 //		WeekOfAssignmentsUpdated.sortOn('due_week');
 		_root.WeekOfAssignments = WeekOfAssignmentsUpdated;
