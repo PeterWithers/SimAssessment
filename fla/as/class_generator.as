@@ -92,6 +92,13 @@ function calculate_emotion(calculate_emotion_workload, calculate_emotion_feedbac
 	if (calculate_emotion_workload > 5) calculate_emotion_workload = 5;
 	if (calculate_emotion_feedback < 1) calculate_emotion_feedback = 1;
 	if (calculate_emotion_feedback > 5) calculate_emotion_feedback = 5;
+	calculate_emotion_workload = (calculate_emotion_workload - 3);
+	calculate_emotion_workload = calculate_emotion_workload * calculate_emotion_workload;
+	calculate_emotion_workload = Math.sqrt(calculate_emotion_workload);
+	calculate_emotion_workload = calculate_emotion_workload * 2;
+	calculate_emotion_workload = 2 - calculate_emotion_workload;
+	calculate_emotion_workload = calculate_emotion_workload * 2 + 1;
+	
 	// good for 0 - 5
 //	calculated_student_emotion = ((Math.abs(calculate_emotion_workload * 1.47 - 5) * 4) - 10);
 	// good for 1 - 5
