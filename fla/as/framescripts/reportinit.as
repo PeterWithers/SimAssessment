@@ -1,3 +1,5 @@
+//_root.report.rep = _root.FinalReportText;
+/*
 // setup report Array
 var reportsum=new Array();
 
@@ -12,4 +14,4 @@ reportsum.push("<b>Week 3</b>&nbsp;<p>reizvoller Sünden. Tauche unter vergehe. W
 // write "forth" entry
 reportsum.push("<b>Week 4</b>&nbsp;<p>yberall wandelt. Anmutig becirct Circe den energischen Freier. Glückverheissend huldigt ihre Jugend kindlicher Lust. Mannhaft nahet Odysseus. Preist Quellen reizvoller Sünden. Tauche unter.</p><p></p>");
 
-
+*/

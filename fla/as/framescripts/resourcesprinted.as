@@ -1,3 +1,4 @@
+/*
 // function turn on scrollers or turn them off
 function needscrollers() {
     edownScroll._visible = printressources.scroll<printressources.maxscroll;
@@ -30,4 +31,6 @@ _root.simmenu.indicator.gotoAndStop(10+stat*10);
 needscrollers();
 stop();
 
+
+*/
 

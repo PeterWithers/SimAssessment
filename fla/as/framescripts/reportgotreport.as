@@ -1,4 +1,5 @@
-
+//_root.report.rep = _root.FinalReportText;
+/*
 // report in - write array to display variable
 rep="";
 for(x=1;x<=reportsum.length;x++) {
@@ -6,4 +7,4 @@ for(x=1;x<=reportsum.length;x++) {
 }
 stop();
 
-
+*/

@@ -1,3 +1,6 @@
+_root.report.report.htmlText = _root.FinalReportText;
+//_root.report.fred.htmlText = _root.FinalReportText;
+/*
 // report in - write array to display variable
 rep="";
 for(x=1;x<=reportsum.length;x++) {
@@ -35,3 +38,4 @@ needscrollers();
 stop();
 
 
+*/

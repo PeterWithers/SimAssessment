@@ -1,5 +1,4 @@
-_root.email.InBoxGrid._visible = true;
-_root.email.OutBoxGrid._visible = true;
+_root.email._x = _root.emailXPosition;
 
 /*
 // function turn on scrollers or turn them off
