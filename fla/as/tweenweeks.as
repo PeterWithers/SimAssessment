@@ -30,7 +30,7 @@ function tweenweeks()
 			for (tweenableindex in TweenableList)
 			{
 				tweenable = TweenableList[tweenableindex];
-				trace ( "tweenableindex: " + tweenableindex);
+//				trace ( "tweenableindex: " + tweenableindex);
 				WeeklyStates[weekcount][tweenable] = _root.GetRMSValue(_root.PreCalculatedStatesForSemester[sessionass_week_list_index][tweenable]);
 			}
 		}
@@ -46,7 +46,7 @@ function tweenweeks()
 				// get last value
 				if (sessionass_week_list_index != 0)
 				{
-					trace ( "tweenable: " + tweenable);
+				//	trace ( "tweenable: " + tweenable);
 					lastvalue = _root.GetRMSValue(_root.PreCalculatedStatesForSemester[sessionass_week_list_index][tweenable]);
 					lastassignmetweek = _root.AssessmentWeeksArray[sessionass_week_list_index - 1];
 				}
@@ -57,19 +57,20 @@ function tweenweeks()
 					lastassignmetweek = 1;
 				}
 				// get next value
-				if (_root.AssessmentWeeksArray.length > sessionass_week_list_index + 1)
+				if (_root.AssessmentWeeksArray.length > sessionass_week_list_index)
 				{
-					trace ( "tweenable: " + tweenable);
+//					if ( tweenable == "feedback" ) trace("get next value");
+					//trace ( "tweenable: " + tweenable);
 					nextvalue = _root.GetRMSValue(_root.PreCalculatedStatesForSemester[sessionass_week_list_index + 1][tweenable]);
 					nextassignmentweek = (_root.AssessmentWeeksArray[sessionass_week_list_index]);
 				}
 				else
 				{
+//					if ( tweenable == "feedback" ) trace("get last value");
 					nextvalue = WeeklyStates[_root.AssessmentWeeksArray[_root.AssessmentWeeksArray.length - 1]][tweenable];
 					nextassignmentweek = 14;
 				}
-				
-//				trace('weeksfromtillassignment: ' + weeksfromtillassignment + ' weekstillassignment: ' + weekstillassignment + ' weeksfromassignment: ' + weeksfromassignment + ' weekcount: ' + weekcount);
+//				if ( tweenable == "feedback" ) trace('weeksfromtillassignment: ' + weeksfromtillassignment + ' weekstillassignment: ' + weekstillassignment + ' weeksfromassignment: ' + weeksfromassignment + ' weekcount: ' + weekcount);
 				
 				percentagebetween = (weekcount - lastassignmetweek) / (nextassignmentweek - lastassignmetweek) * 100;
 				
@@ -97,13 +98,11 @@ function tweenweeks()
 				}
 				// end add the lack of assignment decay
 			
-				
-				//trace('lastvalue: ' + lastvalue + ' lastassignmetweek: ' + lastassignmetweek + '  nextvalue: ' + nextvalue + ' nextassignmentweek: ' + nextassignmentweek + ' percentagebetween: ' + percentagebetween);
-				
-				//trace('lastvalue: ' + lastvalue + '  nextvalue: ' + nextvalue + ' currentvalue: ' + currentvalue + ' percentagebetween: ' + percentagebetween);
+//				if ( tweenable == "feedback" ) trace('lastvalue: ' + lastvalue + ' lastassignmetweek: ' + lastassignmetweek + '  nextvalue: ' + nextvalue + ' nextassignmentweek: ' + nextassignmentweek + ' percentagebetween: ' + percentagebetween);
+//				if ( tweenable == "feedback" ) trace('lastvalue: ' + lastvalue + '  nextvalue: ' + nextvalue + ' currentvalue: ' + currentvalue + ' percentagebetween: ' + percentagebetween);
 
 				WeeklyStates[weekcount][tweenable] = currentvalue;
-//				trace('currentvalue: ' + currentvalue + ' tweenable: ' + tweenable);
+//				if ( tweenable == "feedback" ) trace('currentvalue: ' + currentvalue + ' tweenable: ' + tweenable);
 			}
 		}		
 	}

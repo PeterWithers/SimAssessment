@@ -19,7 +19,7 @@ _root.GetRMSValue = function (feedback_values_string)
 	{
 		itemresult = new Number(feedback_values_string);
 	}
-	trace("\nRMS ( " + feedback_values_string + " ) = " + itemresult + "");
+	//trace("\nRMS ( " + feedback_values_string + " ) = " + itemresult + "");
 	return (itemresult)
 }
 
