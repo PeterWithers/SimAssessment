@@ -11,6 +11,62 @@
 
 
 _root.introduction.loadMovie('introduction.swf');
+function IntroductionStart()
+{
+	trace('IntroductionStart()');
+	_root.DisableControlsFunction();
+	_root.IntroductionRunning = true;
+	_root.RequiredCFCResults++;
+	// just incase the indroduction took longer to load than the cfcs
+	_root.RemoveMessageBox();
+	_root.introduction.SkipButton.onRelease = _root.IntroductionFinish;
+}
+function IntroductionPauseSeconds(seconds)
+{
+	trace('IntroductionPauseSeconds(seconds)');
+	_root.introduction.stop();	
+
+	function IntroductionCallback() 
+	{ 
+		trace('IntroductionCallback()');
+        clearInterval(_root.IntroductionIntervalID);
+		_root.CloseDialogues();
+		_root.introduction.play();
+	}
+	_root.IntroductionIntervalID = setInterval(IntroductionCallback, seconds * 1000);
+}
+function IntroductionLoadTimetable()
+{
+	_root.WeekOfAssignments = _root.GoodSetup;
+	_root.timetable.SetupTimetableDisplay();
+}
+function IntroductionShowAssessment()
+{
+	_global.weechoo = 8;
+	_root.timetable.gotoAndStop("setup");
+}
+function IntroductionStudentHandUp(comment)
+{
+	_root.Classroom.ExemplaryStudent.student.gotoAndPlay(121);
+	_root.Classroom.ExemplaryStudent.feedback = comment;
+}
+function IntroductionStudentHandDown()
+{
+	_root.Classroom.ExemplaryStudent.student.gotoAndPlay(1);
+}
+function IntroductionFinish()
+{
+	trace('IntroductionFinish()');
+	_root.EnableControlsFunction();
+	_root.IntroductionRunning = false;
+	_root.introduction.unloadMovie();
+	
+	// clear the timetable
+	_root.WeekOfAssignments = 1;
+	_root.timetable.SetupTimetableDisplay();
+	
+	_root.InitSemester();
+}
 
 _root.messagepopup.messagetext.text = ''
 function OkMessageBox(messagetext)
@@ -64,6 +120,7 @@ function UserNameRequestBox()
 	{
 		_root.messagepopup.gotoAndStop('welcome');
 		_root.messagepopup.UserName.text = 'Please enter your name here';
+		_root.DisableControlsFunction();
 		_root.messagepopup.UserName.onSetFocus = function()
 		{
 			_root.messagepopup.UserName.text = '';
@@ -71,6 +128,7 @@ function UserNameRequestBox()
 		}
 		_root.messagepopup.OKWelcome.onRelease = function()
 		{
+			_root.EnableControlsFunction();
 			if(_root.messagepopup.UserName.text == '') _root.UserNameRequestBox();
 			else if(_root.messagepopup.UserName.text != 'Please enter your name here')
 			{
@@ -100,6 +158,8 @@ function ClearPreviousWeeks()
 {
 	_root.StopSemester();
 	_root.CurrentWeekInSemester = 1;
+	_root.email.InBoxGrid.removeAll();
+	_root.email.OutBoxGrid.removeAll();
 	_root.email.gotoAndStop('init');
 	_root.mentorpopup.mentorSpeech.htmlText = '';
 	_root.timetable.crossout.gotoAndStop(_root.CurrentWeekInSemester);
@@ -110,6 +170,7 @@ function ClearPreviousWeeks()
 }
 function RecalculateExistingWeeks()
 {
+	if (_root.DisableControls == true) return;
 	trace('RecalculateExistingWeeks()');
 	TempCurrentWeekInSemester = _root.CurrentWeekInSemester;
 	_root.ClearPreviousWeeks();
@@ -130,6 +191,33 @@ function simassessmentInit()
 _root.mentorpopup._visible = false;
 //_root.mentorpopup.mentorSpeech.htmlText = 'rhubarb rhubarb';
 
+
+function DisableControlsFunction()
+{
+	_root.DisableControls = true;
+	_root.Presets.enabled = false;
+	_root.timetable.EditAssignment.AssignmentInstanceSelect.enabled = false;
+	_root.timetable.EditAssignment.AssessmentType.enabled = false;
+	_root.timetable.EditAssignment.AssignmentWorkload.enabled = false;
+	_root.timetable.EditAssignment.FeedbackType.enabled = false;
+	_root.timetable.EditAssignment.MarkerType.enabled = false;
+	for (CheckBoxItem in _root.timetable.EditAssignment.SubjectOutlineGoals) _root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].enabled = false;
+	_root.email.InBoxGrid.enabled = false;
+	_root.email.OutBoxGrid.enabled = false;
+}
+function EnableControlsFunction()
+{
+	_root.DisableControls = false;
+	_root.Presets.enabled = true;	
+	_root.timetable.EditAssignment.AssignmentInstanceSelect.enabled = true;
+_root.timetable.EditAssignment.AssessmentType.enabled = true;
+	_root.timetable.EditAssignment.AssignmentWorkload.enabled = true;
+	_root.timetable.EditAssignment.FeedbackType.enabled = true;
+	_root.timetable.EditAssignment.MarkerType.enabled = true;
+	for (CheckBoxItem in _root.timetable.EditAssignment.SubjectOutlineGoals) _root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].enabled = true;
+	_root.email.InBoxGrid.enabled = true;
+	_root.email.OutBoxGrid.enabled = true;
+}
 
 function ShowDebugInfo()
 {

@@ -12,7 +12,7 @@ function InitSemester()
 		dotsout = dotsout + '.';
 		dots--;		
 	}
-	_root.MessageBox(dotsout);
+	if (_root.IntroductionRunning != true) _root.MessageBox(dotsout);
 	if (_root.RequiredCFCResults < 1)
 	{		
 		if (_root.UserName != null) _root.RemoveMessageBox();

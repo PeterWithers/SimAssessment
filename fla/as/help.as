@@ -2,7 +2,8 @@ function startHelp()
 {
 	trace('startHelp()');	
 	_root.StopSemester();
-	_root.DisableControls = true;
+	_root.PreHelpDisableControlsState = _root.DisableControls == true;
+	_root.DisableControlsFunction();
 	_root.HelpBox._visible = false;
 	_root.helpCursor._x = _root._xmouse;
 	_root.helpCursor._y = _root._ymouse;
@@ -18,6 +19,7 @@ function stopHelp()
 	_root.helpCursor._visible = false;
 	_root.helpCursor.stopDrag();
 	Mouse.show();
+	_root.help.gotoAndStop('off');
 }
 _root.helpCursor._visible = false;
 _root.HelpBox._visible = false;
@@ -25,9 +27,10 @@ _root.HelpBox._visible = false;
 helpListener = new Object();
 helpListener.onMouseUp = function()
 {
+	_root.stopHelp();
 	if (_root.help.hitTest(_root._xmouse, _root._ymouse, true))
 	{
-		_root.DisableControls = false;
+		if (_root.PreHelpDisableControlsState == false) _root.EnableControlsFunction();
 		return;
 	}
 	_root.HelpBox.helpContent.text = '';
@@ -38,8 +41,6 @@ helpListener.onMouseUp = function()
 		if (_root[things]._visible and _root[things].hitTest(_root._xmouse, _root._ymouse, true) and things != 'helpCursor')
 			_root.HelpBox.helpContent.text = _root.HelpBox.helpContent.text + 'Hit: ' + things + '\n';
 	}
-	_root.stopHelp();
-	_root.help.gotoAndStop('off');
 	
 	HelpBoxPadding = 20;
 	_root.HelpBox._x = _root._xmouse - _root.HelpBox._width / 2;
@@ -55,5 +56,5 @@ helpListener.onMouseUp = function()
 _root.HelpBox.closebutton.onRelease = function()
 {
 	_root.HelpBox._visible = false;
-	_root.DisableControls = false;
+	if (_root.PreHelpDisableControlsState == false) _root.EnableControlsFunction();
 }

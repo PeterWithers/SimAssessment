@@ -106,6 +106,7 @@ _root.logedin = false;
 
 SaveButton.onRelease = function()
 {
+	if (_root.DisableControls == true) return;
 	trace('SaveButton.onRelease');
 	if (_root.logedin != true) 
 	{
@@ -168,6 +169,7 @@ function register_user_Result(result)
 
 LoadButton.onRelease = function()
 {
+	if (_root.DisableControls == true) return;
 	trace('LoadButton.onRelease');
 	if (_root.logedin != true) 
 	{
@@ -212,7 +214,7 @@ function SetUpTablesButton_Result(result)
 
 function PresetsOnChangeHandler()
 {
-	if (Presets.editable == true) 
+/*	if (Presets.editable == true) 
 	{
 		Presets.editable = false;
 	}
@@ -221,7 +223,7 @@ function PresetsOnChangeHandler()
 	{
 		Presets.editable = true;
 	}
-
+*/
 	_root.calculation_engine_called = false;
 	_root.StopSemester();
 //	_root.ClearPreviousWeeks();
