@@ -40,6 +40,14 @@
 		</CFQUERY>	
 		<cfreturn class_characteristic>
 	</cffunction>	
+	<cffunction name="get_help" access="remote" returntype="query">
+		<cfargument name="targetnamelist" type="string" required="yes">
+		<CFQUERY NAME="get_helptext" DATASOURCE="sim_assess">
+			SELECT * FROM helptext 
+			where targetname in (<cfqueryparam value="#targetnamelist#" cfsqltype="CF_SQL_VARCHAR" maxlength="100" list="Yes">)
+		</CFQUERY>
+		<cfreturn get_helptext>
+	</cffunction>	
 </cfcomponent>
 
 
