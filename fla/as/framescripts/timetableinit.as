@@ -67,6 +67,7 @@ SetupTimetableDisplay();
 
 _root.timetable.CheckSemesterWorkloadPercentOK = function()
 {
+	if (_root.WeekOfAssignments.length == 0 or _root.WeekOfAssignments == 1) return true;
 	SemesterMinPercent = 0;
 	SemesterMaxPercent = 0;
 	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
