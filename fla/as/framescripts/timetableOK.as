@@ -1,5 +1,7 @@
 on(release)
 {
+	if (_root.DisableControls == true) return;
+	
 	// call the AssignmentInstanceSelect change handler to update the current selection
 	if (!_root.timetable.AssignmentInstanceDataIntoSelectData()) return;
 	

@@ -1,5 +1,6 @@
 on(release) 
 {
+	if (_root.DisableControls == true) return;
 	for (AssignmentInstanceCounter = _root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedIndex(); AssignmentInstanceCounter < _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1; AssignmentInstanceCounter++)
  		_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).data = _root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter + 1).data;
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.removeItemAt(_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1);
