@@ -14,16 +14,13 @@
 			sessionunaligned_assessment = 0;
 			
 			//reset all graph variables
-			sessiongoal_alignment_values = "";
+//			sessiongoal_alignment_values = "";
 			sessionapproach_to_learning_values = "";
 			sessionstudent_workload_values = "";
 			sessionteacher_workload_values = "";
 			sessionfeedback_values = "";
 			sessionpublic_confidence_values = "";			
 			sessionass_weeks_list = "";
-			
-			//set the intial emotion of student
-			//student_emotion = 0;
 		</cfscript>
 	
 		<cfset sessionsubject = "SimAssessment">
@@ -32,10 +29,12 @@
 		<cfloop index="attributescounter" from="1" to="#ArrayLen(get_ass)#">
 			<cfset cur_stateStruct = StructNew()>
 			<cfif attributescounter eq ArrayLen(get_ass) or get_ass[attributescounter].due_week neq get_ass[attributescounter + 1].due_week>
-			<cfset result = StructInsert(CFCresult, "#attributescounter#", cur_stateStruct)>
-			</cfif>
-		
+				<cfset result = StructInsert(CFCresult, "#attributescounter#", cur_stateStruct)>
+			</cfif>		
 			<cfset attributescur_state = attributescounter>
+			
+			<!--- <cfset AssignmentIdList = listappend(AssignmentIdList, get_ass[attributescounter].ass_id)> --->
+			
 <!--- NOTES :
 
 - Basically the system will calculate 6 variables based on the subject specification:
@@ -65,6 +64,7 @@
 				spacing_of_ass = #get_ass[attributescounter].due_week# - #get_ass[prior_ass].due_week#;
 			</cfscript>
 			<!--- end script to calculate the spacing of assignments --->
+			
 			<!--- set the progression --->
 			<cfif get_ass[attributescounter].feedback eq 5>
 				<cfset progression = 5>
@@ -113,6 +113,86 @@
 				<cfset weighting_for_student_emotion = -1>
 			</CFIF>
 			
+			<!--- 
+				Find the goal alignment:
+					goal_autonomy 
+					goal_citizenship 
+					goal_communicative 
+					goal_contextual 
+					goal_knowledgeliteracy 
+					goal_responsive 
+					goal_technical 
+					goal_workload 
+			--->
+		
+			<CFQUERY NAME="FacultyAssignmentTypeTasks" DATASOURCE="sim_assess">
+				SELECT (FacultyTypeTasks.autonomy - AssignmentTypeTasks.autonomy) as autonomy,
+				(FacultyTypeTasks.citizenship - AssignmentTypeTasks.citizenship) as citizenship,
+				(FacultyTypeTasks.communicative - AssignmentTypeTasks.communicative) as communicative,
+				(FacultyTypeTasks.contextual - AssignmentTypeTasks.contextual) as contextual,
+				(FacultyTypeTasks.knowledgeliteracy - AssignmentTypeTasks.knowledgeliteracy) as knowledgeliteracy,
+				(FacultyTypeTasks.responsive - AssignmentTypeTasks.responsive) as responsive,
+				(FacultyTypeTasks.technical - AssignmentTypeTasks.technical) as technical,
+				(FacultyTypeTasks.subjectlevel - AssignmentTypeTasks.workload) as workload
+				FROM FacultyTypeTasks, AssignmentTypeTasks
+				WHERE FACULTY_ID = #sessionsubjectid#
+				and Assignment_id = #get_ass[attributescounter].ass_id#
+			</CFQUERY>
+			
+			<cfscript>
+				goal_alignment = 0;
+				if (FacultyAssignmentTypeTasks.autonomy gt 0) goal_alignment = goal_alignment + 1;
+				if (FacultyAssignmentTypeTasks.citizenship gt 0) goal_alignment = goal_alignment + 1;
+				if (FacultyAssignmentTypeTasks.communicative gt 0) goal_alignment = goal_alignment + 1;
+				if (FacultyAssignmentTypeTasks.contextual gt 0) goal_alignment = goal_alignment + 1;
+				if (FacultyAssignmentTypeTasks.knowledgeliteracy gt 0) goal_alignment = goal_alignment + 1;
+				if (FacultyAssignmentTypeTasks.responsive gt 0) goal_alignment = goal_alignment + 1;
+				if (FacultyAssignmentTypeTasks.technical gt 0) goal_alignment = goal_alignment + 1;
+				if (FacultyAssignmentTypeTasks.workload gt 0) goal_alignment = goal_alignment + 1;
+				goal_alignment = goal_alignment * 0.625;	
+			</cfscript>
+			
+			<cfparam name="goal_deviation_autonomy" default="">
+			<cfset goal_deviation_autonomy = listappend(goal_deviation_autonomy, FacultyAssignmentTypeTasks.autonomy)>
+			<cfparam name="goal_deviation_citizenship" default="">
+			<cfset goal_deviation_citizenship = listappend(goal_deviation_citizenship, FacultyAssignmentTypeTasks.citizenship)>
+			<cfparam name="goal_deviation_communicative" default="">
+			<cfset goal_deviation_communicative = listappend(goal_deviation_communicative, FacultyAssignmentTypeTasks.communicative)>
+			<cfparam name="goal_deviation_contextual" default="">
+			<cfset goal_deviation_contextual = listappend(goal_deviation_contextual, FacultyAssignmentTypeTasks.contextual)>
+			<cfparam name="goal_deviation_knowledgeliteracy" default="">
+			<cfset goal_deviation_knowledgeliteracy = listappend(goal_deviation_knowledgeliteracy, FacultyAssignmentTypeTasks.knowledgeliteracy)>
+			<cfparam name="goal_deviation_responsive" default="">
+			<cfset goal_deviation_responsive = listappend(goal_deviation_responsive, FacultyAssignmentTypeTasks.responsive)>
+			<cfparam name="goal_deviation_technical" default="">
+			<cfset goal_deviation_technical = listappend(goal_deviation_technical, FacultyAssignmentTypeTasks.technical)>
+			<cfparam name="goal_deviation_workload" default="">
+			<cfset goal_deviation_workload = listappend(goal_deviation_workload, FacultyAssignmentTypeTasks.workload)>
+			
+				
+			<CFQUERY NAME="AssignmentTypeTasks" DATASOURCE="sim_assess">
+				SELECT *
+				FROM AssignmentTypeTasks
+				WHERE Assignment_id = #get_ass[attributescounter].ass_id#
+			</CFQUERY>
+			
+			<cfparam name="goal_autonomy" default="">
+			<cfset goal_autonomy = listappend(goal_autonomy, AssignmentTypeTasks.autonomy)>
+			<cfparam name="goal_citizenship" default="">
+			<cfset goal_citizenship = listappend(goal_citizenship, AssignmentTypeTasks.citizenship)>
+			<cfparam name="goal_communicative" default="">
+			<cfset goal_communicative = listappend(goal_communicative, AssignmentTypeTasks.communicative)>
+			<cfparam name="goal_contextual" default="">
+			<cfset goal_contextual = listappend(goal_contextual, AssignmentTypeTasks.contextual)>
+			<cfparam name="goal_knowledgeliteracy" default="">
+			<cfset goal_knowledgeliteracy = listappend(goal_knowledgeliteracy, AssignmentTypeTasks.knowledgeliteracy)>
+			<cfparam name="goal_responsive" default="">
+			<cfset goal_responsive = listappend(goal_responsive, AssignmentTypeTasks.responsive)>
+			<cfparam name="goal_technical" default="">
+			<cfset goal_technical = listappend(goal_technical, AssignmentTypeTasks.technical)>
+			<cfparam name="goal_workload" default="">
+			<cfset goal_workload = listappend(goal_workload, AssignmentTypeTasks.workload)>
+			
 			<!--- Find the goal alignment 
 			
 			- the codes below simply comparing values from one table (new_goal_alignment1) and another table (new_goal_alignment2)
@@ -124,13 +204,9 @@
 			- if the values from "new_goal_alignment2" less than those from "new_goal_alignment1" => not aligned
 			  else => aligned
 			--->
-			<CFQUERY NAME="qAlign1" DATASOURCE="sim_assess">
-			SELECT *
-			FROM new_goal_alignment1
-			WHERE fac_id = #sessionsubjectid#
-			</CFQUERY>
+			
+			<!--- 
 			<!--- <cfset result = StructInsert(cur_stateStruct, "qAlign1", qAlign1)> --->
-			<cfset goal_alignment = 0>
 			
 			<cfloop query="qAlign1">
 				<cfif qAlign1.name neq "Subject level">
@@ -178,7 +254,7 @@
 			</cfif>
 			
 			<Cfset goal_alignment = goal_alignment + 5>
-			
+			 --->
 			<!---  calculation for goal_value.  --->
 			<cfset goal_value = 0>
 			<cfset goal_value_list = "">
@@ -318,7 +394,7 @@
 			<cfif round(teacher_workload) eq 0><cfset teacher_workload = 1></cfif>
 			<cfif round(feedback) eq 0><cfset feedback = 1></cfif>
 			<cfif round(public_confidence) eq 0><cfset public_confidence = 1></cfif>
-			<cfif round(goal_alignment) eq 0><cfset goal_alignment = 1></cfif>
+ 			<cfif round(goal_alignment) eq 0><cfset goal_alignment = 1></cfif>
 			<!--- ========================================== --->
 			
 			<cfscript>
@@ -370,10 +446,10 @@
 					
 				// we save the variables into session variables in order to draw the graph.
 				//update the graph variable
-				if (sessiongoal_alignment_values eq "")
-					sessiongoal_alignment_values = #goal_alignment#;
-				else
-					sessiongoal_alignment_values = ListAppend("#sessiongoal_alignment_values#", "#goal_alignment#", ",");
+//				if (sessiongoal_alignment_values eq "")
+//					sessiongoal_alignment_values = #goal_alignment#;
+//				else
+//					sessiongoal_alignment_values = ListAppend("#sessiongoal_alignment_values#", "#goal_alignment#", ",");
 				if (sessionapproach_to_learning_values eq "")
 					sessionapproach_to_learning_values = #approach_to_learning#;
 				else
@@ -401,7 +477,7 @@
 					else
 						sessionass_weeks_list = ListAppend("#sessionass_weeks_list#", "#get_ass[attributescounter].due_week#", ","); //#qWeek.due_week#", ",");
 				}	
-				result = StructInsert(cur_stateStruct, "sessiongoal_alignment_values", sessiongoal_alignment_values);
+//				result = StructInsert(cur_stateStruct, "sessiongoal_alignment_values", sessiongoal_alignment_values);
 				result = StructInsert(cur_stateStruct, "sessionapproach_to_learning_values", sessionapproach_to_learning_values);
 				result = StructInsert(cur_stateStruct, "sessionteacher_workload_values", sessionteacher_workload_values);
 				result = StructInsert(cur_stateStruct, "sessionfeedback_values", sessionfeedback_values);
@@ -422,7 +498,7 @@
 			ReportStudentWorkload = student_workload;
 			ReportTeacherWorkload = teacher_workload;
 			ReportPublicConfidence = public_confidence;
-			ReportGoalAlignment = goal_alignment;
+//			ReportGoalAlignment = goal_alignment;
 			
 			// to be better tested
 			ReportLevelOfAssessment = sessiontotal_level_of_assessment / attributescur_state;
@@ -435,23 +511,43 @@
 			</cfscript>
 			
 			<!--- add the report values to the return struct --->		
-			<cfset reportvalues = StructNew()>
+			<cfset reportvalues = StructNew()>			
 			<cfset result = StructInsert(reportvalues, "ReportWeighting", ReportWeighting)>
 			<cfset result = StructInsert(reportvalues, "ReportLevelOfAssessment", ReportLevelOfAssessment)>
 			<cfset result = StructInsert(reportvalues, "ReportSpacingOfAssessments", ReportSpacingOfAssessments)>
 			<cfset result = StructInsert(reportvalues, "ReportProgression", ReportProgression)>
+			<!---  report goals deviation from subject norms --->
+			<cfset result = StructInsert(reportvalues, "goal_deviation_autonomy", goal_deviation_autonomy)>
+			<cfset result = StructInsert(reportvalues, "goal_deviation_citizenship", goal_deviation_citizenship)>
+			<cfset result = StructInsert(reportvalues, "goal_deviation_communicative", goal_deviation_communicative)>
+			<cfset result = StructInsert(reportvalues, "goal_deviation_contextual", goal_deviation_contextual)>
+			<cfset result = StructInsert(reportvalues, "goal_deviation_knowledgeliteracy", goal_deviation_knowledgeliteracy)>
+			<cfset result = StructInsert(reportvalues, "goal_deviation_responsive", goal_deviation_responsive)>
+			<cfset result = StructInsert(reportvalues, "goal_deviation_technical", goal_deviation_technical)>
+			<cfset result = StructInsert(reportvalues, "goal_deviation_workload", goal_deviation_workload)>
+			<!---  report goals --->			
+			<cfset result = StructInsert(reportvalues, "goal_autonomy", goal_autonomy)>
+			<cfset result = StructInsert(reportvalues, "goal_citizenship", goal_citizenship)>
+			<cfset result = StructInsert(reportvalues, "goal_communicative", goal_communicative)>
+			<cfset result = StructInsert(reportvalues, "goal_contextual", goal_contextual)>
+			<cfset result = StructInsert(reportvalues, "goal_knowledgeliteracy", goal_knowledgeliteracy)>
+			<cfset result = StructInsert(reportvalues, "goal_responsive", goal_responsive)>
+			<cfset result = StructInsert(reportvalues, "goal_technical", goal_technical)>
+			<cfset result = StructInsert(reportvalues, "goal_workload", goal_workload)>
+								
 			<!---  not used atm: 
 			ReportDepthOfFeedback, 
 			ReportStyleOfFeedback, 
 			ReportMarker, 
 			ReportNumberOfAssessment, 
 			 --->
+			 
 			<cfset result = StructInsert(reportvalues, "ReportApproachToLearning", ReportApproachToLearning)>
 			<cfset result = StructInsert(reportvalues, "ReportFeedback", ReportFeedback)>
 			<cfset result = StructInsert(reportvalues, "ReportStudentWorkload", ReportStudentWorkload)>
 			<cfset result = StructInsert(reportvalues, "ReportTeacherWorkload", ReportTeacherWorkload)>
 			<cfset result = StructInsert(reportvalues, "ReportPublicConfidence", ReportPublicConfidence)>
-			<cfset result = StructInsert(reportvalues, "ReportGoalAlignment", ReportGoalAlignment)>
+<!--- 			<cfset result = StructInsert(reportvalues, "ReportGoalAlignment", ReportGoalAlignment)> --->
 			<cfset result = StructInsert(CFCresult, "reportvalues", reportvalues)>
 			<!--- end add the report values to the return struct --->
 		</cfif>
