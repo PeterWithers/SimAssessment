@@ -3,6 +3,40 @@ function SetUpEngineTestPresets(dropdowntopopulate)
 	dropdowntopopulate.removeAll();
 	dropdowntopopulate.addItem('EngineTest:', 1);
 	
+			Feedback1 = new Array();
+	Feedback1[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	Feedback1[1] = {ass_id: 2, ass_name: 'Essay', due_week: 6, feedback: 2, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 2, goal_ids: '2'};
+	Feedback1[2] = {ass_id: 3, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 3, goal_ids: '2'};
+	Feedback1[3] = {ass_id: 4, ass_name: 'Essay', due_week: 10, feedback: 4, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 4, goal_ids: '2'};
+	Feedback1[4] = {ass_id: 5, ass_name: 'Essay', due_week: 12, feedback: 5, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 5, goal_ids: '2'};
+	dropdowntopopulate.addItem('Feedback1', Feedback1);
+
+			StudentWorkload1 = new Array();
+	StudentWorkload1[0] = {ass_id: 1, ass_name: 'Multiple choice questions', due_week: 4, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	StudentWorkload1[1] = {ass_id: 2, ass_name: 'Class presentation', due_week: 6, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 2, goal_ids: '2'};
+	StudentWorkload1[2] = {ass_id: 3, ass_name: 'Essay', due_week: 8, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 3, goal_ids: '2'};
+	StudentWorkload1[3] = {ass_id: 4, ass_name: 'Case studies', due_week: 10, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 4, goal_ids: '2'};
+	StudentWorkload1[4] = {ass_id: 5, ass_name: 'Portfolio', due_week: 12, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 5, goal_ids: '2'};
+	dropdowntopopulate.addItem('StudentWorkload1', StudentWorkload1);
+	
+	
+//	'Multiple choice questions'
+//	'Poster presentation'
+//	'Class presentation'
+//	'Interview'
+//	'Essay'
+//	'Project'	
+//	'Case studies'
+//	'Portfolio'
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	EngineTest1 = new Array();
 	EngineTest1[0] = {ass_id: 1, ass_name: 'Multiple choice questions', due_week: 3, feedback: 2, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '14'};
 	EngineTest1[1] = {ass_id: 2, ass_name: 'Class presentation', due_week: 6, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 2, goal_ids: '14'};
