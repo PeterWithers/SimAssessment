@@ -10,7 +10,12 @@ on(release)
 	if (!_root.timetable.AssignmentInstanceDataIntoSelectData()) return;
 	
 	_root.CloseDialogues();
+	
 	_root.calculation_engine_called = false;
+	_root.PreCalculatedStatesForSemester = null;
+	_root.TweenedWeeklyStates = null;
+	_root.AssignmentWeeks = null;
+	
 	splicebegin = null;
 	splicecount = 0;
 	
@@ -45,7 +50,7 @@ on(release)
 	}
 
 	SetupTimetableDisplay();
-	_root.timetable.CheckSemesterWorkloadPercentOK()
+	//_root.timetable.CheckSemesterWorkloadPercentOK()
 }
 
 

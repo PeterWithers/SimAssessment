@@ -70,7 +70,6 @@ function GoForwardOneWeek()
 	{
 		_root.ProccessingOneAtATime = true;
 		if (_root.CurrentWeekInSemester == 15)clearInterval(_root.SemesterInterval);
-		trace('calculation_engine_called == ' + _root.calculation_engine_called + ' and _root.calculation_engine_returned == ' + _root.calculation_engine_returned);
 		if (_root.calculation_engine_called == true and _root.calculation_engine_returned == true)
 		{
 			_root.LastPlayerButtonPress = "done";

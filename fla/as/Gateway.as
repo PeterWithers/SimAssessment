@@ -58,12 +58,11 @@ function openGateway()
 }
 function Call_calculation_engineService()
 {
-	if (_root.timetable.CheckSemesterWorkloadPercentOK() or _root.EngineTest == true)
+	if (_root.timetable.CheckSemesterWorkloadPercentOK()) //  or _root.EngineTest == true
 	{
 		if (_root.WeekOfAssignments.length != null)
 		{
 			_root.MessageBox('Calling for semester calculations');
-	//		trace('calculation_engine_called ' + _root.calculation_engine_called);
 			if (_root.calculation_engine_called != true)
 			{
 				_root.calculation_engine_returned = false;

@@ -215,6 +215,10 @@ function SetUpTablesButton_Result(result)
 function PresetsOnChangeHandler()
 {
 	_root.calculation_engine_called = false;
+	_root.PreCalculatedStatesForSemester = null;
+	_root.TweenedWeeklyStates = null;
+	_root.AssignmentWeeks = null;
+	
 	_root.StopSemester();
 //	_root.ClearPreviousWeeks();
 	_root.WeekOfAssignments = _root.Presets.getSelectedItem().data;

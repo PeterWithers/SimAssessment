@@ -78,6 +78,7 @@ _root.timetable.CheckSemesterWorkloadPercentOK = function()
 	
 	 if ( SemesterMaxPercent < 100 ) _root.OkMessageBox("The total assignment percent is too low");
 	 if ( SemesterMinPercent > 100 ) _root.OkMessageBox("The total assignment percent is too high")
+//	 if (_root.EngineTest == true) _root.messagepopup.messagetext.text = _root.messagepopup.messagetext.text + "\nbypassing error for testing";
 	if ( SemesterMinPercent <= 100 and SemesterMaxPercent >= 100 )
 	{
 //		_root.MessageBox("The total assignment percent is OK")

@@ -129,7 +129,12 @@ function IntroductionWizard()
 			_root.EnableControlsFunction();
 			_root.SetUpClass();
 			_root.RemoveMessageBox();
+			
 			_root.calculation_engine_called = false;
+			_root.PreCalculatedStatesForSemester = null;
+			_root.TweenedWeeklyStates = null;
+			_root.AssignmentWeeks = null;
+	
 			_root.StopSemester();
 			//	_root.ClearPreviousWeeks();
 			_root.WeekOfAssignments = 1;
@@ -143,7 +148,12 @@ function IntroductionWizard()
 			_root.EnableControlsFunction();
 			_root.SetUpClass();
 			_root.RemoveMessageBox();
+			
 			_root.calculation_engine_called = false;
+			_root.PreCalculatedStatesForSemester = null;
+			_root.TweenedWeeklyStates = null;
+			_root.AssignmentWeeks = null;
+	
 			_root.StopSemester();
 			//	_root.ClearPreviousWeeks();
 			_root.WeekOfAssignments = _root.introduction.Presets.getSelectedItem().data;
