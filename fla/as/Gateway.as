@@ -58,7 +58,7 @@ function openGateway()
 }
 function Call_calculation_engineService()
 {
-	if (_root.timetable.CheckSemesterWorkloadPercentOK()) //  or _root.EngineTest == true
+	if (_root.timetable.CheckSemesterWorkloadPercentOK() or (Key.isDown(Key.CONTROL) and _root.EngineTest == true ) )
 	{
 		if (_root.WeekOfAssignments.length != null)
 		{
