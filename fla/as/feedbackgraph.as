@@ -133,6 +133,32 @@ _root.GraphDisplay.show = function()
 			for (weekgraphpoint = 0; weekgraphpoint < 6; weekgraphpoint++) 
 				_root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (((weekgraphpoint - 1) * 2.5) -5) * 10);
 			*/
+			
+			// label the emotions
+			EmotionValue = 4;
+			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			_root.GraphDisplay.graph.createTextField("Happy", currentrow_graph * 14 + 1, rightedge_graph - 33, EmotionY - 10, 33, 20);
+			_root.GraphDisplay.graph.Happy.text = "Happy";
+
+			EmotionValue = 2;
+			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			_root.GraphDisplay.graph.createTextField("Stressed", currentrow_graph * 14 + 2, rightedge_graph - 33, EmotionY - 10, 33, 20);
+			_root.GraphDisplay.graph.Stressed.text = "Stressed";
+			
+			EmotionValue = 0;
+			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			_root.GraphDisplay.graph.createTextField("Neutral", currentrow_graph * 14 + 3, rightedge_graph - 33, EmotionY - 10, 33, 20);
+			_root.GraphDisplay.graph.Neutral.text = "Neutral";
+			
+			EmotionValue = -2;
+			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			_root.GraphDisplay.graph.createTextField("Anxious", currentrow_graph * 14 + 4, rightedge_graph - 33, EmotionY - 10, 33, 20);
+			_root.GraphDisplay.graph.Anxious.text = "Anxious";
+			
+			EmotionValue = -4;
+			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			_root.GraphDisplay.graph.createTextField("Depressed", currentrow_graph * 14 + 5, rightedge_graph - 33, EmotionY - 10, 33, 20);
+			_root.GraphDisplay.graph.Depressed.text = "Depressed";
 		}
 		else
 		{
@@ -140,22 +166,27 @@ _root.GraphDisplay.show = function()
 			linecolour_graph = linecolour_graph + 0x005522;
 			_root.GraphDisplay.graph.lineStyle (5, linecolour_graph, 100);
 	//		_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph, currentrowheight_graph);
-			_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + _root.TweenedWeeklyStates[1][tweenable] * 11);
-			for (weekgraphpoint = 1; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable] * 11);
+
+			// draw the data line
+			_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + (5 - _root.TweenedWeeklyStates[1][tweenable]) * 11);
+			for (weekgraphpoint = 1; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (5 - _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable]) * 11);
 
 //_root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * 7, currentrowheight_graph + 0 * 11);
 //_root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * 7, currentrowheight_graph + 5 * 11);
 
 
+			// draw the data nodes
 			_root.GraphDisplay.graph.lineStyle (20, linecolour_graph, 100);
 			for (AssignmentWeek in _root.AssignmentWeeks) 
 			{
 				weekgraphpoint = _root.AssignmentWeeks[AssignmentWeek] - 1;
 				trace('weekgraphpoint: ' + weekgraphpoint);
 				Xcurrent = leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint;
-				Ycurrent = currentrowheight_graph + _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable] * 10;
+				Ycurrent = currentrowheight_graph + (5 - _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable]) * 10;
 				_root.GraphDisplay.graph.moveTo(Xcurrent, Ycurrent);
 				_root.GraphDisplay.graph.lineTo (Xcurrent, Ycurrent + 1);
+				_root.GraphDisplay.graph.createTextField("DataValue_" + currentrow_graph + "_" + AssignmentWeek, currentrow_graph * 14 + AssignmentWeek, Xcurrent, Ycurrent - 10, 33, 20);
+				eval("_root.GraphDisplay.graph.DataValue_" + currentrow_graph + "_" + AssignmentWeek).text = _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable];
 			}
 		}
 		//for (weekgraphpoint = 0; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (weekgraphpoint % 2) * 10);
