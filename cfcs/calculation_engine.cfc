@@ -182,6 +182,21 @@
 			<!--- script below is to calculate all required variables--->
 			<cfscript>
 				//================================================================
+				//now we calculate ambient workload based on the week in the semester
+				//=================================================================
+				switch (get_ass[attributescounter].due_week)
+				{
+					case 1:
+					case 2:
+					case 13:
+					case 14:
+						ambient_workload = -10;
+						break;
+					default:
+						ambient_workload = 0;
+						break;
+				}						
+				//end code to calculate the ambient workload
 				//================================================================
 				//the code below is to calculate the student emotion.
 				//================================================================
@@ -208,7 +223,7 @@
 				penalty = (get_ass[attributescounter].which_ass * penalty_factor) - 4;
 				avg_assessment_time = 14 / (ArrayLen(get_ass) + 1);
 				assessment_time_factor = spacing_of_ass - avg_assessment_time - penalty;
-				student_emotion = assessment_time_factor + marker_for_student_emotion + weighting_for_student_emotion + qAss_workload.value;			
+				student_emotion = ambient_workload + assessment_time_factor + marker_for_student_emotion * 10 + weighting_for_student_emotion * 10 + qAss_workload.value;			
 				//end code to calculate the student emotion
 				//================================================================
 				//now we calculate student workload based on the student_emotion, the calculation is below:
@@ -220,7 +235,7 @@
 					student_emotion = -10;
 					
 	
-				student_workload = abs(((student_emotion + 10) / 4) - 5) + (get_ass[attributescounter].which_ass * 0.7);
+				student_workload = abs(((student_emotion + 10) / 4) - 5); // + (get_ass[attributescounter].which_ass * 0.7);
 				
 				//end calculation to calculate student workload
 				//==============================================================================
