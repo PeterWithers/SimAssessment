@@ -4,7 +4,7 @@
 function InitSemester()
 {
 	_root.RequiredCFCResults--;
-	_root.CurrentWeekInSemester = 1;
+	if (!(_root.CurrentWeekInSemester >= 1 and _root.CurrentWeekInSemester <= 14)) _root.CurrentWeekInSemester = 1;
 	dots = _root.RequiredCFCResults;
 	dotsout = '';
 	while (dots > 0)
@@ -17,7 +17,7 @@ function InitSemester()
 	{		
 		if (_root.UserName != null) _root.RemoveMessageBox();
 		else _root.UserNameRequestBox();		
-		_root.ClearPreviousWeeks();
+		_root.RecalculateExistingWeeks();
 	}
 }
 
@@ -57,7 +57,8 @@ function Call_calculation_engineService()
 	if (_root.WeekOfAssignments.length != null)
 	{
 		_root.MessageBox('Calling for semester calculations');
-		if (_root.calculation_engine_returned != true)
+//		trace('calculation_engine_called ' + _root.calculation_engine_called);
+		if (_root.calculation_engine_called != true)
 		{
 			_root.calculation_engine_returned = false;
 			_root.calculation_engine_called = true;
@@ -171,7 +172,7 @@ function calculate_Status(result)
 function calculate_Result(result)
 {
 	_root.PreCalculatedStatesForSemester = result;
-	_root.calculation_engine_returned == true;
+	_root.calculation_engine_returned = true;
 	_root.InitSemester();
 	
 //	_root.DataGrid.dataProvider = result;

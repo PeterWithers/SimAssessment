@@ -32,6 +32,7 @@ function ErrorMessageBox(messagetext)
 	_root.messagepopup._visible = true;
 	_root.messagepopup.messagetext.text = _root.messagepopup.messagetext.text + messagetext + '\n';
 	_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
+	_root.StopSemester();
 }
 function UserNameRequestBox()
 {
@@ -66,6 +67,7 @@ function RemoveMessageBox()
 }
 function ClearPreviousWeeks()
 {
+	_root.StopSemester();
 	_root.CurrentWeekInSemester = 1;
 	_root.email.gotoAndStop('init');
 	_root.mentorpopup.mentorSpeech.htmlText = '';
@@ -74,6 +76,19 @@ function ClearPreviousWeeks()
 	_root.StudentDoneWeeks = new Array();	
 	_root.computer.emailindicator.gotoAndStop('static');
 	_root.SetUpClass();
+}
+function RecalculateExistingWeeks()
+{
+	trace('RecalculateExistingWeeks()');
+	TempCurrentWeekInSemester = _root.CurrentWeekInSemester;
+	_root.ClearPreviousWeeks();
+	trace('calculation_engine_called == ' + _root.calculation_engine_called + ' and _root.calculation_engine_returned == ' + _root.calculation_engine_returned);
+	trace('TempCurrentWeekInSemester: ' + TempCurrentWeekInSemester + ' _root.CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
+	while (_root.calculation_engine_called == true and _root.calculation_engine_returned == true and TempCurrentWeekInSemester > _root.CurrentWeekInSemester)
+	{
+		_root.GoForwardOneWeek();
+		_root.CurrentWeekInSemester++;
+	}	
 }
 function simassessmentInit()
 {
@@ -225,7 +240,7 @@ function PresetsOnChangeHandler()
 {
 	_root.calculation_engine_called = false;
 	_root.StopSemester();
-	_root.ClearPreviousWeeks();
+//	_root.ClearPreviousWeeks();
 	_root.WeekOfAssignments = _root.Presets.getSelectedItem().data;
 	_root.Call_calculation_engineService();
 	_root.timetable.SetupTimetableDisplay();

@@ -49,16 +49,17 @@ function SetUpWeek()
 }
 function GoBackOneWeek()
 {
-	if (_root.calculation_engine_called == true)
+	if (_root.calculation_engine_called == true and _root.calculation_engine_returned == true)
 	{
 		_root.CurrentWeekInSemester--;
 		if (_root.CurrentWeekInSemester < 1)_root.CurrentWeekInSemester = 1;
 		SetUpWeek();
-	}else _root.Call_calculation_engineService();
+	}else if (_root.calculation_engine_called == false) _root.Call_calculation_engineService();
 }
 ProccessingOneAtATime = false;
 function GoForwardOneWeek()
 {
+	trace('GoForwardOneWeek()');
 	// during testing this has been slow to return
 	// hence we check to see if the function has returned before calling again
 	// not the most fool proof way but it will do in this case
@@ -66,12 +67,13 @@ function GoForwardOneWeek()
 	{
 		_root.ProccessingOneAtATime = true;
 		if (_root.CurrentWeekInSemester == 15)clearInterval(_root.SemesterInterval);
-		if (_root.calculation_engine_called == true)
+		trace('calculation_engine_called == ' + _root.calculation_engine_called + ' and _root.calculation_engine_returned == ' + _root.calculation_engine_returned);
+		if (_root.calculation_engine_called == true and _root.calculation_engine_returned == true)
 		{
 			_root.CurrentWeekInSemester++;
 			if (_root.CurrentWeekInSemester > 15)_root.CurrentWeekInSemester = 15;
 			_root.SetUpWeek();
-		}else _root.Call_calculation_engineService();
+		}else if (_root.calculation_engine_called == false) _root.Call_calculation_engineService();
 		updateAfterEvent();
 		_root.ProccessingOneAtATime = false;
 	}
