@@ -3,6 +3,15 @@ function SetUpEngineTestPresets(dropdowntopopulate)
 	dropdowntopopulate.removeAll();
 	dropdowntopopulate.addItem('EngineTest:', 1);
 	
+	Multiple = new Array();
+	Multiple[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 1, marker: 'Teacher', weighting: 1,  which_ass: 1, goal_ids: '2'};
+	Multiple[1] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 2, marker: 'Teacher', weighting: 1,  which_ass: 2, goal_ids: '2'};
+	Multiple[2] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Teacher', weighting: 1,  which_ass: 3, goal_ids: '2'};
+	Multiple[3] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 4, marker: 'Teacher', weighting: 1,  which_ass: 4, goal_ids: '2'};
+	Multiple[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 5, marker: 'Teacher', weighting: 1,  which_ass: 5, goal_ids: '2'};
+	dropdowntopopulate.addItem('Multiple', Multiple);
+	
+	
 			Feedback1 = new Array();
 	Feedback1[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 1, marker: 'Teacher', weighting: 1,  which_ass: 1, goal_ids: '2'};
 	Feedback1[1] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 2, marker: 'Teacher', weighting: 1,  which_ass: 2, goal_ids: '2'};
@@ -60,13 +69,13 @@ function SetUpEngineTestPresets(dropdowntopopulate)
 	dropdowntopopulate.addItem('AssigWorkloadL', AssignmentWorkloadL);	
 	
 	AssignmentWorkloadA = new Array();
-	AssignmentWorkloadA[0] = {ass_id: 1, ass_name: 'Essay', due_week: 1, feedback: 3, marker: 'Peer', weighting: 3,  which_ass: 1, goal_ids: '2'};
-	AssignmentWorkloadA[1] = {ass_id: 2, ass_name: 'Problem', due_week: 3, feedback: 3, marker: 'Peer', weighting: 3,  which_ass: 2, goal_ids: '2'};
-	AssignmentWorkloadA[2] = {ass_id: 3, ass_name: 'Report', due_week: 5, feedback: 3, marker: 'Peer', weighting: 3,  which_ass: 3, goal_ids: '2'};
-	AssignmentWorkloadA[3] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 7, feedback: 3, marker: 'Peer', weighting: 3,  which_ass: 1, goal_ids: '2'};
-	AssignmentWorkloadA[4] = {ass_id: 5, ass_name: 'Short answer question', due_week: 9, feedback: 3, marker: 'Peer', weighting: 3,  which_ass: 2, goal_ids: '2'};
-	AssignmentWorkloadA[5] = {ass_id: 6, ass_name: 'Practicum', due_week: 11, feedback: 3, marker: 'Peer', weighting: 3,  which_ass: 3, goal_ids: '2'};
-	AssignmentWorkloadA[6] = {ass_id: 7, ass_name: 'Project', due_week: 13, feedback: 3, marker: 'Peer', weighting: 3,  which_ass: 1, goal_ids: '2'};
+	AssignmentWorkloadA[0] = {ass_id: 1, ass_name: 'Essay', due_week: 1, feedback: 3, marker: 'Peer', weighting: 1,  which_ass: 1, goal_ids: '2'};
+	AssignmentWorkloadA[1] = {ass_id: 2, ass_name: 'Problem', due_week: 3, feedback: 3, marker: 'Peer', weighting: 1,  which_ass: 2, goal_ids: '2'};
+	AssignmentWorkloadA[2] = {ass_id: 3, ass_name: 'Report', due_week: 5, feedback: 3, marker: 'Peer', weighting: 1,  which_ass: 3, goal_ids: '2'};
+	AssignmentWorkloadA[3] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 7, feedback: 3, marker: 'Peer', weighting: 1,  which_ass: 1, goal_ids: '2'};
+	AssignmentWorkloadA[4] = {ass_id: 5, ass_name: 'Short answer question', due_week: 9, feedback: 3, marker: 'Peer', weighting: 1,  which_ass: 2, goal_ids: '2'};
+	AssignmentWorkloadA[5] = {ass_id: 6, ass_name: 'Practicum', due_week: 11, feedback: 3, marker: 'Peer', weighting: 1,  which_ass: 3, goal_ids: '2'};
+	AssignmentWorkloadA[6] = {ass_id: 7, ass_name: 'Project', due_week: 13, feedback: 3, marker: 'Peer', weighting: 1,  which_ass: 1, goal_ids: '2'};
 	dropdowntopopulate.addItem('AssigWorkloadA', AssignmentWorkloadA);	
 
 	////////////////////////////////////////
@@ -223,8 +232,28 @@ function SetUpEngineTestPresets(dropdowntopopulate)
 	StudentEmotionGrid5[2] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 8, feedback: 5, marker: 'Self', weighting: 3,  which_ass: 3, goal_ids: '2'};
 	StudentEmotionGrid5[3] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 5, marker: 'Self', weighting: 3,  which_ass: 4, goal_ids: '2'};
 	StudentEmotionGrid5[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 5, marker: 'Self', weighting: 4,  which_ass: 5, goal_ids: '2'};
-	dropdowntopopulate.addItem('EmotionGrid5', StudentEmotionGrid5);			
+	dropdowntopopulate.addItem('EmotionGrid5', StudentEmotionGrid5);	
+			
+	///////////////////////////
+	dropdowntopopulate.addItem('--------', 1);	
 	
+	ReportGoals1 = new Array();
+	ReportGoals1[0] = {ass_id: 1, ass_name: '', due_week: 1, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 1, goal_ids: '2'};
+	ReportGoals1[1] = {ass_id: 2, ass_name: '', due_week: 2, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 2, goal_ids: '2'};
+	ReportGoals1[2] = {ass_id: 3, ass_name: '', due_week: 3, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 3, goal_ids: '2'};
+	ReportGoals1[3] = {ass_id: 4, ass_name: '', due_week: 4, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 4, goal_ids: '2'};
+	ReportGoals1[4] = {ass_id: 5, ass_name: '', due_week: 5, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 5, goal_ids: '2'};
+	ReportGoals1[5] = {ass_id: 6, ass_name: '', due_week: 6, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 6, goal_ids: '2'};
+	ReportGoals1[6] = {ass_id: 7, ass_name: '', due_week: 7, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 7, goal_ids: '2'};
+	ReportGoals1[7] = {ass_id: 8, ass_name: '', due_week: 8, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 8, goal_ids: '2'};
+	ReportGoals1[8] = {ass_id: 9, ass_name: '', due_week: 9, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 9, goal_ids: '2'};
+	ReportGoals1[9] = {ass_id: 10, ass_name: '', due_week: 10, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 10, goal_ids: '2'};
+	ReportGoals1[10] = {ass_id: 11, ass_name: '', due_week: 11, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 11, goal_ids: '2'};
+	ReportGoals1[11] = {ass_id: 12, ass_name: '', due_week: 12, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 12, goal_ids: '2'};
+	ReportGoals1[12] = {ass_id: 13, ass_name: '', due_week: 13, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 13, goal_ids: '2'};
+	ReportGoals1[13] = {ass_id: 14, ass_name: '', due_week: 14, feedback: 1, marker: 'Peer', weighting: 1,  which_ass: 14, goal_ids: '2'};
+	
+	dropdowntopopulate.addItem('ReportGoals1', ReportGoals1);	
 	
 	//////////////////////////////
 			
