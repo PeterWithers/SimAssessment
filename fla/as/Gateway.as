@@ -52,6 +52,7 @@ function openGateway()
 		commentsService.get_studentcomments(); _root.RequiredCFCResults++;
 		commentsService.get_mentorcomments(); _root.RequiredCFCResults++;
 		commentsService.get_finalreport(); _root.RequiredCFCResults++;
+		commentsService.get_goal_alignment_grid(); _root.RequiredCFCResults++;
 //		Call_calculation_engineService();
 	}
 }
@@ -239,4 +240,14 @@ function get_finalreport_Result(result)
 	_root.InitSemester();
 }
 
+get_goal_alignment_grid
 
+function get_goal_alignment_grid_Status(result)
+{
+	_root.ErrorMessageBox('get_class_characteristic\n' + result.description);
+}
+function get_goal_alignment_grid_Result(result)
+{
+	_root.get_goal_alignment_grid result.items;
+	_root.InitSemester();
+}

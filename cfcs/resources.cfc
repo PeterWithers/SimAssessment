@@ -48,6 +48,15 @@
 		</CFQUERY>
 		<cfreturn get_helptext>
 	</cffunction>	
+	<cffunction name="get_goal_alignment_grid" access="remote" returntype="query">
+		<CFQUERY NAME="qAlign2" DATASOURCE="sim_assess">
+			select name, ASS_NAME, value 
+			from new_goal_alignment2, new_assessment
+			where new_assessment.ass_id = new_goal_alignment2.ass_id
+			group by name, ASS_NAME, value 
+		</CFQUERY>
+		<cfreturn qAlign2>
+	</cffunction>	
 </cfcomponent>
 
 
