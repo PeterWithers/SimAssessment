@@ -19,6 +19,9 @@ function SetUpEngineTestPresets(dropdowntopopulate)
 	Feedback2[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 5, goal_ids: '2'};
 	dropdowntopopulate.addItem('Feedback2', Feedback2);
 
+	////////////////////////////////////////
+	dropdowntopopulate.addItem('--------', 1);
+	
 /*			StudentWorkload1 = new Array();
 	StudentWorkload1[0] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 4, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
 	StudentWorkload1[1] = {ass_id: 9, ass_name: 'Class presentation', due_week: 6, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 2, goal_ids: '2'};
@@ -35,7 +38,115 @@ function SetUpEngineTestPresets(dropdowntopopulate)
 //	StudentWorkload1[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 5, goal_ids: '2'};
 	dropdowntopopulate.addItem('StudentWorkload1', StudentWorkload1);
 	
+///////////////////////////////////////////
+	dropdowntopopulate.addItem('--------', 1);
+
+	AssignmentWorkloadH = new Array();
+	AssignmentWorkloadH[0] = {ass_id: 6, ass_name: 'Practicum', due_week: 4, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	AssignmentWorkloadH[1] = {ass_id: 6, ass_name: 'Practicum', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	AssignmentWorkloadH[2] = {ass_id: 6, ass_name: 'Practicum', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('AssigWorkloadH', AssignmentWorkloadH);
+
+	AssignmentWorkloadM = new Array();
+	AssignmentWorkloadM[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	AssignmentWorkloadM[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	AssignmentWorkloadM[2] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('AssigWorkloadM', AssignmentWorkloadM);	
 	
+	AssignmentWorkloadL = new Array();
+	AssignmentWorkloadL[0] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 4, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	AssignmentWorkloadL[1] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	AssignmentWorkloadL[2] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('AssigWorkloadL', AssignmentWorkloadL);	
+	
+	AssignmentWorkloadA = new Array();
+	AssignmentWorkloadA[0] = {ass_id: 1, ass_name: 'Essay', due_week: 1, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	AssignmentWorkloadA[1] = {ass_id: 2, ass_name: 'Problem', due_week: 3, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	AssignmentWorkloadA[2] = {ass_id: 3, ass_name: 'Report', due_week: 5, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	AssignmentWorkloadA[3] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 7, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	AssignmentWorkloadA[4] = {ass_id: 5, ass_name: 'Short answer question', due_week: 9, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	AssignmentWorkloadA[5] = {ass_id: 6, ass_name: 'Practicum', due_week: 11, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	AssignmentWorkloadA[6] = {ass_id: 7, ass_name: 'Project', due_week: 13, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	dropdowntopopulate.addItem('AssigWorkloadA', AssignmentWorkloadA);	
+
+	////////////////////////////////////////
+	dropdowntopopulate.addItem('--------', 1);
+		
+	MarkerWorkloadL = new Array();
+	MarkerWorkloadL[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Self', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	MarkerWorkloadL[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Self', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	MarkerWorkloadL[2] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Self', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('MarkerWorkloadL', MarkerWorkloadL);
+
+	MarkerWorkloadM = new Array();
+	MarkerWorkloadM[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	MarkerWorkloadM[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	MarkerWorkloadM[2] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('MarkerWorkloadM', MarkerWorkloadM);	
+	
+	MarkerWorkloadH = new Array();
+	MarkerWorkloadH[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Teacher', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	MarkerWorkloadH[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Teacher', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	MarkerWorkloadH[2] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Teacher', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('MarkerWorkloadH', MarkerWorkloadH);
+	
+	MarkerWorkloadA = new Array();
+	MarkerWorkloadA[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Self', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	MarkerWorkloadA[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	MarkerWorkloadA[2] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Teacher', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('MarkerWorkloadA', MarkerWorkloadA);		
+	
+	//////////////////////////////////
+	dropdowntopopulate.addItem('--------', 1);
+	
+	WeightingWorkloadH = new Array();
+	WeightingWorkloadH[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: 'More than 80%',  which_ass: 1, goal_ids: '2'};
+	WeightingWorkloadH[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: 'More than 80%',  which_ass: 2, goal_ids: '2'};
+	WeightingWorkloadH[2] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: 'More than 80%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('WeightWorkloadH', WeightingWorkloadH);
+	
+	WeightingWorkloadM = new Array();
+	WeightingWorkloadM[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	WeightingWorkloadM[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	WeightingWorkloadM[2] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('WeightWorkloadM', WeightingWorkloadM);
+	
+	WeightingWorkloadL = new Array();
+	WeightingWorkloadL[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	WeightingWorkloadL[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: 'Less than 20%',  which_ass: 2, goal_ids: '2'};
+	WeightingWorkloadL[2] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: 'Less than 20%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('WeightWorkloadL', WeightingWorkloadL);
+	
+	WeightingWorkloadA = new Array();
+	WeightingWorkloadA[0] = {ass_id: 1, ass_name: 'Essay', due_week: 3, feedback: 3, marker: 'Peer', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	WeightingWorkloadA[1] = {ass_id: 1, ass_name: 'Essay', due_week: 5, feedback: 3, marker: 'Peer', weighting: '20% and 40%',  which_ass: 2, goal_ids: '2'};
+	WeightingWorkloadA[2] = {ass_id: 1, ass_name: 'Essay', due_week: 7, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	WeightingWorkloadA[3] = {ass_id: 1, ass_name: 'Essay', due_week: 9, feedback: 3, marker: 'Peer', weighting: '60% and 80%',  which_ass: 2, goal_ids: '2'};
+	WeightingWorkloadA[4] = {ass_id: 1, ass_name: 'Essay', due_week: 11, feedback: 3, marker: 'Peer', weighting: 'More than 80%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('WeightWorkloadA', WeightingWorkloadA);
+	
+	///////////////////////////
+	dropdowntopopulate.addItem('--------', 1);	
+	
+	CloseSpacingWorkload1 = new Array();
+	CloseSpacingWorkload1[0] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	CloseSpacingWorkload1[1] = {ass_id: 1, ass_name: 'Essay', due_week: 7, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	CloseSpacingWorkload1[2] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('CloseSpcWorkload1', CloseSpacingWorkload1);	
+	
+	MediumSpacingWorkload1 = new Array();
+	MediumSpacingWorkload1[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	MediumSpacingWorkload1[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	MediumSpacingWorkload1[2] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	dropdowntopopulate.addItem('MediumSpcWorkload1', MediumSpacingWorkload1);	
+	
+	DistantSpacingWorkload1 = new Array();
+	DistantSpacingWorkload1[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	DistantSpacingWorkload1[1] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	dropdowntopopulate.addItem('DistantSpcWorkload1', DistantSpacingWorkload1);	
+	
+	//////////////////////////////
+			
 //	'Multiple choice questions'
 //	'Poster presentation'
 //	'Class presentation'

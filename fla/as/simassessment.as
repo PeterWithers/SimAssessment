@@ -146,6 +146,7 @@ function ShowDebugInfo()
 		_root.mentorpopup.mentorSpeech.text = _root.mentorpopup.mentorSpeech.text + '\n\n';
 	}	
 	_root.CloseDialogues();
+	_root.mentorpopup.mentorSpeech.selectable = true;
 	_root.mentorpopup._visible = true;
 	_root.mentorpopup.ok.onRelease = _root.CloseDialogues;
 }
