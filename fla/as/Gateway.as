@@ -243,7 +243,7 @@ function get_finalreport_Result(result)
 	_root.InitSemester();
 }
 
-get_goal_alignment_grid
+// get_goal_alignment_grid
 
 function get_goal_alignment_grid_Status(result)
 {
