@@ -5,7 +5,7 @@
 #include "as/class_generator.as"
 #include "as/mentor_comment.as"
 #include "as/report.as"
-#include "as/studentNoHands.as"
+//#include "as/studentNoHands.as"
 #include "as/feedbackgraph.as"
 #include "as/email.as"
 #include "as/SaveLoad.as"
@@ -165,10 +165,13 @@ function ComputerMailClick()
 
 for (Student in _root.Classroom)
 {
-	_root.Classroom[Student].gotoAndStop('happy');
-	_root.Classroom[Student].feedback = 'We want to learn?';
-	_root.ShowOfHands = false;
-//	_root.lessHands();
+	if (_root.Classroom[Student].student != null)
+	{
+		_root.Classroom[Student].gotoAndStop('happy');
+		_root.Classroom[Student].feedback = 'We want to learn?';
+		_root.ShowOfHands = false;
+		//_root.lessHands();
+	}
 }
 function StepSemesterBack()
 {
