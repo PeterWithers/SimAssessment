@@ -70,7 +70,8 @@ function tweenweeks()
 				}
 				else
 				{
-					lastvalue = 0;
+					// set the initial value
+					lastvalue = 2.5;
 					lastassignmetweek = 1;
 				}
 				// get next value
@@ -117,7 +118,7 @@ function tweenweeks()
 				//trace('lastvalue: ' + lastvalue + ' lastassignmetweek: ' + lastassignmetweek + '  nextvalue: ' + nextvalue + ' nextassignmentweek: ' + nextassignmentweek + ' percentagebetween: ' + percentagebetween);
 				
 				//trace('lastvalue: ' + lastvalue + '  nextvalue: ' + nextvalue + ' currentvalue: ' + currentvalue + ' percentagebetween: ' + percentagebetween);
-				
+
 				WeeklyStates[weekcount][tweenable] = currentvalue;
 				trace('currentvalue: ' + currentvalue + ' tweenable: ' + tweenable);
 			}
