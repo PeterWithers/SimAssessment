@@ -24,28 +24,27 @@ function SetUpWeek()
 {
 	//	gererateClassState(2.79166666667, true, 2.20833333333);
 	_root.timetable.crossout.gotoAndStop(_root.CurrentWeekInSemester);
-	WeekSearchCount = _root.CurrentWeekInSemester;
 	trace('CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
 	if (_root.CurrentWeekInSemester == 15)
 	{
+		FinalAssessmentData = _root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1];
+		_root.GenerateReport(FinalAssessmentData);
 		_root.intray.report.gotoAndPlay(2);
-		_root.GenerateReport();
+		_root.ShowOfHands = false;
+		_root.StopSemester();
 	}else{
 		_root.intray.report.gotoAndStop(1);
-		while (WeekSearchCount > 0)
-		{
-			trace('WeekSearchCount: ' + WeekSearchCount);
-			avg_level_of_assessment = _root.PreCalculatedStatesForSemester[WeekSearchCount].total_level_of_assessment / WeekSearchCount;
-			SetupMentorCommentsForWeek(_root.PreCalculatedStatesForSemester[WeekSearchCount].approach_to_learning, avg_level_of_assessment, _root.PreCalculatedStatesForSemester[WeekSearchCount].goal_alignment, _root.PreCalculatedStatesForSemester[WeekSearchCount].teacher_workload);
-			if (_root.PreCalculatedStatesForSemester[WeekSearchCount] == null) WeekSearchCount--
-			else 
-			{
-				gererateClassState(_root.PreCalculatedStatesForSemester[WeekSearchCount].feedback, true, _root.PreCalculatedStatesForSemester[WeekSearchCount].student_workload);
-				WeekSearchCount = -1;
-			}
-		}
-		if (WeekSearchCount == 0)gererateClassState(0, false, 0);
-//		_root.MentorCommentsArray[_root.PreCalculatedStatesForSemester[WeekSearchCount].ApproachToLearning_value];
+		AssessmentWeeksArray = _root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionass_weeks_list.split(',');
+		if (AssessmentWeeksArray == null)return;
+		AssessmentIndex = AssessmentWeeksArray.length;
+		while (AssessmentWeeksArray[AssessmentIndex - 1] > _root.CurrentWeekInSemester and AssessmentIndex > 0)AssessmentIndex--;
+		trace('AssessmentIndex: ' + AssessmentIndex);
+		AssessmentThisWeek = (AssessmentWeeksArray[AssessmentIndex - 1] == _root.CurrentWeekInSemester);
+		_root.ShowOfHands = (AssessmentWeeksArray[0] <= _root.CurrentWeekInSemester);
+		trace('_root.ShowOfHands'+_root.ShowOfHands);
+//		avg_level_of_assessment = _root.PreCalculatedStatesForSemester[AssessmentIndex].total_level_of_assessment / WeekSearchCount;
+		gererateClassState(_root.PreCalculatedStatesForSemester[AssessmentIndex].feedback, AssessmentIndex != 0, _root.PreCalculatedStatesForSemester[AssessmentIndex].student_workload, AssessmentThisWeek);
+		SetupMentorCommentsForWeek(_root.PreCalculatedStatesForSemester[AssessmentIndex].approach_to_learning, _root.PreCalculatedStatesForSemester[AssessmentIndex].goal_alignment, AssessmentThisWeek);
 	}
 }
 function GoBackOneWeek()
@@ -55,7 +54,7 @@ function GoBackOneWeek()
 		_root.CurrentWeekInSemester--;
 		if (_root.CurrentWeekInSemester < 1)_root.CurrentWeekInSemester = 1;
 		SetUpWeek();
-	}
+	}else _root.Call_calculation_engineService();
 }
 ProccessingOneAtATime = false;
 function GoForwardOneWeek()
@@ -72,12 +71,12 @@ function GoForwardOneWeek()
 			_root.CurrentWeekInSemester++;
 			if (_root.CurrentWeekInSemester > 15)_root.CurrentWeekInSemester = 15;
 			_root.SetUpWeek();
-		}
+		}else _root.Call_calculation_engineService();
 		updateAfterEvent();
 		_root.ProccessingOneAtATime = false;
 	}
 }
-function gererateClassState(attributesFEEDBACK, attributesSEMESTER_RUNNING, attributesSTUDENT_WORKLOAD)	
+function gererateClassState(attributesFEEDBACK, attributesSEMESTER_RUNNING, attributesSTUDENT_WORKLOAD, AssessmentThisWeek)	
 {
 	trace('gererateClassState(' + attributesFEEDBACK + ' , ' + attributesSEMESTER_RUNNING + ' , ' + attributesSTUDENT_WORKLOAD + ')');
     happyCount = 0;
@@ -137,32 +136,44 @@ function gererateClassState(attributesFEEDBACK, attributesSEMESTER_RUNNING, attr
 			}
 			
 	//		<!--- uncomment this to display different color for different characteristics->
-			trace('student: ' + class_counter + ' type: ' + _root.Class_CharacteristicsArray[query_position].student_type + ' : ' + student_image + ' : qStudentcomment.description');
+//			trace('student: ' + class_counter + ' type: ' + _root.Class_CharacteristicsArray[query_position].student_type + ' : ' + student_image + ' : qStudentcomment.description');
 			_root.StudentsInClassroom[class_counter].gotoAndStop(student_image);
 			_root.StudentsInClassroom[class_counter].feedback = qStudentcomment.description;
-			
-			if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester] == null)
+
+			if(AssessmentThisWeek)
 			{
-				_root.StudentDoneWeeks[_root.CurrentWeekInSemester] = 1;
-	/*			_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
-				_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
-				_root.email.emailfrom.push('Student' + class_counter + ' : ' + _root.Class_CharacteristicsArray[query_position].student_type);
-				_root.email.emailcont.push(qStudentcomment.description);*/
-				if (qStudentcomment.description1 != null and qStudentcomment.description1 != '')
+				trace('made changes here to the email code\n and you should probably test it a bit more.');
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester] == null)_root.StudentDoneWeeks[_root.CurrentWeekInSemester] = new Array();			
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][_root.CurrentWeekInSemester] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][_root.CurrentWeekInSemester] = new Array();
+				
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] == null)
 				{
-					_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
-					_root.email.emailfrom.push('Student' + class_counter + ' : ' + _root.Class_CharacteristicsArray[query_position].student_type);
-					_root.email.emailref.push(student_image + ' description2');
-					_root.email.emailcont.push(qStudentcomment.description2);
-					_root.computer.emailindicator.gotoAndPlay('new');
-				}
-				if (qStudentcomment.description2 != null and qStudentcomment.description2 != '')
-				{			
-					_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
-					_root.email.emailfrom.push('Student' + class_counter + ' : ' + _root.Class_CharacteristicsArray[query_position].student_type);
-					_root.email.emailref.push(student_image + ' description3');
-					_root.email.emailcont.push(qStudentcomment.description3);
-					_root.computer.emailindicator.gotoAndPlay('new');
+					_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] = 1;
+	
+/*					if (qStudentcomment.description != null and qStudentcomment.description != '')
+					{					
+						_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
+						_root.email.emailfrom.push('Student');
+						_root.email.emailref.push(student_image);
+						_root.email.emailcont.push('To ' + _root.UserName + '\n\n' + qStudentcomment.description + '\n\nStudent');
+						_root.computer.emailindicator.gotoAndPlay('new');
+					}*/
+					if (qStudentcomment.description1 != null and qStudentcomment.description1 != '')
+					{
+						_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
+						_root.email.emailfrom.push('Student');
+						_root.email.emailref.push(student_image);
+						_root.email.emailcont.push('To ' + _root.UserName + '\n\n' + qStudentcomment.description2 + '\n\nStudent');
+						_root.computer.emailindicator.gotoAndPlay('new');
+					}
+					if (qStudentcomment.description2 != null and qStudentcomment.description2 != '')
+					{			
+						_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
+						_root.email.emailfrom.push('Student');
+						_root.email.emailref.push(student_image);
+						_root.email.emailcont.push('To ' + _root.UserName + '\n\n' + qStudentcomment.description3 + '\n\nStudent');
+						_root.computer.emailindicator.gotoAndPlay('new');
+					}
 				}
 			}
 		}
@@ -175,7 +186,7 @@ function gererateClassState(attributesFEEDBACK, attributesSEMESTER_RUNNING, attr
 			query_position = _root.StudentsInClassroom[class_counter].personality;
 			student_image = "neutral";
 //		<!--- uncomment this to display different color for different characteristics->
-			trace('student: ' + class_counter + ' type: ' + _root.Class_CharacteristicsArray[query_position].student_type + ' : ' + student_image + ' : qStudentcomment.description');
+//			trace('student: ' + class_counter + ' type: ' + _root.Class_CharacteristicsArray[query_position].student_type + ' : ' + student_image + ' : qStudentcomment.description');
 			_root.StudentsInClassroom[class_counter].gotoAndStop(student_image);
 			_root.StudentsInClassroom[class_counter].feedback = 'When does the semester start?';
 		    happyCount = 0;
@@ -185,9 +196,6 @@ function gererateClassState(attributesFEEDBACK, attributesSEMESTER_RUNNING, attr
 			depressedCount = 0;
 		}
 	}
-    _root.feedbackgraph.happybar._xscale = (happyCount / NumberOfStudents * 97) + 3;
-    _root.feedbackgraph.stressedbar._xscale = (stressedCount / NumberOfStudents * 97) + 3;
-	_root.feedbackgraph.neutralbar._xscale = (neutralCount / NumberOfStudents * 97) + 3;
-    _root.feedbackgraph.anxiousbar._xscale = (anxiousCount / NumberOfStudents * 97) + 3;
-	_root.feedbackgraph.depressedbar._xscale = (depressedCount / NumberOfStudents * 97) + 3;
+	_root.feedbackgraph.setValues(happyCount, stressedCount, neutralCount, anxiousCount, depressedCount, NumberOfStudents);
 }
+
