@@ -243,9 +243,9 @@ function SetUpPresets(dropdowntopopulate)
 	happySetup[2] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 5, marker: 'Teacher', weighting: '40% and 60%', which_ass: 3, goal_ids: '2'};
 	
 	GoodSetup = new Array();
-	GoodSetup[0] = {ass_id: 5, ass_name: 'Short answer question', due_week: 4, feedback: 2, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
-	GoodSetup[1] = {ass_id: 3, ass_name: 'Report', due_week: 8, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 2, goal_ids: '8'};
-	GoodSetup[2] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 13, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 3, goal_ids: '8,14'};
+	GoodSetup[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 5, marker: 'Self', weighting: '20% and 40%', which_ass: 1, goal_ids: 2};
+	GoodSetup[1] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 5, marker: 'Teacher', weighting: '60% and 80%', which_ass: 2, goal_ids: 8};
+	GoodSetup[2] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 13, feedback: 5, marker: 'Teacher', weighting: '40% and 60%', which_ass: 3, goal_ids: '14,8'};
 	
 	MultiSetup = new Array();
 	MultiSetup[0] = {ass_id: 5, ass_name: 'Short answer question', due_week: 4, feedback: 2, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
