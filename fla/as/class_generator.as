@@ -13,18 +13,11 @@ function SetUpClass()
 			// the following has been added to use the description, description1, description2 fields that Lawrence added.
 			// there is a lack of clarity on how this fits with the personality 
 			_root.Classroom[Student].type = Math.ceil(Math.random() * 3);
-//			trace('_root.Classroom[Student].type ' + _root.Classroom[Student].type);
-//			trace('_root.Classroom[Student].student ' + _root.Classroom[Student].student);
+			_root.StudentHandDown(_root.Classroom[Student].student);
 		}
-	}	
+	}
 	_root.NumberOfStudents = _root.StudentsInClassroom.length;
-//	sessiondefault_class = new Array();
-//	for (studentcounter = 0; studentcounter < NumberOfStudents; studentcounter++)
-//	{
-//		sessiondefault_class[studentcounter] = Math.ceil(Math.random() * 15);
-//		trace('sessiondefault_class[' + studentcounter + ']: '+ sessiondefault_class[studentcounter]);
-//	}
-	SetUpWeek();
+	_root.SetUpWeek();
 }
 function SetUpWeek()
 {
@@ -143,11 +136,9 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 				depressedCount++;
 			}
 			
-	//		<!--- uncomment this to display different color for different characteristics->
-//			trace('student: ' + class_counter + ' type: ' + _root.Class_CharacteristicsArray[query_position].student_type + ' : ' + student_image + ' : qStudentcomment.description');
 			_root.StudentsInClassroom[class_counter].gotoAndStop(student_image);
 			_root.StudentsInClassroom[class_counter].feedback = qStudentcomment.description;
-
+			
 			if(AssessmentThisWeek)
 			{
 				trace([_root.CurrentWeekInSemester] + ' : ' + [Math.round(modified_student_workload)] + ' : ' + [Math.round(modified_feedback)] + ' : ' + [_root.StudentsInClassroom[class_counter].type]);
@@ -163,19 +154,19 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 					{
 						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description + '\n\nStudent'});
 						_root.computer.emailindicator.gotoAndPlay('new');
-						_root.StudentsInClassroom[class_counter].student.SomethingToSay = true;
+						_root.StudentHandUp(_root.StudentsInClassroom[class_counter].student);
 					}
 					if (qStudentcomment.description1 != null and qStudentcomment.description1 != '' and _root.StudentsInClassroom[class_counter].type == 2)
 					{
 						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description2 + '\n\nStudent'});
-						_root.computer.emailindicator.gotoAndPlay('new');						
-						_root.StudentsInClassroom[class_counter].student.SomethingToSay = true;
+						_root.computer.emailindicator.gotoAndPlay('new');			
+						_root.StudentHandUp(_root.StudentsInClassroom[class_counter].student);
 					}
 					if (qStudentcomment.description2 != null and qStudentcomment.description2 != '' and _root.StudentsInClassroom[class_counter].type == 3)
 					{			
 						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description3 + '\n\nStudent'});
 						_root.computer.emailindicator.gotoAndPlay('new');						
-						_root.StudentsInClassroom[class_counter].student.SomethingToSay = true;
+						_root.StudentHandUp(_root.StudentsInClassroom[class_counter].student);
 					}
 				}
 			}
@@ -189,8 +180,6 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 		{
 			query_position = _root.StudentsInClassroom[class_counter].personality;
 			student_image = "neutral";
-//		<!--- uncomment this to display different color for different characteristics->
-//			trace('student: ' + class_counter + ' type: ' + _root.Class_CharacteristicsArray[query_position].student_type + ' : ' + student_image + ' : qStudentcomment.description');
 			_root.StudentsInClassroom[class_counter].gotoAndStop(student_image);
 			_root.StudentsInClassroom[class_counter].feedback = 'When does the semester start?';
 		    happyCount = 0;

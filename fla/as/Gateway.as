@@ -71,7 +71,7 @@ function Call_calculation_engineService()
 }
 function get_subjects_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('get_subjects\n' + result.description);
 }
 function get_subjects_Result(result)
 {
@@ -81,7 +81,7 @@ function get_subjects_Result(result)
 }
 function get_assessment_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('get_assessment\n' + result.description);
 }
 function get_assessment_Result(result)
 {
@@ -94,7 +94,7 @@ function get_assessment_Result(result)
 }
 function get_feedback_type_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('get_feedback_type\n' + result.description);
 }
 function get_feedback_type_Result(result)
 {
@@ -122,7 +122,7 @@ function get_feedback_type_Result(result)
 }
 function get_subject_goals_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('get_subject_goals\n' + result.description);
 }
 function get_subject_goals_Result(result)
 {
@@ -138,7 +138,7 @@ function get_subject_goals_Result(result)
 }
 function get_studentcomments_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('get_studentcomments\n' + result.description);
 }
 function get_studentcomments_Result(result)
 {
@@ -156,7 +156,7 @@ function get_studentcomments_Result(result)
 
 function get_class_characteristic_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('get_class_characteristic\n' + result.description);
 }
 function get_class_characteristic_Result(result)
 {// get all different student types and characteristics from db (15 different students)
@@ -169,7 +169,7 @@ function get_class_characteristic_Result(result)
 }
 function calculate_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('calculate\n' + result.description);
 }
 function calculate_Result(result)
 {
@@ -184,7 +184,7 @@ function calculate_Result(result)
 
 function get_mentorcomments_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('get_mentorcomments\n' + result.description);
 }
 function get_mentorcomments_Result(result)
 {
@@ -202,7 +202,7 @@ function get_mentorcomments_Result(result)
 
 function get_finalreport_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('get_finalreport\n' + result.description);
 }
 function get_finalreport_Result(result)
 {

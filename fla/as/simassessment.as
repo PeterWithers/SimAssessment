@@ -3,7 +3,7 @@
 #include "as/class_generator.as"
 #include "as/mentor_comment.as"
 #include "as/report.as"
-//#include "as/studentNoHands.as"
+#include "as/studentNoHands.as"
 #include "as/feedbackgraph.as"
 #include "as/email.as"
 #include "as/SaveLoad.as"
@@ -12,8 +12,9 @@
 
 _root.introduction.loadMovie('introduction.swf');
 _root.introduction._visible = false;
-_root.DisableControlsFunction();
-
+_root.HelpMode = '';
+_root.emailXPosition = _root.email._x;
+_root.email._x = _root.emailXPosition - 800;
 function IntroductionStart()
 {
 	trace('IntroductionStart()');
@@ -32,12 +33,13 @@ function IntroductionStart()
 //	_root.RemoveMessageBox();
 
 	_root.introduction.SkipButton.onRelease = _root.IntroductionFinish;
-	_root.introduction.NextButton.onRelease = _root.IntroductionCallback;
+	_root.introduction.nextButton.onRelease = _root.IntroductionCallback;
+//	for (things in _root.introduction) trace(things);
 }	
 function IntroductionCallback()
 { 
 	trace('IntroductionCallback()');
-       clearInterval(_root.IntroductionIntervalID);
+    clearInterval(_root.IntroductionIntervalID);
 	_root.CloseDialogues();
 	_root.introduction.play();
 }
@@ -47,7 +49,7 @@ function IntroductionPauseSeconds(seconds)
 	{
 		return;
 	}
-	trace('IntroductionPauseSeconds(seconds)');
+	trace('IntroductionPauseSeconds(' + seconds + ')');
 	_root.introduction.stop();	
 	_root.IntroductionIntervalID = setInterval(_root.IntroductionCallback, seconds * 1000);
 }
@@ -68,7 +70,7 @@ function IntroductionStudentHandUp(comment)
 }
 function IntroductionStudentHandDown()
 {
-	_root.Classroom.ExemplaryStudent.student.gotoAndPlay(1);
+	_root.Classroom.ExemplaryStudent.student.gotoAndPlay(10);
 }
 function IntroductionFinish()
 {
@@ -80,7 +82,7 @@ function IntroductionFinish()
 	// clear the timetable
 	_root.WeekOfAssignments = 1;
 	_root.timetable.SetupTimetableDisplay();
-	
+	_root.IntroductionStudentHandDown();
 //	_root.InitSemester();
 }
 
@@ -110,6 +112,7 @@ function SavingMessageBox(messagetext)
 }
 function MessageBox(messagetext)
 {
+	if (_root.ErrorMessageShowing == true) return;
 	_root.messagepopup.gotoAndStop('loading');
 	_root.messagepopup._visible = true;
 	_root.messagepopup.messagetext.text = _root.messagepopup.messagetext.text + messagetext + '\n';
@@ -125,35 +128,36 @@ function ErrorMessageBox(messagetext)
 	_root.messagepopup.messagetext.text = _root.ErrorMessages;
 	_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
 	_root.StopSemester();
-	_root.messagepopup.ok.onRelease = function() {
-		_root.ErrorMessageShowing = false;
-		_root.RemoveMessageBox();
-	}
+	if (_root.DisableControls != true)
+	{
+		_root.messagepopup.ok.onRelease = function() 
+		{
+			_root.ErrorMessageShowing = false;
+			_root.RemoveMessageBox();
+		}
+	}else _root.messagepopup.ok._visible = false;
 }
 function UserNameRequestBox()
 {
-	if (_root.ErrorMessageShowing != true)
+	_root.messagepopup.gotoAndStop('welcome');
+	_root.messagepopup.UserName.text = 'Please enter your name here';
+	_root.DisableControlsFunction();
+	_root.messagepopup.UserName.onSetFocus = function()
 	{
-		_root.messagepopup.gotoAndStop('welcome');
-		_root.messagepopup.UserName.text = 'Please enter your name here';
-		_root.DisableControlsFunction();
-		_root.messagepopup.UserName.onSetFocus = function()
+		_root.messagepopup.UserName.text = '';
+		_root.messagepopup.UserName.onSetFocus = null;
+	}
+	_root.messagepopup.OKWelcome.onRelease = function()
+	{
+		_root.EnableControlsFunction();
+		if(_root.messagepopup.UserName.text == '') _root.UserNameRequestBox();
+		else if(_root.messagepopup.UserName.text != 'Please enter your name here')
 		{
-			_root.messagepopup.UserName.text = '';
-			_root.messagepopup.UserName.onSetFocus = null;
-		}
-		_root.messagepopup.OKWelcome.onRelease = function()
-		{
-			_root.EnableControlsFunction();
-			if(_root.messagepopup.UserName.text == '') _root.UserNameRequestBox();
-			else if(_root.messagepopup.UserName.text != 'Please enter your name here')
-			{
-				_root.UserName = _root.messagepopup.UserName.text;
-				_root.SetUpClass();
-				_root.RemoveMessageBox();
-				_root.introduction.gotoAndPlay(1);
-				_root.introduction._visible = true;
-			}
+			_root.UserName = _root.messagepopup.UserName.text;
+			_root.SetUpClass();
+			_root.RemoveMessageBox();
+			_root.introduction.gotoAndPlay(1);
+			_root.introduction._visible = true;
 		}
 	}
 }
@@ -164,41 +168,9 @@ function RemoveMessageBox()
 		_root.messagepopup._visible = false;
 		_root.messagepopup.messagetext.text = '';		
 		_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
-	}else{
-		_root.messagepopup.gotoAndStop('error');
-		_root.messagepopup._visible = true;
-		_root.messagepopup.messagetext.text = _root.ErrorMessages;
-		_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
-		_root.StopSemester();
+	}else{ 
+		_root.ErrorMessageBox('.');
 	}
-}
-function ClearPreviousWeeks()
-{
-	_root.StopSemester();
-	_root.CurrentWeekInSemester = 1;
-	_root.email.InBoxGrid.removeAll();
-	_root.email.OutBoxGrid.removeAll();
-	_root.email.gotoAndStop('init');
-	_root.mentorpopup.mentorSpeech.htmlText = '';
-	_root.timetable.crossout.gotoAndStop(_root.CurrentWeekInSemester);
-	_root.MentorDoneWeeks = new Array();
-	_root.StudentDoneWeeks = new Array();	
-	_root.computer.emailindicator.gotoAndStop('static');
-	_root.SetUpClass();
-}
-function RecalculateExistingWeeks()
-{
-	if (_root.DisableControls == true) return;
-	trace('RecalculateExistingWeeks()');
-	TempCurrentWeekInSemester = _root.CurrentWeekInSemester;
-	_root.ClearPreviousWeeks();
-	trace('calculation_engine_called == ' + _root.calculation_engine_called + ' and _root.calculation_engine_returned == ' + _root.calculation_engine_returned);
-	trace('TempCurrentWeekInSemester: ' + TempCurrentWeekInSemester + ' _root.CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
-	while (_root.calculation_engine_called == true and _root.calculation_engine_returned == true and TempCurrentWeekInSemester > _root.CurrentWeekInSemester)
-	{
-		_root.GoForwardOneWeek();
-		_root.CurrentWeekInSemester++;
-	}	
 }
 function simassessmentInit()
 {
@@ -273,6 +245,8 @@ function TimetableClick(weeknumber)
 	_root.CloseDialogues();
 	_global.weechoo=weeknumber;
 	_root.timetable.gotoAndStop("setup");
+	_root.Classroom._visible = false;
+	_root.HelpMode = 'EditSubject';
 }
 
 function PhoneClick()
@@ -287,6 +261,7 @@ function PhoneClick()
 		_root.mentorpopup.ok.onRelease = _root.CloseDialogues;
 	}
 	_root.Phone.Light.gotoAndStop('off');
+	_root.Classroom._visible = false;
 }
 function ComputerMailClick()
 {
@@ -294,6 +269,7 @@ function ComputerMailClick()
 	_root.CloseDialogues();
 	_root.computer.emailindicator.gotoAndStop('static');
 	_root.email.gotoAndStop(10);
+	_root.Classroom._visible = false;
 }
 
 for (Student in _root.Classroom)
@@ -303,8 +279,40 @@ for (Student in _root.Classroom)
 		_root.Classroom[Student].gotoAndStop('happy');
 		_root.Classroom[Student].feedback = 'We want to learn?';
 		_root.ShowOfHands = false;
-		//_root.lessHands();
+//		_root.lessHands();
 	}
+}
+function ClearPreviousWeeks()
+{
+	trace('ClearPreviousWeeks()');
+	_root.StopSemester();
+	_root.CurrentWeekInSemester = 0;
+	_root.email.InBoxGrid.removeAll();
+	_root.email.OutBoxGrid.removeAll();
+	_root.email.gotoAndStop('init');
+	_root.mentorpopup.mentorSpeech.htmlText = '';
+//	_root.timetable.crossout.gotoAndStop(_root.CurrentWeekInSemester);
+	_root.MentorDoneWeeks = new Array();
+	_root.StudentDoneWeeks = new Array();	
+	_root.computer.emailindicator.gotoAndStop('static');
+//	_root.SetUpClass();
+	_root.Phone.Light.gotoAndStop('off');
+	_root.UpDateEmailCounters();
+	_root.GoForwardOneWeek();
+}
+function RecalculateExistingWeeks()
+{
+	if (_root.DisableControls == true) return;
+	trace('RecalculateExistingWeeks()');
+	TempCurrentWeekInSemester = _root.CurrentWeekInSemester;
+	_root.ClearPreviousWeeks();
+	trace('calculation_engine_called == ' + _root.calculation_engine_called + ' and _root.calculation_engine_returned == ' + _root.calculation_engine_returned);
+	trace('TempCurrentWeekInSemester: ' + TempCurrentWeekInSemester + ' _root.CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
+	while (_root.calculation_engine_called == true and _root.calculation_engine_returned == true and TempCurrentWeekInSemester > _root.CurrentWeekInSemester)
+	{
+		_root.GoForwardOneWeek();
+		_root.CurrentWeekInSemester++;
+	}	
 }
 function StepSemesterBack()
 {
@@ -348,6 +356,10 @@ function PlaySemester()
 function CloseDialogues()
 {
 	_root.StopSemester();
+	_root.HelpMode = '';
+	
+	// show classroom
+	_root.Classroom._visible = true;
 	
 	// close timetable
 	_root.timetable.EditAssignment._visible = false;
@@ -361,8 +373,7 @@ function CloseDialogues()
 	
 	// close 
 	_root.email.gotoAndStop("no mail");
-	_root.email.InBoxGrid._visible = false;
-	_root.email.OutBoxGrid._visible = false;
+	_root.email._x = _root.emailXPosition - 800;
 	
 	// close mentorpopup
 	_root.mentorpopup._visible = false;
@@ -372,6 +383,7 @@ function CloseDialogues()
 }
 
 StopSemester();
+_root.DisableControlsFunction();
 
 /*
 _root.get_ass.due_week[cur_state];

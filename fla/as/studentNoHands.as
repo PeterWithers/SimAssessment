@@ -1,26 +1,23 @@
-function lessHands()
+function StudentHandUp(student)
 {
-	for (Student in _root.Classroom)
-	{
-		_root.Classroom[Student].student.gotoAndStop(10);
-		_root.Classroom[Student].student.happyprobability=1000;
-		_root.Classroom[Student].student.stressedprobability=1000;
-		_root.Classroom[Student].student.neutralprobability=1000;
-		_root.Classroom[Student].student.anxiousprobability=1000;
-		_root.Classroom[Student].student.depressedprobability=1000;
-	}	
+	trace('StudentHandUp: ' + student);
+	student.handuppause = 0;
+	student.handup = true;
 }
-
-function moreHands()
+function StudentHandUpNow(student)
 {
-	for (Student in _root.Classroom)
-	{
-		_root.Classroom[Student].student.happyprobability=5;
-		_root.Classroom[Student].student.stressedprobability=5;
-		_root.Classroom[Student].student.neutralprobability=5;
-		_root.Classroom[Student].student.anxiousprobability=5;
-		_root.Classroom[Student].student.depressedprobability=5;
-		_root.Classroom[Student].student.gotoAndPlay(1);
-	}	
+	trace('StudentHandUpNow: ' + student);
+	student.handuppause = 0;
+	student.sendtolabel = 'studenthandupstart';
+}
+function StudentHandUpSpeak(student)
+{
+	trace('StudentHandUpSpeak: ' + student);
+	student.sendtolabel = 'talk';
+}
+function StudentHandDown(student)
+{
+	trace('StudentHandDown: ' + student);
+	student.gotoAndPlay('studentstart');
 }
 

@@ -28,9 +28,6 @@ _root.email.InBoxGrid.getColumnAt(1).width = _root.email.InBoxGrid.width * 0.4;
 _root.email.OutBoxGrid.getColumnAt(0).width = _root.email.InBoxGrid.width * 0.6;
 _root.email.OutBoxGrid.getColumnAt(1).width = _root.email.InBoxGrid.width * 0.4;
 
-_root.email.InBoxGrid._visible = false;
-_root.email.OutBoxGrid._visible = false;
-
 function UpDateEmailCounters()
 {
 	computer.newMail.text = _root.email.InBoxGrid.length;

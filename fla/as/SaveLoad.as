@@ -120,7 +120,7 @@ SaveButton.onRelease = function()
 }
 function save_timetable_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('save_timetable\n' + result.description);
 }
 function save_timetable_Result(result)
 {
@@ -131,7 +131,7 @@ function save_timetable_Result(result)
 
 function login_user_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('login_user\n' + result.description);
 }
 function login_user_Result(result)
 {
@@ -151,7 +151,7 @@ function login_user_Result(result)
 }
 function register_user_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('register_user\n' + result.description);
 }
 function register_user_Result(result)
 {
@@ -182,7 +182,7 @@ LoadButton.onRelease = function()
 }
 function load_timetable_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('load_timetable\n' + result.description);
 }
 function load_timetable_Result(result)
 {
@@ -214,16 +214,6 @@ function SetUpTablesButton_Result(result)
 
 function PresetsOnChangeHandler()
 {
-/*	if (Presets.editable == true) 
-	{
-		Presets.editable = false;
-	}
-	trace(_root.Presets.getSelectedItem().label);
-	if (_root.Presets.getSelectedItem().label == 'enter name')
-	{
-		Presets.editable = true;
-	}
-*/
 	_root.calculation_engine_called = false;
 	_root.StopSemester();
 //	_root.ClearPreviousWeeks();

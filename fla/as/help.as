@@ -1,6 +1,8 @@
 function startHelp()
 {
 	trace('startHelp()');	
+	if (_root.DisableControls == true) return;
+	_root.help.gotoAndStop('on');
 	_root.StopSemester();
 	_root.PreHelpDisableControlsState = _root.DisableControls == true;
 	_root.DisableControlsFunction();
@@ -39,15 +41,19 @@ helpListener.onMouseUp = function()
 	for (things in _root)
 	{
 		//if (_root.help.hitTest(_root[things]))
-		trace(things + ' : ' + typeof(_root[things]));
+//		trace(things + ' : ' + typeof(_root[things]));
 		if (typeof(_root[things]) == 'movieclip' and _root[things]._visible)
 			if (_root[things].hitTest(_root._xmouse, _root._ymouse, true) and things != 'helpCursor')
 			{
-				if (things.length <= 100) targetnamearray.push(things);
+				if (things.length <= 100) targetnamearray.push(things + _root.HelpMode);
 			}
 	}
 	_root.HelpBox.helpContent.text = '\n\nLoading\n';
-	if (targetnamearray.length > 0) _root.resourcesService.get_help(targetnamearray.toString());
+	if (targetnamearray.length > 0)
+	{
+		trace('help targets: ' + targetnamearray.toString());
+		_root.resourcesService.get_help(targetnamearray.toString());
+	}
 	else _root.HelpBox.helpContent.text = 'No help is associated with this item';
 	
 	HelpBoxPadding = 20;
@@ -82,5 +88,5 @@ function get_help_Result(result)
 
 function get_help_Status(result)
 {
-	_root.ErrorMessageBox(result.description);
+	_root.ErrorMessageBox('get_help\n' + result.description);
 }
