@@ -10,8 +10,8 @@ on(release)
 	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
 	{
 		trace('AssignmentsForWeek: ' + AssignmentsForWeek);
-		trace('DUE_WEEK: ' + _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK); 
-		if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK)
+		trace('due_week: ' + _root.WeekOfAssignments[AssignmentsForWeek].due_week); 
+		if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].due_week)
 			trace('one to remove');
 		else
 			WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length] = _root.WeekOfAssignments[AssignmentsForWeek];
@@ -20,10 +20,10 @@ on(release)
 	for (AssignmentInstanceCounter = 0; AssignmentInstanceCounter < _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1; AssignmentInstanceCounter++)
  		WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length] = _root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).data;
 
-	WeekOfAssignmentsUpdated.sortOn('DUE_WEEK', Array.NUMERIC);
+	WeekOfAssignmentsUpdated.sortOn('due_week', Array.NUMERIC);
 	_root.WeekOfAssignments = WeekOfAssignmentsUpdated;
 	
-	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++) _root.WeekOfAssignments[AssignmentsForWeek].WHICH_ASS = AssignmentsForWeek + 1;
+	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++) _root.WeekOfAssignments[AssignmentsForWeek].which_ass = AssignmentsForWeek + 1;
 
 	SetupTimetableDisplay();
 }

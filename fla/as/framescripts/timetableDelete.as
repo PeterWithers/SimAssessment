@@ -27,13 +27,13 @@ on(release)
 		for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
 		{
 			trace('AssignmentsForWeek: ' + AssignmentsForWeek);
-			trace('DUE_WEEK: ' + _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK); 
-			if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK)
+			trace('due_week: ' + _root.WeekOfAssignments[AssignmentsForWeek].due_week); 
+			if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].due_week)
 				trace('one to remove');
 			else
 				WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length] = _root.WeekOfAssignments[AssignmentsForWeek];
 		}
-//		WeekOfAssignmentsUpdated.sortOn('DUE_WEEK');
+//		WeekOfAssignmentsUpdated.sortOn('due_week');
 		_root.WeekOfAssignments = WeekOfAssignmentsUpdated;
 		SetupTimetableDisplay();
 	}

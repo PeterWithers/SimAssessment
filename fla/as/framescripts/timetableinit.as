@@ -11,9 +11,9 @@ function SetupTimetableDisplay()
 	}
 	for (AssignmentsForWeek in _root.WeekOfAssignments)
 	{
-		DUE_WEEK = _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK
-		set ("WTTfirst" + DUE_WEEK, _root.WeekOfAssignments[AssignmentsForWeek].ASS_NAME);
-		set ("WTTsecond" + DUE_WEEK, (_root.WeekOfAssignments[AssignmentsForWeek].WEIGHTING+"  " + _root.WeekOfAssignments[AssignmentsForWeek].MARKER + "-marked"));
+		due_week = _root.WeekOfAssignments[AssignmentsForWeek].due_week
+		set ("WTTfirst" + due_week, _root.WeekOfAssignments[AssignmentsForWeek].ass_name);
+		set ("WTTsecond" + due_week, (_root.WeekOfAssignments[AssignmentsForWeek].weighting+"  " + _root.WeekOfAssignments[AssignmentsForWeek].marker + "-marked"));
 	}
 }
 SetupTimetableDisplay();

@@ -42,23 +42,23 @@ function AssignmentInstanceDataIntoSelectData()
 	
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(_root.timetable.LastSelectedAssignmentInstanceIndex).data = 
 	{
-		ASS_ID: _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_id, 
-		ASS_NAME: _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_name, 
-		DUE_WEEK: _global.weechoo, 
-		FEEDBACK: _root.timetable.EditAssignment.FeedbackType.getSelectedItem().data.feedback_id, 
-		MARKER: _root.timetable.EditAssignment.MarkerType.getSelectedItem().data, 
-		WEIGHTING: _root.timetable.EditAssignment.AssignmentWorkload.getSelectedItem().data, 
-		WHICH_ASS: '?', 
+		ass_id: _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_id, 
+		ass_name: _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_name, 
+		due_week: _global.weechoo, 
+		feedback: _root.timetable.EditAssignment.FeedbackType.getSelectedItem().data.feedback_id, 
+		marker: _root.timetable.EditAssignment.MarkerType.getSelectedItem().data, 
+		weighting: _root.timetable.EditAssignment.AssignmentWorkload.getSelectedItem().data, 
+		which_ass: '?', 
 		goal_ids: SelectedGoalIds.toString()
 	};
 	
 	/*trace(
-	'AssignmentsByWeek['+_global.weechoo+'] = { ASS_ID: ' + _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ASS_ID +
-	', ASS_NAME: ' + _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_name + 
-	', DUE_WEEK: ' + _global.weechoo + ' , FEEDBACK: ' + _root.timetable.EditAssignment.FeedbackType.getSelectedItem().data.feedback_id + ' , ' +
-	'MARKER: ' + _root.timetable.EditAssignment.MarkerType.getSelectedItem().data + ' , ' +
-	'WEIGHTING: ' + _root.timetable.EditAssignment.AssignmentWorkload.getSelectedItem().data + ', ' + 
-	' WHICH_ASS: ?, goal_ids: ' + SelectedGoalIds.toString() + '	};');*/
+	'AssignmentsByWeek['+_global.weechoo+'] = { ass_id: ' + _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_id +
+	', ass_name: ' + _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_name + 
+	', due_week: ' + _global.weechoo + ' , feedback: ' + _root.timetable.EditAssignment.FeedbackType.getSelectedItem().data.feedback_id + ' , ' +
+	'marker: ' + _root.timetable.EditAssignment.MarkerType.getSelectedItem().data + ' , ' +
+	'weighting: ' + _root.timetable.EditAssignment.AssignmentWorkload.getSelectedItem().data + ', ' + 
+	' which_ass: ?, goal_ids: ' + SelectedGoalIds.toString() + '	};');*/
 	
 	// store the last selection;
 	_root.timetable.LastSelectedAssignmentInstanceIndex =_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedIndex();
@@ -102,22 +102,22 @@ function PopulateSubjectInputs(AssignmentObjectForWeek)
 	trace('about to IndesOfThings');
 	for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.MarkerType.getLength(); IndesOfThings++)
 	{
-		if (_root.timetable.EditAssignment.MarkerType.getItemAt(IndesOfThings).data == AssignmentObjectForWeek.MARKER)
+		if (_root.timetable.EditAssignment.MarkerType.getItemAt(IndesOfThings).data == AssignmentObjectForWeek.marker)
 			_root.timetable.EditAssignment.MarkerType.setSelectedIndex(IndesOfThings);
 	}
 	for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.AssessmentType.getLength(); IndesOfThings++)
 	{
-		if (_root.timetable.EditAssignment.AssessmentType.getItemAt(IndesOfThings).data.ass_name == AssignmentObjectForWeek.ASS_NAME)
+		if (_root.timetable.EditAssignment.AssessmentType.getItemAt(IndesOfThings).data.ass_name == AssignmentObjectForWeek.ass_name)
 			_root.timetable.EditAssignment.AssessmentType.setSelectedIndex(IndesOfThings);
 	}
 	for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.AssignmentWorkload.getLength(); IndesOfThings++)
 	{
-		if (_root.timetable.EditAssignment.AssignmentWorkload.getItemAt(IndesOfThings).data == AssignmentObjectForWeek.WEIGHTING)
+		if (_root.timetable.EditAssignment.AssignmentWorkload.getItemAt(IndesOfThings).data == AssignmentObjectForWeek.weighting)
 			_root.timetable.EditAssignment.AssignmentWorkload.setSelectedIndex(IndesOfThings); 
 	}
 	for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.FeedbackType.getLength(); IndesOfThings++)
 	{
-		if (_root.timetable.EditAssignment.FeedbackType.getItemAt(IndesOfThings).data.feedback_id == AssignmentObjectForWeek.FEEDBACK)
+		if (_root.timetable.EditAssignment.FeedbackType.getItemAt(IndesOfThings).data.feedback_id == AssignmentObjectForWeek.feedback)
 			_root.timetable.EditAssignment.FeedbackType.setSelectedIndex(IndesOfThings);
 	}
 	
@@ -141,7 +141,7 @@ AssignmentObjectForWeek = null;
 _root.timetable.EditAssignment.AssignmentInstanceSelect.removeAll();
 for (AssignmentsForWeek in _root.WeekOfAssignments)
 {
-	if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK)
+	if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].due_week)
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.addItem('temp name', _root.WeekOfAssignments[AssignmentsForWeek]);
 }
 _root.timetable.UpdateSelectAddingNewItem();
