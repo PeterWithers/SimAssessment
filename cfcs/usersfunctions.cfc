@@ -127,8 +127,20 @@
 	
 <!--- table functions --->
 	
-<!--- 	<cffunction name="create_timetableconfig_table" access="remote">
-		<cftransaction>		
+<cffunction name="create_timetableconfig_table" access="remote">
+		<cftransaction>		<!--- 	
+			<CFQUERY NAME="drop_helptext" DATASOURCE="sim_assess">
+				if exists (select * from sysobjects where id = object_id(N'helptext') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+				drop table helptext
+			</CFQUERY>		
+			<CFQUERY NAME="create_helptext" DATASOURCE="sim_assess">
+				CREATE TABLE helptext
+				(
+					id int IDENTITY (1, 1) NOT NULL,
+					helptext varchar (2000) NOT NULL, 
+					targetname varchar (100) NOT NULL
+				)
+			</CFQUERY>				
 			<CFQUERY NAME="drop_FK_timetableconfig_publicusers" DATASOURCE="sim_assess">
 				if exists (select * from dbo.sysobjects where id = object_id(N'FK_timetableconfig_publicusers') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
 				ALTER TABLE timetableconfig DROP CONSTRAINT FK_timetableconfig_publicusers
@@ -195,7 +207,7 @@
 			<CFQUERY NAME="create_FK_timetableassignment_timetableconfig" DATASOURCE="sim_assess">
 				ALTER TABLE timetableassignment ADD 
 				CONSTRAINT FK_timetableassignment_timetableconfig FOREIGN KEY (timetableid) REFERENCES timetableconfig (id)
-			</CFQUERY>
+			</CFQUERY>  --->
 		</cftransaction>
-	</cffunction> --->
+	</cffunction> 
 </cfcomponent>
