@@ -33,7 +33,8 @@ _root.email.OutBoxGrid._visible = false;
 
 function UpDateEmailCounters()
 {
-	trace('In: ' + _root.email.InBoxGrid.length + ' Out: ' + _root.email.OutBoxGrid.length);
+	computer.newMail.text = _root.email.InBoxGrid.length;
+	computer.oldMail.text = _root.email.OutBoxGrid.length;
 }
 
 _root.UpDateEmailCounters();
