@@ -206,13 +206,16 @@ _root.GraphDisplay.show = function()
 			for (AssignmentWeek in _root.AssignmentWeeks) 
 			{
 				weekgraphpoint = _root.AssignmentWeeks[AssignmentWeek] - 1;
-				trace('weekgraphpoint: ' + weekgraphpoint);
-				Xcurrent = leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint;
-				Ycurrent = currentrowheight_graph + (5 - _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable]) * 10;
-				_root.GraphDisplay.graph.moveTo(Xcurrent, Ycurrent);
-				_root.GraphDisplay.graph.lineTo (Xcurrent, Ycurrent + 1);
-				_root.GraphDisplay.graph.createTextField("DataValue_" + currentrow_graph + "_" + AssignmentWeek, currentrow_graph * 14 + AssignmentWeek, Xcurrent, Ycurrent - 10, 33, 20);
-				eval("_root.GraphDisplay.graph.DataValue_" + currentrow_graph + "_" + AssignmentWeek).text = _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable];
+				if (weekgraphpoint >= 0)
+				{
+					trace('weekgraphpoint: ' + weekgraphpoint);
+					Xcurrent = leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint;
+					Ycurrent = currentrowheight_graph + (5 - _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable]) * 10;
+					_root.GraphDisplay.graph.moveTo(Xcurrent, Ycurrent);
+					_root.GraphDisplay.graph.lineTo (Xcurrent, Ycurrent + 1);
+					_root.GraphDisplay.graph.createTextField("DataValue_" + currentrow_graph + "_" + AssignmentWeek, currentrow_graph * 14 + AssignmentWeek, Xcurrent, Ycurrent - 10, 33, 20);
+					eval("_root.GraphDisplay.graph.DataValue_" + currentrow_graph + "_" + AssignmentWeek).text = _root.TweenedWeeklyStates[weekgraphpoint + 1][tweenable];
+				}
 			}
 		}
 		//for (weekgraphpoint = 0; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (weekgraphpoint % 2) * 10);
