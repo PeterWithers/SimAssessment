@@ -59,6 +59,16 @@ _root.GraphDisplay.show = function()
 	totalrows_graph = TweenableList.length
 	rowheight_graph = height_graph / totalrows_graph;
 	
+	// draw grid
+	for (weekgraphpoint = 0; weekgraphpoint < 14; weekgraphpoint++)
+	{
+		_root.GraphDisplay.graph.lineStyle (1, 0x999999, 100);
+		Xcurrent = leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint;
+		_root.GraphDisplay.graph.moveTo(Xcurrent, bottomedge_graph);
+		_root.GraphDisplay.graph.lineTo (Xcurrent, topedge_graph);
+	}
+	
+	
 	for (currentrow_graph = 1; currentrow_graph <= totalrows_graph; currentrow_graph++)
 	{
 		tweenable = TweenableList[currentrow_graph - 1];
