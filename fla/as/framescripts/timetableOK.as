@@ -39,7 +39,6 @@ on(release)
 	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
 	{
 		_root.WeekOfAssignments[AssignmentsForWeek].which_ass = AssignmentsForWeek + 1;
-		_root.WeekOfAssignments[AssignmentsForWeek].ass_id = AssignmentsForWeek + 1;
 	}
 
 	SetupTimetableDisplay();
