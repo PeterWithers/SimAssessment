@@ -40,6 +40,15 @@ helpListener.onMouseUp = function()
 	}
 	_root.stopHelp();
 	_root.help.gotoAndStop('off');
+	
+	HelpBoxPadding = 20;
+	_root.HelpBox._x = _root._xmouse - _root.HelpBox._width / 2;
+	_root.HelpBox._y = _root._ymouse - _root.HelpBox._height / 2;
+	if (_root.HelpBox._x < HelpBoxPadding) _root.HelpBox._x = HelpBoxPadding;
+	if (_root.HelpBox._y < HelpBoxPadding) _root.HelpBox._y = HelpBoxPadding;
+	if (_root.HelpBox._x + _root.HelpBox._width > 800 - HelpBoxPadding) _root.HelpBox._x = 800 - _root.HelpBox._width - HelpBoxPadding;
+	if (_root.HelpBox._y + _root.HelpBox._height > 600 - HelpBoxPadding) _root.HelpBox._y = 600 - _root.HelpBox._height - HelpBoxPadding;
+
 	_root.HelpBox._visible = true;
 }
 
