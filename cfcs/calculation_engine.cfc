@@ -31,7 +31,9 @@
 
 		<cfloop index="attributescounter" from="1" to="#ArrayLen(get_ass)#">
 			<cfset cur_stateStruct = StructNew()>
-			<cfset result = StructInsert(CFCresult, "#attributescounter#", cur_stateStruct)>
+			<cfif attributescounter eq ArrayLen(get_ass) or get_ass[attributescounter].due_week neq get_ass[attributescounter + 1].due_week>
+<!--- look at this!!! --->			<cfset result = StructInsert(CFCresult, "#attributescounter#", cur_stateStruct)>
+			</cfif>
 		
 			<cfset attributescur_state = attributescounter>
 <!--- NOTES :
@@ -217,12 +219,14 @@
 				else if (student_emotion lt -10)
 					student_emotion = -10;
 					
-				student_workload = abs(((student_emotion + 10) / 4) - 5);
+	
+				student_workload = abs(((student_emotion + 10) / 4) - 5) + (get_ass[attributescounter].which_ass * 0.7);
+				
 				//end calculation to calculate student workload
 				//==============================================================================
 				//==============================================================================	
 				//new calculation for teacher workload
-				penalty_factor = 1;
+				penalty_factor = 3;
 				penalty = (get_ass[attributescounter].which_ass * penalty_factor) - 4;
 				avg_assessment_time = 14 / (ArrayLen(get_ass) + 1);
 				assessment_time_factor = spacing_of_ass - avg_assessment_time - penalty;
@@ -339,11 +343,13 @@
 					sessionpublic_confidence_values = #public_confidence#;
 				else
 					sessionpublic_confidence_values = ListAppend("#sessionpublic_confidence_values#", "#public_confidence#", ",");
-				if (sessionass_weeks_list eq "")
-					sessionass_weeks_list = #get_ass[attributescounter].due_week#; //#qWeek.due_week#; 
-				else
-					sessionass_weeks_list = ListAppend("#sessionass_weeks_list#", "#get_ass[attributescounter].due_week#", ","); //#qWeek.due_week#", ",");
-					
+				if (attributescounter eq ArrayLen(get_ass) or get_ass[attributescounter].due_week neq get_ass[attributescounter + 1].due_week)
+				{
+					if (sessionass_weeks_list eq "")
+						sessionass_weeks_list = #get_ass[attributescounter].due_week#; //#qWeek.due_week#; 
+					else
+						sessionass_weeks_list = ListAppend("#sessionass_weeks_list#", "#get_ass[attributescounter].due_week#", ","); //#qWeek.due_week#", ",");
+				}	
 				result = StructInsert(cur_stateStruct, "sessiongoal_alignment_values", sessiongoal_alignment_values);
 				result = StructInsert(cur_stateStruct, "sessionapproach_to_learning_values", sessionapproach_to_learning_values);
 				result = StructInsert(cur_stateStruct, "sessionteacher_workload_values", sessionteacher_workload_values);
@@ -357,6 +363,24 @@
 			<!---=========================--->
 					
 		</cfloop>
+
+		<!--- add the tweening values to the return struct --->		
+		<cfset tweeningvalues = StructNew()>
+		<!--- insert rhe variables that you want to decay here --->
+		<cfset result = StructInsert(tweeningvalues, "student_workload_decay", -0.1)>
+		<cfset result = StructInsert(tweeningvalues, "goal_alignment_decay", -0.5)>
+		<cfset result = StructInsert(tweeningvalues, "student_emotion_decay", -0.1)>
+		<cfset result = StructInsert(tweeningvalues, "public_confidence_decay", 0)>
+		<cfset result = StructInsert(tweeningvalues, "teacher_workload_decay", 0.1)>
+		<cfset result = StructInsert(tweeningvalues, "feedback_decay", 0.2)>
+		     
+		<cfset result = StructInsert(tweeningvalues, "tween", true)>
+		<cfset result = StructInsert(tweeningvalues, "decay", true)>
+		<cfset result = StructInsert(tweeningvalues, "logdecay", true)>
+		<!--- end add the tweening values to the return struct --->
+		
+		<cfset result = StructInsert(CFCresult, "tweeningvalues", tweeningvalues)>
+
 		<cfreturn CFCresult>
 	</cffunction>
 </cfcomponent>
