@@ -129,7 +129,7 @@
 	
 <cffunction name="create_timetableconfig_table" access="remote">
 		<cftransaction>		
-			<CFQUERY NAME="drop_helptext" DATASOURCE="sim_assess">
+			<!--- 	<CFQUERY NAME="drop_helptext" DATASOURCE="sim_assess">
 				if exists (select * from sysobjects where id = object_id(N'helptext') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
 				drop table helptext
 			</CFQUERY>		
@@ -146,7 +146,7 @@
 				ALTER TABLE helptext WITH NOCHECK ADD
 				CONSTRAINT PK_helptext PRIMARY KEY  CLUSTERED (id)
 			</CFQUERY>			
-			<!--- 	<CFQUERY NAME="drop_FK_timetableconfig_publicusers" DATASOURCE="sim_assess">
+			<CFQUERY NAME="drop_FK_timetableconfig_publicusers" DATASOURCE="sim_assess">
 				if exists (select * from dbo.sysobjects where id = object_id(N'FK_timetableconfig_publicusers') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
 				ALTER TABLE timetableconfig DROP CONSTRAINT FK_timetableconfig_publicusers
 			</CFQUERY>				
