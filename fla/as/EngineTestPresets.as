@@ -10,6 +10,14 @@ function SetUpEngineTestPresets(dropdowntopopulate)
 	Feedback1[3] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 4, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 4, goal_ids: '2'};
 	Feedback1[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 5, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 5, goal_ids: '2'};
 	dropdowntopopulate.addItem('Feedback1', Feedback1);
+	
+			Feedback2 = new Array();
+	Feedback2[0] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 5, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	Feedback2[1] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 4, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 2, goal_ids: '2'};
+	Feedback2[2] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 3, goal_ids: '2'};
+	Feedback2[3] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 2, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 4, goal_ids: '2'};
+	Feedback2[4] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 5, goal_ids: '2'};
+	dropdowntopopulate.addItem('Feedback2', Feedback2);
 
 			StudentWorkload1 = new Array();
 	StudentWorkload1[0] = {ass_id: 4, ass_name: 'Multiple choice questions', due_week: 4, feedback: 1, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
