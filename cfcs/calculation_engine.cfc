@@ -430,12 +430,12 @@
 		
 		* put zero if for variables that you don't want to decay
 		--->
-		<cfset result = StructInsert(tweeningvalues, "student_workload_decay", -0.1)>
-		<cfset result = StructInsert(tweeningvalues, "goal_alignment_decay", 0.0)>
-		<cfset result = StructInsert(tweeningvalues, "student_emotion_decay", -0.1)>
+		<cfset result = StructInsert(tweeningvalues, "student_workload_decay", 0)>
+		<cfset result = StructInsert(tweeningvalues, "goal_alignment_decay", 0)>
+		<cfset result = StructInsert(tweeningvalues, "student_emotion_decay", 0)>
 		<cfset result = StructInsert(tweeningvalues, "public_confidence_decay", 0)>
-		<cfset result = StructInsert(tweeningvalues, "teacher_workload_decay", 0.1)>
-		<cfset result = StructInsert(tweeningvalues, "feedback_decay", 0.2)>
+		<cfset result = StructInsert(tweeningvalues, "teacher_workload_decay", 0)>
+		<cfset result = StructInsert(tweeningvalues, "feedback_decay", -1)>
 		     	 
 		
 		<cfset result = StructInsert(tweeningvalues, "tween", true)>

@@ -110,7 +110,7 @@ function tweenweeks()
 					if (!_root.GraphDisplay.weekdecaylog)
 						currentvalue = currentvalue + eval('_root.GraphDisplay.tweeningvalues.' + tweenable + '_decay') * weeksfromtillassignment;
 					else
-						currentvalue = currentvalue + (eval('_root.GraphDisplay.tweeningvalues.' + tweenable + '_decay') * weeksfromtillassignment) / Math.log(15 - weeksfromtillassignment) / 1.5;
+						currentvalue = currentvalue + (eval('_root.GraphDisplay.tweeningvalues.' + tweenable + '_decay') * weeksfromtillassignment) / (1 + Math.log( weeksfromtillassignment)) / 1.5;
 				}
 				// end add the lack of assignment decay
 			
