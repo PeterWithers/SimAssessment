@@ -11,21 +11,28 @@
 	FROM comments
 	WHERE type = 'student'
 </CFQUERY>
-<cfdump var="#qComments#">
+<cfdump var="#qComments#" label="student">
 
 <CFQUERY NAME="qComments" DATASOURCE="sim_assess">
 	SELECT GoalAlignment_value, ApproachToLearning_value, description
 	FROM comments
 	WHERE type = 'mentor'
 </CFQUERY>
-<cfdump var="#qComments#">
+<cfdump var="#qComments#" label="mentor">
 
 <CFQUERY NAME="qComments" DATASOURCE="sim_assess">
 	SELECT outcome, outcome_value, description
 	FROM comments
 	WHERE type = 'report'
 </CFQUERY>
-<cfdump var="#qComments#">
+<cfdump var="#qComments#" label="report">
+
+<CFQUERY NAME="qComments" DATASOURCE="sim_assess">
+	SELECT distinct outcome
+	FROM comments
+	WHERE type = 'report'
+</CFQUERY>
+<cfdump var="#qComments#" label="report types">
 
 <!--- <CFQUERY NAME="qComments" DATASOURCE="sim_assess">
 	SELECT *
