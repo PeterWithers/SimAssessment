@@ -145,6 +145,43 @@ function SetUpEngineTestPresets(dropdowntopopulate)
 	DistantSpacingWorkload1[1] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
 	dropdowntopopulate.addItem('DistantSpcWorkload1', DistantSpacingWorkload1);	
 	
+	IntenseSpacingWorkload1 = new Array();
+	IntenseSpacingWorkload1[0] = {ass_id: 1, ass_name: 'Essay', due_week: 1, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	IntenseSpacingWorkload1[1] = {ass_id: 1, ass_name: 'Essay', due_week: 2, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	IntenseSpacingWorkload1[2] = {ass_id: 1, ass_name: 'Essay', due_week: 3, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	IntenseSpacingWorkload1[3] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 4, goal_ids: '2'};
+	IntenseSpacingWorkload1[4] = {ass_id: 1, ass_name: 'Essay', due_week: 5, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 5, goal_ids: '2'};
+	IntenseSpacingWorkload1[5] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 6, goal_ids: '2'};
+	IntenseSpacingWorkload1[6] = {ass_id: 1, ass_name: 'Essay', due_week: 7, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 7, goal_ids: '2'};
+	IntenseSpacingWorkload1[7] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 8, goal_ids: '2'};
+	IntenseSpacingWorkload1[8] = {ass_id: 1, ass_name: 'Essay', due_week: 9, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 9, goal_ids: '2'};
+	IntenseSpacingWorkload1[9] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 10, goal_ids: '2'};
+	IntenseSpacingWorkload1[10] = {ass_id: 1, ass_name: 'Essay', due_week: 11, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 11, goal_ids: '2'};
+	IntenseSpacingWorkload1[11] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 12, goal_ids: '2'};
+	IntenseSpacingWorkload1[12] = {ass_id: 1, ass_name: 'Essay', due_week: 13, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 13, goal_ids: '2'};
+	IntenseSpacingWorkload1[13] = {ass_id: 1, ass_name: 'Essay', due_week: 14, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 14, goal_ids: '2'};
+	dropdowntopopulate.addItem('IntenWorkload1', IntenseSpacingWorkload1);		
+	
+	IntenseSpacingWorkload2 = new Array();
+	IntenseSpacingWorkload2[0] = {ass_id: 1, ass_name: 'Essay', due_week: 1, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	IntenseSpacingWorkload2[1] = {ass_id: 1, ass_name: 'Essay', due_week: 3, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	IntenseSpacingWorkload2[2] = {ass_id: 1, ass_name: 'Essay', due_week: 5, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	IntenseSpacingWorkload2[3] = {ass_id: 1, ass_name: 'Essay', due_week: 7, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 4, goal_ids: '2'};
+	IntenseSpacingWorkload2[4] = {ass_id: 1, ass_name: 'Essay', due_week: 9, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 5, goal_ids: '2'};
+	IntenseSpacingWorkload2[5] = {ass_id: 1, ass_name: 'Essay', due_week: 11, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 6, goal_ids: '2'};
+	IntenseSpacingWorkload2[6] = {ass_id: 1, ass_name: 'Essay', due_week: 13, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 7, goal_ids: '2'};
+	dropdowntopopulate.addItem('IntenWorkload2', IntenseSpacingWorkload2);		
+	
+	IntenseSpacingWorkload3 = new Array();
+	IntenseSpacingWorkload3[0] = {ass_id: 1, ass_name: 'Essay', due_week: 2, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 1, goal_ids: '2'};
+	IntenseSpacingWorkload3[1] = {ass_id: 1, ass_name: 'Essay', due_week: 4, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 2, goal_ids: '2'};
+	IntenseSpacingWorkload3[2] = {ass_id: 1, ass_name: 'Essay', due_week: 6, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 3, goal_ids: '2'};
+	IntenseSpacingWorkload3[3] = {ass_id: 1, ass_name: 'Essay', due_week: 8, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 4, goal_ids: '2'};
+	IntenseSpacingWorkload3[4] = {ass_id: 1, ass_name: 'Essay', due_week: 10, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 5, goal_ids: '2'};
+	IntenseSpacingWorkload3[5] = {ass_id: 1, ass_name: 'Essay', due_week: 12, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 6, goal_ids: '2'};
+	IntenseSpacingWorkload3[6] = {ass_id: 1, ass_name: 'Essay', due_week: 14, feedback: 3, marker: 'Peer', weighting: '40% and 60%',  which_ass: 7, goal_ids: '2'};
+	dropdowntopopulate.addItem('IntenWorkload3', IntenseSpacingWorkload3);		
+	
 	//////////////////////////////
 			
 //	'Multiple choice questions'
