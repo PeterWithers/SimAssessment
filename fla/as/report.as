@@ -3,22 +3,36 @@ _root.GetReportValues = function (feedback_values_string)
 	feedback_values_array = feedback_values_string.split(',');
 	itemresult = 0;
 	itemweighting = 1;
-	_root.FinalReportText = _root.FinalReportText + "\n" + feedback_values_array + "\n\nSQRT (\n\t(\n";
+//	_root.FinalReportText = _root.FinalReportText + "\n" + feedback_values_array + "\n\nSQRT (\n\t(\n";
 	for (sessionvalue in feedback_values_array)
 	{
 		itemresult = itemresult + Number(feedback_values_array[sessionvalue]) * Number(feedback_values_array[sessionvalue]) * itemweighting;
-		_root.FinalReportText = _root.FinalReportText + "\t\t( " + feedback_values_array[sessionvalue] + " * " + feedback_values_array[sessionvalue] + " * " + itemweighting + " ) + \n";
+//		_root.FinalReportText = _root.FinalReportText + "\t\t( " + feedback_values_array[sessionvalue] + " * " + feedback_values_array[sessionvalue] + " * " + itemweighting + " ) + \n";
 	}
 	itemresult = itemresult / feedback_values_array.length;
-	_root.FinalReportText = _root.FinalReportText + "\t) / " + feedback_values_array.length + " )\n";
+//	_root.FinalReportText = _root.FinalReportText + "\t) / " + feedback_values_array.length + " )\n";
 	itemresult = Math.sqrt(itemresult);
-	_root.FinalReportText = _root.FinalReportText + itemresult + "\n";
+//	_root.FinalReportText = _root.FinalReportText + itemresult + "\n";
 		
 	itemresult = Math.round(itemresult);
 	if (itemresult > 5) itemresult = 5;
 	if (itemresult < 1) itemresult = 1;
-	_root.FinalReportText = _root.FinalReportText + itemresult + "\n\n";
+	_root.FinalReportText = _root.FinalReportText + "\nRMS " + itemresult + "\n";
 	return (itemresult)
+}
+
+_root.draw_goal_alignment_grid = function()
+{
+	for (things in _root.goal_alignment_array) 
+	{
+		_root.FinalReportText = _root.FinalReportText + things + ": ";
+		for (thing in _root.goal_alignment_array[things]) 
+		{
+			_root.FinalReportText = _root.FinalReportText + _root.goal_alignment_array[things][thing] + " | ";
+//			_root.FinalReportText = _root.FinalReportText + thing + ", ";
+		}
+		_root.FinalReportText = _root.FinalReportText + "\n";
+	}
 }
 
 function GenerateReport(FinalAssessmentData)
@@ -61,32 +75,33 @@ function GenerateReport(FinalAssessmentData)
 
 	ReportApproachToLearning = GetReportValues(_root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionapproach_to_learning_values);
 	_root.FinalReportText = _root.FinalReportText + 
-	'Approach to Learning\n' + ReportApproachToLearning + "\n" +
+	'Approach to Learning\n' +
 		_root.FinalReportArray['Approach to Learning'][ReportApproachToLearning] + '\n\n';
 
 	ReportFeedback = GetReportValues(_root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionfeedback_values);	
 	_root.FinalReportText = _root.FinalReportText + 
-	'Feedback\n' + ReportFeedback + "\n" +
+	'Feedback\n' + // ReportFeedback + "\n" +
 		_root.FinalReportArray['Feedback'][ReportFeedback] + '\n\n';
 
 //	 = GetReportValues(_root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionfeedback_values);	
 	 _root.FinalReportText = _root.FinalReportText + 
-	'Student Workload\n' + _root.PreCalculatedStatesForSemester.reportvalues.ReportStudentWorkload + "\n" +
+	'Student Workload\n' + //_root.PreCalculatedStatesForSemester.reportvalues.ReportStudentWorkload + "\n" +
 		_root.FinalReportArray['Student Workload'][_root.PreCalculatedStatesForSemester.reportvalues.ReportStudentWorkload] + '\n\n';
 
+/*		
 	ReportTeacherWorkload = GetReportValues(_root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionteacher_workload_values);	
 	 _root.FinalReportText = _root.FinalReportText + 
-	'Teacher Workload\n' + ReportTeacherWorkload + "\n" +
+	'Teacher Workload\n' + //ReportTeacherWorkload + "\n" +
 		_root.FinalReportArray['Teacher Workload'][ReportTeacherWorkload] + '\n\n';
 
 	ReportPublicConfidence = GetReportValues(_root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionpublic_confidence_values);	
 	 _root.FinalReportText = _root.FinalReportText + 
-	'Public Confidence\n' + ReportPublicConfidence + "\n" +
+	'Public Confidence\n' + //ReportPublicConfidence + "\n" +
 		_root.FinalReportArray['Public Confidence'][ReportPublicConfidence] + '\n\n';
-
+*/
 //	 = GetReportValues(_root.PreCalculatedStatesForSemester[_root.PreCalculatedStatesForSemester.length - 1].sessionfeedback_values);	
 	 _root.FinalReportText = _root.FinalReportText + 
-	'Goal Alignment\n' + _root.PreCalculatedStatesForSemester.reportvalues.ReportGoalAlignment + "\n" +
+	'Goal Alignment\n' + //_root.PreCalculatedStatesForSemester.reportvalues.ReportGoalAlignment + "\n" +
 		_root.FinalReportArray['Goal Alignment'][_root.PreCalculatedStatesForSemester.reportvalues.ReportGoalAlignment] + '\n\n';
 	
 	// the following are not used in the cfm version
@@ -106,6 +121,8 @@ function GenerateReport(FinalAssessmentData)
 	'Number of Assessment\n' + _root.FinalReportArray['Number of Assessment'][_root.PreCalculatedStatesForSemester.reportvalues.ReportNumberOfAssessment] + '\n\n';
 	_root.FinalReportText = _root.FinalReportText +
 	'Level of Assessment\n' + _root.FinalReportArray['Level of Assessment'][_root.PreCalculatedStatesForSemester.reportvalues.ReportLevelOfAssessment] + '\n\n';
+	
+	_root.draw_goal_alignment_grid();
 }
 		
 		

@@ -1,5 +1,5 @@
 #include "NetServices.as"
-//#include "NetDebug.as"
+// #include "NetDebug.as"
 
 function InitSemester()
 {
@@ -248,6 +248,15 @@ function get_goal_alignment_grid_Status(result)
 }
 function get_goal_alignment_grid_Result(result)
 {
-	_root.get_goal_alignment_grid.result.items;
+//	_root.get_goal_alignment_grid = result.items;
+	_root.goal_alignment_array = new Array();
+	for (resultrow = 0; resultrow < result.items.length; resultrow++) 
+	{
+		if (_root.goal_alignment_array[result.items[resultrow].name] == null) _root.goal_alignment_array[result.items[resultrow].name] = new Array();
+		_root.goal_alignment_array[result.items[resultrow].name][result.items[resultrow].ASS_NAME] = result.items[resultrow].value;
+	}
+//	ASS_NAME
+//	name
+//	value
 	_root.InitSemester();
 }
