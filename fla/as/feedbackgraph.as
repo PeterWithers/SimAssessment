@@ -93,7 +93,7 @@ _root.GraphDisplay.show = function()
 		_root.GraphDisplay.graph.lineTo (rightedge_graph, currentrowheight_graph);
 		
 		// draw increment lines
-		_root.GraphDisplay.graph.lineStyle (1, 0x999999, 30);
+		_root.GraphDisplay.graph.lineStyle (1, 0x999999, 40);
 		for (incrementlines = 1; incrementlines < 5; incrementlines++)
 		{
 			_root.GraphDisplay.graph.moveTo(leftedge_graph, currentrowheight_graph + (rowheight_graph / 5 * incrementlines));
@@ -104,59 +104,85 @@ _root.GraphDisplay.show = function()
 		// exception for student_emotion
 		if (tweenable == "student_emotion")
 		{		
-			for (query_position = 1; query_position < 16; query_position++)
+			// draw the variation based on personality
+			for (Student in _root.Classroom)
 			{
-				_root.GraphDisplay.graph.lineStyle (1, linecolour_graph + 0x000000, 100);
-				_root.GraphDisplay.graph.moveTo(leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + ((calculate_emotion(modify_student_workload(_root.TweenedWeeklyStates[weekgraphpoint + 1]['student_workload'], query_position), modify_feedback(_root.TweenedWeeklyStates[weekgraphpoint + 1]['feedback'], query_position)) + 5) / 2) * 11);
-				for (weekgraphpoint = 1; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + ((calculate_emotion(modify_student_workload(_root.TweenedWeeklyStates[weekgraphpoint + 1]['student_workload'], query_position), modify_feedback(_root.TweenedWeeklyStates[weekgraphpoint + 1]['feedback'], query_position)) + 5) / 2) * 11);
+				if (_root.Classroom[Student].student != null)
+				{
+					personality_workload = _root.Classroom[Student].personality_workload;
+					personality_feedback = _root.Classroom[Student].personality_feedback;
+					
+					_root.GraphDisplay.graph.lineStyle (1, linecolour_graph + 0x999900, 100);
+					_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + (5 - calculate_emotion(Number(_root.TweenedWeeklyStates[1]['student_workload']) + personality_workload, Number(_root.TweenedWeeklyStates[1]['feedback']) + personality_feedback)) * 11);
+					for (weekgraphpoint = 1; weekgraphpoint < 14; weekgraphpoint++) 
+					{
+						_root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (5 - calculate_emotion(Number(_root.TweenedWeeklyStates[weekgraphpoint + 1]['student_workload']) + personality_workload, Number(_root.TweenedWeeklyStates[weekgraphpoint + 1]['feedback']) + personality_feedback)) * 11);
+					}
+				}
 			}
-
-			// draw data			
+			
+			// draw the variation based on personality  limits
+			for (query_position = 0; query_position < 4; query_position++)
+			{
+				switch(query_position)
+				{
+					case 0:
+						personality_workload = -1;
+						personality_feedback = -1;
+						break;
+					case 1:
+						personality_workload = 1;
+						personality_feedback = -1;
+						break;
+					case 2:
+						personality_workload = -1;
+						personality_feedback = 1;
+						break;
+					case 3:
+						personality_workload = 1;
+						personality_feedback = 1;
+						break;
+				}
+				_root.GraphDisplay.graph.lineStyle (1, linecolour_graph + 0x331177, 100);
+				_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + (5 - calculate_emotion(Number(_root.TweenedWeeklyStates[1]['student_workload']) + personality_workload, Number(_root.TweenedWeeklyStates[1]['feedback']) + personality_feedback)) * 11);
+				for (weekgraphpoint = 1; weekgraphpoint < 14; weekgraphpoint++) 
+				{
+					_root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (5 - calculate_emotion(Number(_root.TweenedWeeklyStates[weekgraphpoint + 1]['student_workload']) + personality_workload, Number(_root.TweenedWeeklyStates[weekgraphpoint + 1]['feedback']) + personality_feedback)) * 11);
+				}
+			}
+			
+			// draw the emotion
 			linecolour_graph = linecolour_graph + 0x005522;
 			_root.GraphDisplay.graph.lineStyle (5, linecolour_graph, 100);
-			_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + ((calculate_emotion(_root.TweenedWeeklyStates[weekgraphpoint + 1]['student_workload'], _root.TweenedWeeklyStates[weekgraphpoint + 1]['feedback']) + 5) / 2) * 11);
-			for (weekgraphpoint = 1; weekgraphpoint < 14; weekgraphpoint++) _root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + ((calculate_emotion(_root.TweenedWeeklyStates[weekgraphpoint + 1]['student_workload'], _root.TweenedWeeklyStates[weekgraphpoint + 1]['feedback']) + 5) / 2) * 11);
-			/*
-			// test workload curve
-			for (feedbackpoint = 1; feedbackpoint < 6; feedbackpoint++)
-			{				
-				_root.GraphDisplay.graph.lineStyle (2, 0x11FF11 + feedbackpoint * 40, 100);
-				_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + 0 * 10);
-				for (weekgraphpoint = 0; weekgraphpoint < 6; weekgraphpoint++) 
-					_root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (calculate_emotion(weekgraphpoint, feedbackpoint)) * 10);
-			}
-			*/
-			/*
-			// test feedback curve
-			_root.GraphDisplay.graph.lineStyle (2, 0x1111FF, 100);
-			_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + 0 * 10);
-			for (weekgraphpoint = 0; weekgraphpoint < 6; weekgraphpoint++) 
-				_root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (((weekgraphpoint - 1) * 2.5) -5) * 10);
-			*/
+			_root.GraphDisplay.graph.moveTo (leftedge_graph + offset_graph + (width_graph / 14) * 0, currentrowheight_graph + (5 - calculate_emotion(_root.TweenedWeeklyStates[1]['student_workload'], _root.TweenedWeeklyStates[1]['feedback'])) * 11);
+			for (weekgraphpoint = 1; weekgraphpoint < 14; weekgraphpoint++) 
+			{
+				_root.GraphDisplay.graph.lineTo (leftedge_graph + offset_graph + (width_graph / 14) * weekgraphpoint, currentrowheight_graph + (5 - calculate_emotion(_root.TweenedWeeklyStates[weekgraphpoint + 1]['student_workload'], _root.TweenedWeeklyStates[weekgraphpoint + 1]['feedback'])) * 11);
+			}		
 			
 			// label the emotions
-			EmotionValue = 4;
-			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			EmotionValue = 5;
+			EmotionY = currentrowheight_graph + (5 - EmotionValue) * 11;
 			_root.GraphDisplay.graph.createTextField("Happy", currentrow_graph * 14 + 1, rightedge_graph - 33, EmotionY - 10, 33, 20);
 			_root.GraphDisplay.graph.Happy.text = "Happy";
 
-			EmotionValue = 2;
-			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			EmotionValue = 4;
+			EmotionY = currentrowheight_graph + (5 - EmotionValue) * 11;
 			_root.GraphDisplay.graph.createTextField("Stressed", currentrow_graph * 14 + 2, rightedge_graph - 33, EmotionY - 10, 33, 20);
 			_root.GraphDisplay.graph.Stressed.text = "Stressed";
 			
-			EmotionValue = 0;
-			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			EmotionValue = 3;
+			EmotionY = currentrowheight_graph + (5 - EmotionValue) * 11;
 			_root.GraphDisplay.graph.createTextField("Neutral", currentrow_graph * 14 + 3, rightedge_graph - 33, EmotionY - 10, 33, 20);
 			_root.GraphDisplay.graph.Neutral.text = "Neutral";
 			
-			EmotionValue = -2;
-			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			EmotionValue = 2;
+			EmotionY = currentrowheight_graph + (5 - EmotionValue) * 11;
 			_root.GraphDisplay.graph.createTextField("Anxious", currentrow_graph * 14 + 4, rightedge_graph - 33, EmotionY - 10, 33, 20);
 			_root.GraphDisplay.graph.Anxious.text = "Anxious";
 			
-			EmotionValue = -4;
-			EmotionY = currentrowheight_graph + ((EmotionValue + 5) / 2) * 11;
+			EmotionValue = 1;
+			EmotionY = currentrowheight_graph + (5 - EmotionValue) * 11;
 			_root.GraphDisplay.graph.createTextField("Depressed", currentrow_graph * 14 + 5, rightedge_graph - 33, EmotionY - 10, 33, 20);
 			_root.GraphDisplay.graph.Depressed.text = "Depressed";
 		}

@@ -9,7 +9,8 @@ function SetUpClass()
 		if (_root.Classroom[Student].student != null)
 		{
 			_root.StudentsInClassroom.push(_root.Classroom[Student]);
-			_root.Classroom[Student].personality = Math.ceil(Math.random() * 15);
+			_root.Classroom[Student].personality_workload = Math.random() * 2 - 1;
+			_root.Classroom[Student].personality_feedback = Math.random() * 2 - 1;
 			// the following has been added to use the description, description1, description2 fields that Lawrence added.
 			// there is a lack of clarity on how this fits with the personality 
 			_root.Classroom[Student].type = Math.ceil(Math.random() * 3);
@@ -82,37 +83,36 @@ function GoForwardOneWeek()
 	}
 }
 
-function modify_feedback(attributesfeedback, query_position)
+function calculate_emotion(calculate_emotion_workload, calculate_emotion_feedback)
 {
-	return Math.round(attributesfeedback) + _root.Class_CharacteristicsArray[query_position].feedback;
-}
+	calculate_emotion_workload = Number(calculate_emotion_workload);
+	calculate_emotion_feedback = Number(calculate_emotion_feedback);
 
-function modify_student_workload(attributesstudent_workload, query_position)
-{
-	return (Math.round(attributesstudent_workload) + _root.Class_CharacteristicsArray[query_position].student_workload);
-}
-
-function calculate_emotion(modified_student_workload, modified_feedback)
-{
+	if (calculate_emotion_workload < 1) calculate_emotion_workload = 1;
+	if (calculate_emotion_workload > 5) calculate_emotion_workload = 5;
+	if (calculate_emotion_feedback < 1) calculate_emotion_feedback = 1;
+	if (calculate_emotion_feedback > 5) calculate_emotion_feedback = 5;
 	// good for 0 - 5
-//	modified_student_emotion = ((Math.abs(modified_student_workload * 1.47 - 5) * 4) - 10);
+//	calculated_student_emotion = ((Math.abs(calculate_emotion_workload * 1.47 - 5) * 4) - 10);
 	// good for 1 - 5
-	modified_student_emotion = ((Math.abs(modified_student_workload - 3) * 5) - 5);
-	if (modified_student_emotion > 5) modified_student_emotion = 5;
-	if (modified_student_emotion < -5) modified_student_emotion = -5;
+//	calculated_student_emotion = ((Math.abs(calculate_emotion_workload - 3) * 5) - 5);
+//	if (calculated_student_emotion > 5) calculated_student_emotion = 5;
+//	if (calculated_student_emotion < -5) calculated_student_emotion = -5;
 	
 	// calculate the feedback into the equation
-	modified_student_emotion = modified_student_emotion + ((modified_feedback - 1) * 2.5) -5;
-	modified_student_emotion = modified_student_emotion / 2;
+//	calculated_student_emotion = calculated_student_emotion + ((calculate_emotion_feedback - 1) * 2.5) -5;
+//	calculated_student_emotion = calculated_student_emotion / 2;
+
+	calculated_student_emotion = (calculate_emotion_workload + calculate_emotion_feedback) / 2;
 	
-	if (modified_student_emotion > 5) modified_student_emotion = 5;
-	if (modified_student_emotion < -5) modified_student_emotion = -5;
-	
-	return modified_student_emotion;
+	if (calculated_student_emotion > 5) calculated_student_emotion = 5;
+	if (calculated_student_emotion < 1) calculated_student_emotion = 1;
+
+	return Math.round(calculated_student_emotion);
 }
 
 
-function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attributesstudent_workload, AssessmentThisWeek)	
+function gererateClassState(current_weeks_feedback, attributesSEMESTER_RUNNING, current_weeks_workload, AssessmentThisWeek)	
 {
 	trace('gererateClassState(' + attributesfeedback + ' , ' + attributesSEMESTER_RUNNING + ' , ' + attributesstudent_workload + ')');
     happyCount = 0;
@@ -120,6 +120,7 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 	neutralCount = 0;
     anxiousCount = 0;
 	depressedCount = 0;
+	
 		
 	if (attributesSEMESTER_RUNNING == true)
 	{
@@ -127,13 +128,11 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 //	<!--- the code below is to generate the class emotion. to generate 15 different student. --->
 		for (class_counter = 0; class_counter < NumberOfStudents; class_counter++)
 		{
-			query_position = _root.StudentsInClassroom[class_counter].personality;//assign the random query position -> pick up random student..... according to the associated session variable
-			//calculate new student workload value for a particular student
-			modified_student_workload = modify_student_workload(attributesstudent_workload, query_position);
-			//calculate new feedback value for a particular student
-			modified_feedback = modify_feedback(attributesfeedback, query_position);
-			//calculate new student emotion value.. this is the inverse of generating student workload
-			modified_student_emotion = calculate_emotion(modified_student_workload, modified_feedback);
+			//calculate new student workload and feedback values for the current student			
+			personal_workload = Math.round(Number(current_weeks_workload) + _root.StudentsInClassroom[class_counter].personality_workload);
+			personal_feedback = Math.round(Number(current_weeks_feedback) + _root.StudentsInClassroom[class_counter].personality_feedback);
+			
+			personal_emotion = calculate_emotion(personal_workload, personal_feedback);
 
 				// emotion should be workload and feedback 
 				// where feedback is a linear relationship
@@ -144,39 +143,37 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 				// graph personalities in grey to indicate personality offset
 				
 					//		<!--- make sure that all value ranges from 1-5 --->
-			if (Math.round(modified_student_workload) == 0) modified_student_workload = 1;
-			else if (Math.round(modified_student_workload) > 5) modified_student_workload = 5;
+			if (personal_workload == 0) personal_workload = 1;
+			else if (personal_workload > 5) personal_workload = 5;
 			
-			if (Math.round(modified_feedback) == 0) modified_feedback = 1;
-			else if (Math.round(modified_feedback) > 5) modified_feedback = 5;
+			if (personal_feedback == 0) personal_feedback = 1;
+			else if (personal_feedback > 5) personal_feedback = 5;
 				
 	//		<!--- find the appropriate comment for student --->
-			qStudentcomment = _root.StudentCommentsArray[Math.round(modified_student_workload)][Math.round(modified_feedback)];
+			qStudentcomment = _root.StudentCommentsArray[personal_workload][personal_feedback];
 					
-			if (modified_student_emotion >= 3)
+			switch(personal_emotion)
 			{
-				student_image = "happy";
-				happyCount++;
-			}
-			else if ((modified_student_emotion > 0) and (modified_student_emotion < 3)) 
-			{
-				student_image = "stressed";
-				stressedCount++;
-			}
-			else if (modified_student_emotion == 0) 
-			{
-				student_image = "neutral";
-				neutralCount++;
-			}
-			else if ((modified_student_emotion > -3) and (modified_student_emotion < 0)) 
-			{
-				student_image = "anxious";
-				anxiousCount++;
-			}
-			else if (modified_student_emotion < -3) 
-			{
-				student_image = "depressed";
-				depressedCount++;
+				case 5:		
+					student_image = "happy";
+					happyCount++;
+					break;
+				case 4:
+					student_image = "stressed";
+					stressedCount++;
+					break;
+				case 3:
+					student_image = "neutral";
+					neutralCount++;
+					break;
+				case 2:
+					student_image = "anxious";
+					anxiousCount++;
+					break;
+				case 1:
+					student_image = "depressed";
+					depressedCount++;
+					break;
 			}
 			
 			trace('updating states of students');
@@ -185,14 +182,14 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 			
 			if(AssessmentThisWeek)
 			{
-				trace('CurrentWeekInSemester: ' + [_root.CurrentWeekInSemester] + ' modified_student_workload: ' + [Math.round(modified_student_workload)] + ' modified_feedback: ' + [Math.round(modified_feedback)] + ' type: ' + [_root.StudentsInClassroom[class_counter].type]);
+				// give each comment only once
 				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester] = new Array();
-				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)] = new Array();
-				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] = new Array();
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][personal_workload] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][personal_workload] = new Array();
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][personal_workload][personal_feedback] == null) _root.StudentDoneWeeks[_root.CurrentWeekInSemester][personal_workload][personal_feedback] = new Array();
 				
-				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)][_root.StudentsInClassroom[class_counter].type] == null)
+				if (_root.StudentDoneWeeks[_root.CurrentWeekInSemester][personal_workload][personal_feedback][_root.StudentsInClassroom[class_counter].type] == null)
 				{
-					_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)][_root.StudentsInClassroom[class_counter].type] = 1;
+					_root.StudentDoneWeeks[_root.CurrentWeekInSemester][personal_workload][personal_feedback][_root.StudentsInClassroom[class_counter].type] = 1;
 					trace('using comment');	
 					if (qStudentcomment.description != null and qStudentcomment.description != '' and _root.StudentsInClassroom[class_counter].type == 1)
 					{
@@ -222,7 +219,6 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 		trace('first week');
 		for (class_counter = 0; class_counter < NumberOfStudents; class_counter++)
 		{
-			query_position = _root.StudentsInClassroom[class_counter].personality;
 			student_image = "neutral";
 			_root.StudentsInClassroom[class_counter].gotoAndStop(student_image);
 			_root.StudentsInClassroom[class_counter].feedback = 'When does the semester start?';
