@@ -264,10 +264,16 @@ function SetUpPresets(dropdowntopopulate)
 	MultiSetup[9] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: 2,  which_ass: 10, goal_ids: '8,14'};
 	MultiSetup[10] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: 2,  which_ass: 11, goal_ids: '8,14'};
 	
+	PetersKsGoodSetup = new Array();
+	PetersKsGoodSetup[0] = { goal_ids: "4", which_ass: 1, weighting: 1, marker: "Self", feedback: 3, due_week: 4, ass_name: "Short answer question", ass_id: 5 };
+	PetersKsGoodSetup[1] = { goal_ids: "7", which_ass: 2, weighting: 2, marker: "Peer", feedback: 4, due_week: 8, ass_name: "Class presentation", ass_id: 9 };
+	PetersKsGoodSetup[2] = { goal_ids: "10", which_ass: 3, weighting: 3, marker: "Teacher", feedback: 2, due_week: 12, ass_name: "Report", ass_id: 3 };
+	
 	dropdowntopopulate.addItem('Blank Setup', 1);
 	dropdowntopopulate.addItem('Good Setup', GoodSetup);
 	dropdowntopopulate.addItem('Bad Setup', BadSetup);
-	dropdowntopopulate.addItem('Multi per Week', MultiSetup);
+	dropdowntopopulate.addItem('Good Setup (Peter K)', PetersKsGoodSetup);
+//	dropdowntopopulate.addItem('Multi per Week', MultiSetup);
 	//Presets.addItem('cfm setup', cfmSetup);
 	//Presets.addItem('Happy Setup', happySetup);
 	//Presets.addItem('error', 1);
