@@ -138,6 +138,7 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 				depressedCount++;
 			}
 			
+			trace('updating states of students');
 			_root.StudentsInClassroom[class_counter].gotoAndStop(student_image);
 			_root.StudentsInClassroom[class_counter].feedback = qStudentcomment.description;
 			
