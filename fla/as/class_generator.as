@@ -79,6 +79,37 @@ function GoForwardOneWeek()
 		_root.ProccessingOneAtATime = false;
 	}
 }
+
+function modify_feedback(attributesfeedback, query_position)
+{
+	return Math.round(attributesfeedback) + _root.Class_CharacteristicsArray[query_position].feedback;
+}
+
+function modify_student_workload(attributesstudent_workload, query_position)
+{
+	return (Math.round(attributesstudent_workload) + _root.Class_CharacteristicsArray[query_position].student_workload);
+}
+
+function calculate_emotion(modified_student_workload, modified_feedback)
+{
+	// good for 0 - 5
+//	modified_student_emotion = ((Math.abs(modified_student_workload * 1.47 - 5) * 4) - 10);
+	// good for 1 - 5
+	modified_student_emotion = ((Math.abs(modified_student_workload - 3) * 5) - 5);
+	if (modified_student_emotion > 5) modified_student_emotion = 5;
+	if (modified_student_emotion < -5) modified_student_emotion = -5;
+	
+	// calculate the feedback into the equation
+	modified_student_emotion = modified_student_emotion + ((modified_feedback - 1) * 2.5) -5;
+	modified_student_emotion = modified_student_emotion / 2;
+	
+	if (modified_student_emotion > 5) modified_student_emotion = 5;
+	if (modified_student_emotion < -5) modified_student_emotion = -5;
+	
+	return modified_student_emotion;
+}
+
+
 function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attributesstudent_workload, AssessmentThisWeek)	
 {
 	trace('gererateClassState(' + attributesfeedback + ' , ' + attributesSEMESTER_RUNNING + ' , ' + attributesstudent_workload + ')');
@@ -96,13 +127,21 @@ function gererateClassState(attributesfeedback, attributesSEMESTER_RUNNING, attr
 		{
 			query_position = _root.StudentsInClassroom[class_counter].personality;//assign the random query position -> pick up random student..... according to the associated session variable
 			//calculate new student workload value for a particular student
-			modified_student_workload = Math.round(attributesstudent_workload) + _root.Class_CharacteristicsArray[query_position].student_workload;
+			modified_student_workload = modify_student_workload(attributesstudent_workload, query_position);
 			//calculate new feedback value for a particular student
-			modified_feedback = Math.round(attributesfeedback) + _root.Class_CharacteristicsArray[query_position].feedback;
+			modified_feedback = modify_feedback(attributesfeedback, query_position);
 			//calculate new student emotion value.. this is the inverse of generating student workload
-			modified_student_emotion = (Math.abs(modified_student_workload - 5) * 4) - 10;
+			modified_student_emotion = calculate_emotion(modified_student_workload, modified_feedback);
+
+				// emotion should be workload and feedback 
+				// where feedback is a linear relationship
+				// and workload is a bell curve
+				// all values except emotion are 0 - 5 so the auto range graph can be removed
+				// assignmet spacing algor
+				// graph starts at 2.5 
+				// graph personalities in grey to indicate personality offset
 				
-	//		<!--- make sure that all value ranges from 1-5 --->
+					//		<!--- make sure that all value ranges from 1-5 --->
 			if (Math.round(modified_student_workload) == 0) modified_student_workload = 1;
 			else if (Math.round(modified_student_workload) > 5) modified_student_workload = 5;
 			
