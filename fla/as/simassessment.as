@@ -8,6 +8,7 @@
 #include "as/studentNoHands.as"
 #include "as/feedbackgraph.as"
 #include "as/email.as"
+#include "as/SaveLoad.as"
 
 _root.messagepopup.messagetext.text = ''
 function OkMessageBox(messagetext)
@@ -15,7 +16,15 @@ function OkMessageBox(messagetext)
 	_root.messagepopup.gotoAndStop('ok');
 	_root.messagepopup._visible = true;
 	_root.messagepopup.messagetext.text = messagetext;
-	_root.messagepopup.start.onRelease = function() {_root.messagepopup._visible = false;}
+	_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
+	_root.messagepopup.ok.onRelease = function() {_root.RemoveMessageBox();}
+}
+function SavingMessageBox(messagetext)
+{
+	_root.messagepopup.gotoAndStop('saving');
+	_root.messagepopup._visible = true;
+	_root.messagepopup.messagetext.text = messagetext; //_root.messagepopup.messagetext.text + messagetext + '\n';
+	_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
 }
 function MessageBox(messagetext)
 {
@@ -30,7 +39,8 @@ function ErrorMessageBox(messagetext)
 	_root.ErrorMessageShowing = true;
 	_root.messagepopup.gotoAndPlay('error');
 	_root.messagepopup._visible = true;
-	_root.messagepopup.messagetext.text = _root.messagepopup.messagetext.text + messagetext + '\n';
+	_root.ErrorMessages = _root.ErrorMessages + messagetext + '\n';
+	_root.messagepopup.messagetext.text = _root.ErrorMessages;
 	_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
 	_root.StopSemester();
 }
@@ -52,7 +62,7 @@ function UserNameRequestBox()
 			{
 				_root.UserName = _root.messagepopup.UserName.text;
 				_root.SetUpClass();
-				_root.messagepopup._visible = false;
+				_root.RemoveMessageBox();
 			}
 		}
 	}
@@ -63,6 +73,12 @@ function RemoveMessageBox()
 	{
 		_root.messagepopup._visible = false;
 		_root.messagepopup.messagetext = '';
+	}else{
+		_root.messagepopup.gotoAndPlay('error');
+		_root.messagepopup._visible = true;
+		_root.messagepopup.messagetext.text = _root.ErrorMessages;
+		_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
+		_root.StopSemester();
 	}
 }
 function ClearPreviousWeeks()
@@ -213,53 +229,12 @@ function CloseDialogues()
 	_root.mentorpopup._visible = false;
 }
 
-cfmSetup = new Array();
-cfmSetup[0] = {ASS_ID: 7, ASS_NAME: 'Project', DUE_WEEK: 2, FEEDBACK: 1, MARKER: 'Self', WEIGHTING: '40% and 60%', WHICH_ASS: 1, goal_ids: '2'};
-cfmSetup[1] = {ASS_ID: 12, ASS_NAME: 'Case studies', DUE_WEEK: 3, FEEDBACK: 1, MARKER: 'Self', WEIGHTING: '40% and 60%', WHICH_ASS: 2, goal_ids: '2'};
-cfmSetup[2] = {ASS_ID: 11, ASS_NAME: 'Reflective journals', DUE_WEEK: 5, FEEDBACK: 1, MARKER: 'Self', WEIGHTING: 'Less than 20%', WHICH_ASS: 3, goal_ids: '2'};
-cfmSetup[3] = {ASS_ID: 3, ASS_NAME: 'Report', DUE_WEEK: 7, FEEDBACK: 1, MARKER: 'Self', WEIGHTING: 'Less than 20%', WHICH_ASS: 4, goal_ids: '2'};
-cfmSetup[4] = {ASS_ID: 1, ASS_NAME: 'Essay', DUE_WEEK: 10, FEEDBACK: 1, MARKER: 'Self', WEIGHTING: 'Less than 20%', WHICH_ASS: 5, goal_ids: '2'};
-
-BadSetup = new Array();
-BadSetup[0] = {ASS_ID: 7, ASS_NAME: 'Project', DUE_WEEK: 2, FEEDBACK: 1, MARKER: 'Self', WEIGHTING: '40% and 60%', WHICH_ASS: 1, goal_ids: '2'};
-BadSetup[1] = {ASS_ID: 12, ASS_NAME: 'Case studies', DUE_WEEK: 3, FEEDBACK: 1, MARKER: 'Self', WEIGHTING: '40% and 60%', WHICH_ASS: 2, goal_ids: '2'};
-BadSetup[2] = {ASS_ID: 3, ASS_NAME: 'Report', DUE_WEEK: 7, FEEDBACK: 1, MARKER: 'Self', WEIGHTING: 'Less than 20%', WHICH_ASS: 4, goal_ids: '2'};
-BadSetup[3] = {ASS_ID: 1, ASS_NAME: 'Essay', DUE_WEEK: 10, FEEDBACK: 1, MARKER: 'Self', WEIGHTING: 'Less than 20%', WHICH_ASS: 5, goal_ids: '2'};
-
-happySetup = new Array();
-happySetup[0] = {ASS_ID: 5, ASS_NAME: 'Short answer question', DUE_WEEK: 5, FEEDBACK: 5, MARKER: 'Teacher', WEIGHTING: 'Less than 20%', WHICH_ASS: 1, goal_ids: '2'};
-happySetup[1] = {ASS_ID: 1, ASS_NAME: 'Essay', DUE_WEEK: 10, FEEDBACK: 5, MARKER: 'Teacher', WEIGHTING: '20% and 40%', WHICH_ASS: 2, goal_ids: '2'};
-happySetup[2] = {ASS_ID: 11, ASS_NAME: 'Reflective journals', DUE_WEEK: 14, FEEDBACK: 5, MARKER: 'Teacher', WEIGHTING: '40% and 60%', WHICH_ASS: 3, goal_ids: '2'};
-
-GoodSetup = new Array();
-GoodSetup[0] = {ASS_ID: 5, ASS_NAME: 'Short answer question', DUE_WEEK: 4, FEEDBACK: 2, MARKER: 'Teacher', WEIGHTING: 'Less than 20%',  WHICH_ASS: 1, goal_ids: '2'};
-GoodSetup[1] = {ASS_ID: 3, ASS_NAME: 'Report', DUE_WEEK: 8, FEEDBACK: 2, MARKER: 'Teacher', WEIGHTING: '20% and 40%',  WHICH_ASS: 2, goal_ids: '8'};
-GoodSetup[2] = {ASS_ID: 11, ASS_NAME: 'Reflective journals', DUE_WEEK: 13, FEEDBACK: 2, MARKER: 'Teacher', WEIGHTING: '20% and 40%',  WHICH_ASS: 3, goal_ids: '8,14'};
-
-function PresetsOnChangeHandler()
-{
-	_root.calculation_engine_called = false;
-	_root.StopSemester();
-//	_root.ClearPreviousWeeks();
-	_root.WeekOfAssignments = _root.Presets.getSelectedItem().data;
-	_root.Call_calculation_engineService();
-	_root.timetable.SetupTimetableDisplay();
-}
-
-Presets.addItem('Blank Setup', 1);
-Presets.addItem('Good Setup', GoodSetup);
-Presets.addItem('Bad Setup', BadSetup);
-//Presets.addItem('cfm setup', cfmSetup);
-//Presets.addItem('Happy Setup', happySetup);
-//Presets.addItem('error', 1);
-Presets.setChangeHandler('PresetsOnChangeHandler', _root);
-
 StopSemester();
 
 /*
 _root.get_ass.due_week[cur_state];
 {
-  ASS_ID ASS_NAME DUE_WEEK FEEDBACK MARKER WEIGHTING WHICH_ASS 
+  ass_id ass_name due_week feedback marker weighting which_ass 
 1 7  Project  2  1  Self  Between 40 and 60  1  
 2 12  Case studies  3  1  Self  Between 40 and 60  2  
 3 11  Reflective journals  5  1  Self  Less than 20  3  
