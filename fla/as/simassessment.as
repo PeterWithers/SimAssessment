@@ -104,19 +104,21 @@ function DisableControlsFunction()
 	_root.email.InBoxGrid.enabled = false;
 	_root.email.OutBoxGrid.enabled = false;
 	_root.clock.gotoAndStop("pause");
+	_root.timetable.WeekButtonCover._visible = true;
 }
 function EnableControlsFunction()
 {
 	_root.DisableControls = false;
 	_root.Presets.enabled = true;	
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.enabled = true;
-_root.timetable.EditAssignment.AssessmentType.enabled = true;
+	_root.timetable.EditAssignment.AssessmentType.enabled = true;
 	_root.timetable.EditAssignment.AssignmentWorkload.enabled = true;
 	_root.timetable.EditAssignment.FeedbackType.enabled = true;
 	_root.timetable.EditAssignment.MarkerType.enabled = true;
 	for (CheckBoxItem in _root.timetable.EditAssignment.SubjectOutlineGoals) _root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].enabled = true;
 	_root.email.InBoxGrid.enabled = true;
 	_root.email.OutBoxGrid.enabled = true;
+	_root.timetable.WeekButtonCover._visible = false;
 }
 
 function ShowDebugInfo()
