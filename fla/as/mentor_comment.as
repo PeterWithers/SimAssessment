@@ -1,13 +1,16 @@
 _root.MentorDoneWeeks = new Array();
 
-//<!--- THE CODE BELOW IS TO GENERATE THE mentor comment --->
-function SetupMentorCommentsForWeek(mentor_approach_to_learning, mentor_goal_alignment, AssessmentThisWeek)
+function SetupMentorCommentsForWeek(mentor_teacher_workload, mentor_goal_alignment, AssessmentThisWeek)
 {	
-	trace('SetupMentorCommentsForWeek('+mentor_approach_to_learning+', '+mentor_goal_alignment+')');
-	MentorComments = '';
-	if  (_root.MentorCommentsArray[mentor_goal_alignment][Math.round(mentor_approach_to_learning)] != null)
-		MentorComments = MentorComments + _root.MentorCommentsArray[mentor_goal_alignment][Math.round(mentor_approach_to_learning)];
-
+	MentorComments = "";
+	if (_root.EngineTest == true)
+	{
+		MentorComments = "mentor_teacher_workload: " + mentor_teacher_workload + "\nmentor_goal_alignment: " + mentor_goal_alignment + "\nAssessmentThisWeek: " + AssessmentThisWeek + "\n";
+		MentorComments = MentorComments  + "mentor_teacher_workload: " + Math.round(mentor_teacher_workload) + "\nmentor_goal_alignment: " + Math.round(mentor_goal_alignment) + "\n";
+	}
+	if  (_root.MentorCommentsArray[Math.round(mentor_goal_alignment)][Math.round(mentor_teacher_workload)] != null)
+		MentorComments = MentorComments + _root.MentorCommentsArray[Math.round(mentor_goal_alignment)][Math.round(mentor_teacher_workload)];
+	else MentorComments = MentorComments + "There are no comments for this week.";
 	_root.mentorpopup.mentorSpeech.htmlText = MentorComments;
 
 	if (_root.MentorDoneWeeks[_root.CurrentWeekInSemester] == null and AssessmentThisWeek)
