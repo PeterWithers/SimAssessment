@@ -31,8 +31,7 @@
 <cffunction name="get_studentcomments" access="remote" returntype="query" displayname="get_studentcomments" hint="Returns information about all buildings" output="no">
         <CFQUERY NAME="qComments" DATASOURCE="sim_assess">
 			SELECT student_workload_value, feedback_value, description, description2, description3
-			FROM comments
-			WHERE type = 'student'
+			FROM StudentComments
         </CFQUERY>
         <cfreturn qComments>
 </cffunction>
