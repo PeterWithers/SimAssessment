@@ -38,11 +38,21 @@ _root.draw_goal_alignment_grid = function()
 function GenerateReport(FinalAssessmentData)
 {
 	trace('GenerateReport()');
+	_root.FinalReportText = "";
+	
 /*	for (Student in _root.Classroom)
 	{
 		_root.Classroom[Student].gotoAndStop('neutral');
 		_root.Classroom[Student].feedback = 'What does the report say?';
 	}	*/
+	
+	
+	for (ReportItem in _root.PreCalculatedStatesForSemester.reportvalues)
+	{
+		_root.FinalReportText = _root.FinalReportText + ReportItem + ": " + _root.PreCalculatedStatesForSemester.reportvalues[ReportItem] + "\n\n";
+	}
+	
+	
 		
 	for (ReportItem in _root.PreCalculatedStatesForSemester.reportvalues)
 	{
@@ -50,8 +60,6 @@ function GenerateReport(FinalAssessmentData)
 		if (_root.PreCalculatedStatesForSemester.reportvalues[ReportItem] > 5) _root.PreCalculatedStatesForSemester.reportvalues[ReportItem] = 5;
 		if (_root.PreCalculatedStatesForSemester.reportvalues[ReportItem] < 1) _root.PreCalculatedStatesForSemester.reportvalues[ReportItem] = 1;
 	}
-	
-	_root.FinalReportText = "";
 
 	/*
 	CalculatedAssessment [5]
@@ -121,7 +129,7 @@ function GenerateReport(FinalAssessmentData)
 	'Number of Assessment\n' + _root.FinalReportArray['Number of Assessment'][_root.PreCalculatedStatesForSemester.reportvalues.ReportNumberOfAssessment] + '\n\n';
 	_root.FinalReportText = _root.FinalReportText +
 	'Level of Assessment\n' + _root.FinalReportArray['Level of Assessment'][_root.PreCalculatedStatesForSemester.reportvalues.ReportLevelOfAssessment] + '\n\n';
-	
+
 	_root.draw_goal_alignment_grid();
 }
 		
