@@ -17,8 +17,9 @@ function InitSemester()
 	if (_root.RequiredCFCResults < 1)
 	{		
 		if (_root.UserName != null) _root.RemoveMessageBox();
-		else _root.UserNameRequestBox();		
+		else _root.startwizard();		
 		_root.RecalculateExistingWeeks();
+		if (_root.EngineTest == true) _root.GraphDisplay.show();
 	}
 }
 
