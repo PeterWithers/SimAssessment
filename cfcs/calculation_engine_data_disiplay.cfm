@@ -89,7 +89,7 @@ FROM new_feedback_type
 - if the values from "new_goal_alignment2" less than those from "new_goal_alignment1" => not aligned
   else => aligned
 --->
-<CFQUERY NAME="qAlign1" DATASOURCE="sim_assess">
+<!--- <CFQUERY NAME="qAlign1" DATASOURCE="sim_assess">
 SELECT *
 FROM new_goal_alignment1
 group by NAME, FAC_ID, ID, VALUE 
@@ -121,9 +121,79 @@ group by NAME, FAC_ID, ID, VALUE
 	</cfoutput>
 </table>
 <br>
+<br> --->
+
+<CFQUERY NAME="FacultyTypeTasks" DATASOURCE="sim_assess">
+	select faculty_id, autonomy, citizenship, communicative, contextual, knowledgeliteracy, responsive, subjectlevel, technical 
+	from FacultyTypeTasks order by FACULTY_ID
+</CFQUERY>
+
+<cfdump var="#FacultyTypeTasks#" label="FacultyTypeTasks">
+<br>
 <br>
 
-<CFQUERY NAME="qAlign2" DATASOURCE="sim_assess">
+<CFQUERY NAME="AssignmentTypeTasks" DATASOURCE="sim_assess">
+	select ass_name, autonomy, citizenship, communicative, contextual, knowledgeliteracy, responsive, technical, workload
+	from AssignmentTypeTasks, new_assessment
+	where Assignment_id = ass_id
+</CFQUERY>
+<cfdump var="#AssignmentTypeTasks#" label="AssignmentTypeTasks">
+<br>
+<br>
+
+<CFQUERY NAME="FacultyAssignmentTypeTasks" DATASOURCE="sim_assess">
+			SELECT (FacultyTypeTasks.autonomy - AssignmentTypeTasks.autonomy) as autonomy,
+			(FacultyTypeTasks.citizenship - AssignmentTypeTasks.citizenship) as citizenship,
+			(FacultyTypeTasks.communicative - AssignmentTypeTasks.communicative) as communicative,
+			(FacultyTypeTasks.contextual - AssignmentTypeTasks.contextual) as contextual,
+			(FacultyTypeTasks.knowledgeliteracy - AssignmentTypeTasks.knowledgeliteracy) as knowledgeliteracy,
+			(FacultyTypeTasks.responsive - AssignmentTypeTasks.responsive) as responsive,
+			(FacultyTypeTasks.technical - AssignmentTypeTasks.technical) as technical,
+			(FacultyTypeTasks.subjectlevel - AssignmentTypeTasks.workload) as workload
+			FROM FacultyTypeTasks, AssignmentTypeTasks
+			WHERE FACULTY_ID = 2
+			and Assignment_id = 5
+</CFQUERY>
+
+<cfdump var="#FacultyAssignmentTypeTasks#" label="FacultyAssignmentTypeTasks">
+<br>
+<br> 
+
+<!--- <CFQUERY NAME="qAlign1a" DATASOURCE="sim_assess">
+SELECT *
+FROM new_goal_alignment1
+group by FAC_ID, NAME, ID, VALUE 
+order by FAC_ID, NAME, ID, VALUE
+<!--- WHERE fac_id = #sessionsubjectid# --->
+</CFQUERY>
+
+<table class="tablestyle">
+	<th colspan="10">new_goal_alignment1</th>
+	<tr bgcolor="eeaaaa">
+		<td rowspan="2">&nbsp;FAC_ID (always 2)</td>
+		<td colspan="10" align="center">NAME</td>
+	</tr>
+	<tr bgcolor="eeaaaa">
+		<!--- <td>&nbsp;</td> --->
+		<cfoutput query="qAlign1a" group="FAC_ID" maxrows=1>
+			<cfoutput>
+				<td>#NAME#</td>
+			</cfoutput>
+		</cfoutput>
+	</tr>
+	<cfoutput query="qAlign1a" group="FAC_ID">
+	<tr bgcolor="eeaaaa">
+		<td>#FAC_ID#</td>
+		<cfoutput>
+			<td><!---  #NAME#, #FAC_ID#, #ID#,  --->#VALUE#</td>
+		</cfoutput>
+	</tr>
+	</cfoutput>
+</table>
+<br>
+<br> --->
+
+<!--- <CFQUERY NAME="qAlign2" DATASOURCE="sim_assess">
 select name, ASS_NAME, value 
 from new_goal_alignment2, new_assessment
 where new_assessment.ass_id = new_goal_alignment2.ass_id
@@ -155,7 +225,10 @@ group by name, ASS_NAME, value
 	</cfoutput>
 </table>
 <br>
-<br>
+<br> --->
+
+
+
 
 <CFQUERY NAME="qLargest_level" DATASOURCE="sim_assess">
 SELECT NAME, VALUE 
