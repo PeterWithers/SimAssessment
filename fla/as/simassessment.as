@@ -75,6 +75,7 @@ function IntroductionStudentHandDown()
 function IntroductionFinish()
 {
 	trace('IntroductionFinish()');
+	clearInterval(_root.IntroductionIntervalID);
 	_root.EnableControlsFunction();
 	_root.IntroductionRunning = false;
 	_root.introduction.unloadMovie();
