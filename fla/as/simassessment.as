@@ -236,6 +236,7 @@ function RecalculateExistingWeeks()
 {
 	if (_root.DisableControls == true) return;
 	trace('RecalculateExistingWeeks()');
+	TempLastPlayerButtonPress = _root.LastPlayerButtonPress
 	TempCurrentWeekInSemester = _root.CurrentWeekInSemester;
 	_root.ClearPreviousWeeks();
 	trace('calculation_engine_called == ' + _root.calculation_engine_called + ' and _root.calculation_engine_returned == ' + _root.calculation_engine_returned);
@@ -245,6 +246,18 @@ function RecalculateExistingWeeks()
 		_root.GoForwardOneWeek();
 		trace('TempCurrentWeekInSemester: ' + TempCurrentWeekInSemester + ' _root.CurrentWeekInSemester: ' + _root.CurrentWeekInSemester);
 	}	
+	switch(TempLastPlayerButtonPress)
+	{
+	case "play":
+		_root.PlaySemester();
+		break;
+	case "forward": 
+		_root.StepSemesterForward();
+		break;
+	case "backward":
+		_root.StepSemesterBack();
+		break;	
+	}
 }
 function StepSemesterBack()
 {
@@ -254,6 +267,7 @@ function StepSemesterBack()
 	clearInterval(_root.SemesterInterval);
 	_root.playStatus.gotoAndStop("paused");
 	_root.clock.gotoAndPlay("step");
+	_root.LastPlayerButtonPress = "backward";
 	_root.GoBackOneWeek();
 }
 function StepSemesterForward()
@@ -264,6 +278,7 @@ function StepSemesterForward()
 	clearInterval(_root.SemesterInterval);
 	_root.playStatus.gotoAndStop("paused");
 	_root.clock.gotoAndPlay("step");
+	_root.LastPlayerButtonPress = "forward";
 	_root.GoForwardOneWeek();
 }
 function StopSemester()
@@ -282,6 +297,7 @@ function PlaySemester()
 	clearInterval(_root.SemesterInterval);
 	_root.playStatus.gotoAndStop("playing");
 	_root.clock.gotoAndStop("play");
+	_root.LastPlayerButtonPress = "play";
 	_root.GoForwardOneWeek();
 	_root.SemesterInterval = setInterval(_root.GoForwardOneWeek, 4000);	
 }

@@ -53,6 +53,7 @@ function GoBackOneWeek()
 	if (_root.calculation_engine_called == true and _root.calculation_engine_returned == true)
 	{
 		_root.CurrentWeekInSemester--;
+		_root.LastPlayerButtonPress = "done";
 		if (_root.CurrentWeekInSemester < 0)_root.CurrentWeekInSemester = 0;
 		SetUpWeek();
 	}else if (_root.calculation_engine_called == false) _root.Call_calculation_engineService();
@@ -71,6 +72,7 @@ function GoForwardOneWeek()
 		trace('calculation_engine_called == ' + _root.calculation_engine_called + ' and _root.calculation_engine_returned == ' + _root.calculation_engine_returned);
 		if (_root.calculation_engine_called == true and _root.calculation_engine_returned == true)
 		{
+			_root.LastPlayerButtonPress = "done";
 			_root.CurrentWeekInSemester++;
 			if (_root.CurrentWeekInSemester > 15)_root.CurrentWeekInSemester = 15;
 			_root.SetUpWeek();
