@@ -123,19 +123,13 @@ function get_subject_goals_Status(result)
 }
 function get_subject_goals_Result(result)
 {
-	resultrow = 0;
-	for (CheckBoxItem in _root.timetable.EditAssignment.SubjectOutlineGoals)
+	for (resultrow in result.items)
 	{
-//		trace(CheckBoxItem);
-		if (resultrow < result.items.length)
-		{
-			_root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].setLabel(result.items[resultrow].name);	
-			_root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].DataObject = result.items[resultrow];
-			_root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem]._visible = true;
-			resultrow++;
-		}
-		else
-			_root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem]._visible = false;
+		CurrentCheckBox = _root.timetable.EditAssignment.SubjectOutlineGoals.attachMovie('CheckBox', 'CheckBox' + result.items[resultrow].id, resultrow);
+		CurrentCheckBox._y = resultrow * 20;
+		CurrentCheckBox.setSize(466, CurrentCheckBox.height);
+		CurrentCheckBox.setLabel(result.items[resultrow].name);	
+		CurrentCheckBox.DataObject = result.items[resultrow];
 	}
 	_root.InitSemester();
 }

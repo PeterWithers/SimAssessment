@@ -58,8 +58,8 @@ function AssignmentInstanceSelectChange()
 
 function PopulateSubjectInputs(AssignmentObjectForWeek)
 {
-	trace('AssignmentObjectForWeek: ' + AssignmentObjectForWeek);
-	trace('AssignmentObjectForWeek: ' + AssignmentObjectForWeek.MARKER);
+//	trace('AssignmentObjectForWeek: ' + AssignmentObjectForWeek);
+//	trace('AssignmentObjectForWeek: ' + AssignmentObjectForWeek.MARKER);
 	
 	// clear previous settings
 	_root.timetable.EditAssignment.AssessmentType.setSelectedIndex(0);
@@ -89,16 +89,18 @@ function PopulateSubjectInputs(AssignmentObjectForWeek)
 		if (_root.timetable.EditAssignment.FeedbackType.getItemAt(IndesOfThings).data.feedback_id == AssignmentObjectForWeek.FEEDBACK)
 			_root.timetable.EditAssignment.FeedbackType.setSelectedIndex(IndesOfThings);
 	}
-	for (IndesOfThings in _root.timetable.EditAssignment.SubjectOutlineGoals)
+	
+	for (IndexOfThings in _root.timetable.EditAssignment.SubjectOutlineGoals)
+	{		
+//		trace('IndexOfThings: ' + IndexOfThings);
+		_root.timetable.EditAssignment.SubjectOutlineGoals[IndexOfThings].selected = false;
+	}
+		
+	AssignmentObjectForWeekArray = AssignmentObjectForWeek.goal_ids.split(',');
+	for (GoalIdCounter in AssignmentObjectForWeekArray)
 	{
-		_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].setValue(false);
-		AssignmentObjectForWeekArray = AssignmentObjectForWeek.goal_ids.split(',')
-		for (GoalIdCounter in AssignmentObjectForWeekArray)
-		{
-//			trace(_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].DataObject.id + ' == ' + AssignmentObjectForWeekArray[GoalIdCounter]);
-			if (_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].DataObject.id == AssignmentObjectForWeekArray[GoalIdCounter])
-				_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].setValue(true);
-		}
+//		trace('GoalIdCounter: ' + GoalIdCounter);
+		_root.timetable.EditAssignment.SubjectOutlineGoals['CheckBox' + AssignmentObjectForWeekArray[GoalIdCounter]].selected  = true;
 	}
 }
 
@@ -158,12 +160,12 @@ for (x=0;x<=5;x++) {
 	}
 }
 
-
+/*
 // debug
 for (i=0;i<=14;i++) {
 	trace(WDue[i]+"/"+WAssess[i]+"/"+WWorth[i]+"/"+WType[i]+"/"+WMark[i])
 }
-trace("");
+trace("");*/
 
 stop();
 
