@@ -1,4 +1,54 @@
 <cfcomponent>
+
+<!--- User login functions --->
+
+	<cffunction name="login_user" access="remote" returntype="any">	
+		<cfargument name="loginname" type="string" required="yes">		
+		<cfargument name="password" type="string" required="yes">
+		<CFQUERY NAME="usersearch" DATASOURCE="sim_assess">
+			select LoginName, Password, UserName, userid from publicusers
+			where loginname = '#loginname#'
+			and password = '#password#'
+		</CFQUERY>	
+		<cfif usersearch.recordcount eq 0>
+			<cfreturn -1>
+		<cfelse>
+			<cfreturn usersearch>
+		</cfif>
+	</cffunction>
+	
+	<cffunction name="register_user" access="remote" returntype="string">		
+		<cfargument name="loginname" type="string" required="yes">	
+		<cfargument name="username" type="string" required="yes">		
+		<cfargument name="password" type="string" required="yes">
+		<CFQUERY NAME="usersearch" DATASOURCE="sim_assess">
+			select * from publicusers
+			where loginname = '#loginname#'
+			and password = '#password#'
+		</CFQUERY>	
+		<cfif usersearch.recordcount eq 0>
+			<cftransaction>
+			<CFQUERY NAME="userinsert" DATASOURCE="sim_assess">
+				insert into publicusers
+				(loginname, username, password)
+				values
+				('#loginname#', '#username#', '#password#')
+			</CFQUERY>	
+			<CFQUERY NAME="usersearch" DATASOURCE="sim_assess">
+				select userid from publicusers
+				where loginname = '#loginname#'
+				and password = '#password#'
+				and username = '#username#'
+			</CFQUERY>	
+			</cftransaction>
+			<cfreturn usersearch.userid>			
+		<cfelse>
+			<cfreturn -1>
+		</cfif>
+	</cffunction>
+
+<!--- timetable functions --->
+
 	<cffunction name="load_timetable" access="remote" returntype="query">	
 		<cfargument name="userid" type="numeric" required="yes">
 		<CFQUERY NAME="listing" DATASOURCE="sim_assess">
@@ -55,6 +105,8 @@
 		</CFQUERY>			
 		<cfreturn listing>
 	</cffunction>	
+	
+<!--- table functions --->
 	
 	<cffunction name="create_timetableconfig_table" access="remote">
 		<cftransaction>		

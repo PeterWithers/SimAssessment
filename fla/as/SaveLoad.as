@@ -2,15 +2,20 @@ function GetUserTextBox()
 {
 	_root.messagepopup.gotoAndStop('GetUserText');
 	_root.messagepopup._visible = true;
-	_root.messagepopup.ok.onRelease = function() 
+	_root.messagepopup.save.onRelease = function() 
 	{
 		_root.RemoveMessageBox();
-		_root.timetableconfigService.save_timetable({timetabletosave: _root.WeekOfAssignments, timetablelabel: _root.messagepopup.UserText.text, userid: 1});
+		_root.usersfunctionsService.save_timetable({timetabletosave: _root.WeekOfAssignments, timetablelabel: _root.messagepopup.UserText.text, userid: _root.userid});
 		_root.SavingMessageBox(_root.messagepopup.UserText.text);
 	}
 	_root.messagepopup.cancel.onRelease = function() 
 	{
 		_root.RemoveMessageBox();
+	}
+	_root.messagepopup.UserText.onSetFocus = function()
+	{
+		_root.messagepopup.UserText.text = '';
+		_root.messagepopup.UserText.onSetFocus = null;
 	}
 }
 function GetUserLogin(callbackfunction)
@@ -22,34 +27,79 @@ function GetUserLogin(callbackfunction)
 	{
 		_root.RemoveMessageBox();
 	}
+	_root.messagepopup.login.onRelease = _root.messagepopup.loginbox;
+	_root.messagepopup.register.onRelease = _root.messagepopup.registerbox;
+}
+_root.messagepopup.loginbox = function() 
+{
+	_root.messagepopup.gotoAndStop('Login');
 	_root.messagepopup.login.onRelease = function() 
 	{
-		_root.messagepopup.gotoAndStop('Login');
-		_root.messagepopup.ok.onRelease = function() 
-		{
-//			_root.SavingMessageBox('saving user name');
-			_root.logedin = true;
-			_root.GetUserLoginCallBackFunction();
-		}
-		_root.messagepopup.cancel.onRelease = function() 
-		{
-			_root.RemoveMessageBox();
-		}
+		_root.usersfunctionsService.login_user({LoginName: _root.messagepopup.LoginName.text, Password: _root.messagepopup.Password.text});
+		_root.SavingMessageBox('loging in user name');
 	}
-	_root.messagepopup.register.onRelease = function() 
+	_root.messagepopup.cancel.onRelease = function() 
 	{
-		_root.messagepopup.gotoAndStop('Register');
-		_root.messagepopup.ok.onRelease = function() 
-		{
-//			_root.SavingMessageBox('registering user name');
-			_root.logedin = true;
-			_root.GetUserLoginCallBackFunction();
-		}
-		_root.messagepopup.cancel.onRelease = function() 
-		{
-			_root.RemoveMessageBox();
-		}
+		_root.RemoveMessageBox();
+	}		
+	_root.messagepopup.LoginName.onSetFocus = function()
+	{
+		_root.messagepopup.LoginName.text = '';
+		_root.messagepopup.LoginName.onSetFocus = null;
 	}
+	_root.messagepopup.Password.onSetFocus = function()
+	{
+		_root.messagepopup.Password.text = '';
+		_root.messagepopup.Password.onSetFocus = null;
+	}
+	_root.messagepopup._visible = true;
+}
+_root.messagepopup.registerbox = function() 
+{
+	_root.messagepopup.gotoAndStop('Register');
+	_root.messagepopup.LoginNameDefault = _root.messagepopup.LoginName.text;
+	_root.messagepopup.PasswordDefault = _root.messagepopup.Password.text;
+	_root.messagepopup.register.onRelease = function() 
+	{		
+		if (_root.messagepopup.LoginName.text == '' or _root.messagepopup.LoginName.text == _root.messagepopup.LoginNameDefault)
+		{
+			_root.messagepopup.LoginName.text = _root.messagepopup.LoginNameDefault;			
+			_root.messagepopup.LoginName.onSetFocus = function()
+			{
+				_root.messagepopup.LoginName.text = '';
+				_root.messagepopup.LoginName.onSetFocus = null;
+			}
+			return;
+		}
+		if (_root.messagepopup.Password.text == '' or _root.messagepopup.Password.text == _root.messagepopup.PasswordDefault)
+		{
+			_root.messagepopup.Password.text = _root.messagepopup.PasswordDefault;
+			_root.messagepopup.Password.onSetFocus = function()
+			{
+				_root.messagepopup.Password.text = '';
+				_root.messagepopup.Password.onSetFocus = null;
+			}
+			return;
+		}
+		if (_root.UserName == null) _root.UserName = _root.messagepopup.LoginName.text;
+		_root.usersfunctionsService.register_user({LoginName: _root.messagepopup.LoginName.text, Password: _root.messagepopup.Password.text, UserName: _root.UserName});
+		_root.SavingMessageBox('Registering user name');
+	}
+	_root.messagepopup.cancel.onRelease = function() 
+	{
+		_root.RemoveMessageBox();
+	}
+	_root.messagepopup.LoginName.onSetFocus = function()
+	{
+		_root.messagepopup.LoginName.text = '';
+		_root.messagepopup.LoginName.onSetFocus = null;
+	}
+	_root.messagepopup.Password.onSetFocus = function()
+	{
+		_root.messagepopup.Password.text = '';
+		_root.messagepopup.Password.onSetFocus = null;
+	}
+	_root.messagepopup._visible = true;
 }
 
 _root.logedin = false;
@@ -73,10 +123,49 @@ function save_timetable_Status(result)
 }
 function save_timetable_Result(result)
 {
-	trace('get_subjects_Result(result)');
+	trace('save_timetable_Result(result)');
 	Presets.addItem(result.items[0].timetablelabel, result.items);
 	_root.RemoveMessageBox();
 }
+
+function login_user_Status(result)
+{
+	_root.ErrorMessageBox(result.description);
+}
+function login_user_Result(result)
+{
+	trace('register_user_Result(result)');
+	if (result != -1)
+	{
+		_root.RemoveMessageBox();
+		_root.logedin = true;
+		
+		_root.userid = result.items[0].userid;
+	//	_root.LoginName = result.items[0].LoginName;	
+	//	_root.Password = result.items[0].Password;
+		_root.UserName = result.items[0].UserName;
+		
+		_root.GetUserLoginCallBackFunction();
+	} else _root.OkMessageBoxOKfunction('Incorrect login', _root.messagepopup.loginbox);
+}
+function register_user_Status(result)
+{
+	_root.ErrorMessageBox(result.description);
+}
+function register_user_Result(result)
+{
+	trace('register_user_Result(result)');
+	if (result > 0)
+	{
+		_root.userid = result;
+		_root.RemoveMessageBox();
+		_root.logedin = true;
+		_root.GetUserLoginCallBackFunction();
+	} else {
+		_root.OkMessageBoxOKfunction('This login name is taken please use another.\n Your display name will remain the same.', _root.messagepopup.registerbox);
+	}
+}
+
 LoadButton.onRelease = function()
 {
 	trace('LoadButton.onRelease');
@@ -85,9 +174,9 @@ LoadButton.onRelease = function()
 		_root.GetUserLogin(_root.LoadButton.onRelease);
 		return;
 	}
-	timetableconfigService.load_timetable({userid: 1});
+	usersfunctionsService.load_timetable({userid: _root.userid});
 	_root.MessageBox('Loading saved setups');
-//	timetableconfigService.create_timetableconfig_table();
+//	usersfunctionsService.create_timetableconfig_table();
 }
 function load_timetable_Status(result)
 {
@@ -110,7 +199,7 @@ function load_timetable_Result(result)
 SetUpTablesButton.onRelease = function()
 {
 	trace('SetUpTablesButton.onRelease');
-	timetableconfigService.create_timetableconfig_table();
+	usersfunctionsService.create_timetableconfig_table();
 }
 function SetUpTablesButton_Status(result)
 {
