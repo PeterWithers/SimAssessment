@@ -1,7 +1,5 @@
 #include "as/XMLConfig.as"
-//#include "as/class_generator.as"
 #include "as/Gateway.as"
-//#include "as/calculation_engine.as"
 #include "as/class_generator.as"
 #include "as/mentor_comment.as"
 #include "as/report.as"
@@ -9,6 +7,7 @@
 #include "as/feedbackgraph.as"
 #include "as/email.as"
 #include "as/SaveLoad.as"
+#include "as/help.as"
 
 _root.messagepopup.messagetext.text = ''
 function OkMessageBox(messagetext)
@@ -145,8 +144,17 @@ function ShowDebugInfo()
 	_root.mentorpopup.ok.onRelease = _root.CloseDialogues;
 }
 
+function TimetableClick(weeknumber)
+{
+	if (_root.DisableControls == true) return;
+	_root.CloseDialogues();
+	_global.weechoo=weeknumber;
+	_root.timetable.gotoAndStop("setup");
+}
+
 function PhoneClick()
 {
+	if (_root.DisableControls == true) return;
 	if (Key.isDown(Key.CONTROL))
 	{
 		_root.ShowDebugInfo();
@@ -155,9 +163,11 @@ function PhoneClick()
 		_root.mentorpopup._visible = true;
 		_root.mentorpopup.ok.onRelease = _root.CloseDialogues;
 	}
+	_root.Phone.Light.gotoAndStop('off');
 }
 function ComputerMailClick()
 {
+	if (_root.DisableControls == true) return;
 	_root.CloseDialogues();
 	_root.computer.emailindicator.gotoAndStop('static');
 	_root.email.gotoAndStop(10);
@@ -175,6 +185,7 @@ for (Student in _root.Classroom)
 }
 function StepSemesterBack()
 {
+	if (_root.DisableControls == true) return;
 	_root.CloseDialogues();
 	_root.SemesterPlaying = false;
 	clearInterval(_root.SemesterInterval);
@@ -184,6 +195,7 @@ function StepSemesterBack()
 }
 function StepSemesterForward()
 {
+	if (_root.DisableControls == true) return;
 	_root.CloseDialogues();
 	_root.SemesterPlaying = false;
 	clearInterval(_root.SemesterInterval);
@@ -193,6 +205,7 @@ function StepSemesterForward()
 }
 function StopSemester()
 {
+	if (_root.DisableControls == true) return;
 	_root.SemesterPlaying = false;
 	clearInterval(_root.SemesterInterval);
 	_root.playStatus.gotoAndStop("paused");
@@ -200,6 +213,7 @@ function StopSemester()
 }
 function PlaySemester()
 {
+	if (_root.DisableControls == true) return;
 	_root.CloseDialogues();
 	_root.SemesterPlaying = true;
 	clearInterval(_root.SemesterInterval);
@@ -226,10 +240,12 @@ function CloseDialogues()
 	_root.email.gotoAndStop("no mail");
 	_root.email.InBoxGrid._visible = false;
 	_root.email.OutBoxGrid._visible = false;
-
 	
 	// close mentorpopup
 	_root.mentorpopup._visible = false;
+	
+	// close help box
+	_root.HelpBox._visible = false;
 }
 
 StopSemester();
