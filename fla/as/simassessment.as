@@ -11,29 +11,45 @@
 
 
 _root.introduction.loadMovie('introduction.swf');
+_root.introduction._visible = false;
+_root.DisableControlsFunction();
+
 function IntroductionStart()
 {
 	trace('IntroductionStart()');
+	if (_root.UserName == null)
+	{
+		// go to frame two so that frame one scripts get called later
+		_root.introduction.gotoAndStop(2);
+		_root.introduction._visible = false;
+		return;
+	}
 	_root.DisableControlsFunction();
 	_root.IntroductionRunning = true;
-	_root.RequiredCFCResults++;
+//	_root.RequiredCFCResults++;
+
 	// just incase the indroduction took longer to load than the cfcs
-	_root.RemoveMessageBox();
+//	_root.RemoveMessageBox();
+
 	_root.introduction.SkipButton.onRelease = _root.IntroductionFinish;
+	_root.introduction.NextButton.onRelease = _root.IntroductionCallback;
+}	
+function IntroductionCallback()
+{ 
+	trace('IntroductionCallback()');
+       clearInterval(_root.IntroductionIntervalID);
+	_root.CloseDialogues();
+	_root.introduction.play();
 }
 function IntroductionPauseSeconds(seconds)
 {
+	if (_root.UserName == null)
+	{
+		return;
+	}
 	trace('IntroductionPauseSeconds(seconds)');
 	_root.introduction.stop();	
-
-	function IntroductionCallback() 
-	{ 
-		trace('IntroductionCallback()');
-        clearInterval(_root.IntroductionIntervalID);
-		_root.CloseDialogues();
-		_root.introduction.play();
-	}
-	_root.IntroductionIntervalID = setInterval(IntroductionCallback, seconds * 1000);
+	_root.IntroductionIntervalID = setInterval(_root.IntroductionCallback, seconds * 1000);
 }
 function IntroductionLoadTimetable()
 {
@@ -65,7 +81,7 @@ function IntroductionFinish()
 	_root.WeekOfAssignments = 1;
 	_root.timetable.SetupTimetableDisplay();
 	
-	_root.InitSemester();
+//	_root.InitSemester();
 }
 
 _root.messagepopup.messagetext.text = ''
@@ -135,6 +151,8 @@ function UserNameRequestBox()
 				_root.UserName = _root.messagepopup.UserName.text;
 				_root.SetUpClass();
 				_root.RemoveMessageBox();
+				_root.introduction.gotoAndPlay(1);
+				_root.introduction._visible = true;
 			}
 		}
 	}
@@ -204,6 +222,7 @@ function DisableControlsFunction()
 	for (CheckBoxItem in _root.timetable.EditAssignment.SubjectOutlineGoals) _root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].enabled = false;
 	_root.email.InBoxGrid.enabled = false;
 	_root.email.OutBoxGrid.enabled = false;
+	_root.clock.gotoAndStop("pause");
 }
 function EnableControlsFunction()
 {
