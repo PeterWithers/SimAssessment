@@ -1,43 +1,63 @@
 trace("timetablesetup.as");
-
-// find the correct week
-for (AssignmentsForWeek in _root.WeekOfAssignments)
+trace(this);
+function PopulateSubjectInputs(AssignmentObjectForWeek)
 {
-	if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK) AssignmentObjectForWeek = _root.WeekOfAssignments[AssignmentsForWeek];
-}
-// preset the inputs to match the current values
-trace('about to IndesOfThings');
-for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.MarkerType.getLength(); IndesOfThings++)
-{
-	if (_root.timetable.EditAssignment.MarkerType.getItemAt(IndesOfThings).data == AssignmentObjectForWeek.MARKER)
-		_root.timetable.EditAssignment.MarkerType.setSelectedIndex(IndesOfThings);
-}
-for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.AssessmentType.getLength(); IndesOfThings++)
-{
-	if (_root.timetable.EditAssignment.AssessmentType.getItemAt(IndesOfThings).data.ASS_NAME == AssignmentObjectForWeek.ASS_NAME)
-		_root.timetable.EditAssignment.AssessmentType.setSelectedIndex(IndesOfThings);
-}
-for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.AssignmentWorkload.getLength(); IndesOfThings++)
-{
-	if (_root.timetable.EditAssignment.AssignmentWorkload.getItemAt(IndesOfThings).data == AssignmentObjectForWeek.WEIGHTING)
-		_root.timetable.EditAssignment.AssignmentWorkload.setSelectedIndex(IndesOfThings); 
-}
-for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.FeedbackType.getLength(); IndesOfThings++)
-{
-	if (_root.timetable.EditAssignment.FeedbackType.getItemAt(IndesOfThings).data.ASS_NAME == AssignmentObjectForWeek.FEEDBACK)
-		_root.timetable.EditAssignment.FeedbackType.setSelectedIndex(IndesOfThings);
-}
-for (IndesOfThings in _root.timetable.EditAssignment.SubjectOutlineGoals)
-{
-	_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].setValue(false);
-	AssignmentObjectForWeekArray = AssignmentObjectForWeek.goal_ids.split(',')
-	for (GoalIdCounter in AssignmentObjectForWeekArray)
+	// preset the inputs to match the current values
+	trace('about to IndesOfThings');
+	for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.MarkerType.getLength(); IndesOfThings++)
 	{
-		trace(_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].DataObject.id + ' == ' + AssignmentObjectForWeekArray[GoalIdCounter]);
-		if (_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].DataObject.id == AssignmentObjectForWeekArray[GoalIdCounter])
-			_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].setValue(true);
+		if (_root.timetable.EditAssignment.MarkerType.getItemAt(IndesOfThings).data == AssignmentObjectForWeek.MARKER)
+			_root.timetable.EditAssignment.MarkerType.setSelectedIndex(IndesOfThings);
+	}
+	for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.AssessmentType.getLength(); IndesOfThings++)
+	{
+		if (_root.timetable.EditAssignment.AssessmentType.getItemAt(IndesOfThings).data.ASS_NAME == AssignmentObjectForWeek.ASS_NAME)
+			_root.timetable.EditAssignment.AssessmentType.setSelectedIndex(IndesOfThings);
+	}
+	for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.AssignmentWorkload.getLength(); IndesOfThings++)
+	{
+		if (_root.timetable.EditAssignment.AssignmentWorkload.getItemAt(IndesOfThings).data == AssignmentObjectForWeek.WEIGHTING)
+			_root.timetable.EditAssignment.AssignmentWorkload.setSelectedIndex(IndesOfThings); 
+	}
+	for (IndesOfThings = 0; IndesOfThings < _root.timetable.EditAssignment.FeedbackType.getLength(); IndesOfThings++)
+	{
+		if (_root.timetable.EditAssignment.FeedbackType.getItemAt(IndesOfThings).data.feedback_id == AssignmentObjectForWeek.FEEDBACK)
+			_root.timetable.EditAssignment.FeedbackType.setSelectedIndex(IndesOfThings);
+	}
+	for (IndesOfThings in _root.timetable.EditAssignment.SubjectOutlineGoals)
+	{
+		_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].setValue(false);
+		AssignmentObjectForWeekArray = AssignmentObjectForWeek.goal_ids.split(',')
+		for (GoalIdCounter in AssignmentObjectForWeekArray)
+		{
+			trace(_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].DataObject.id + ' == ' + AssignmentObjectForWeekArray[GoalIdCounter]);
+			if (_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].DataObject.id == AssignmentObjectForWeekArray[GoalIdCounter])
+				_root.timetable.EditAssignment.SubjectOutlineGoals[IndesOfThings].setValue(true);
+		}
 	}
 }
+
+// clear previous settings
+_root.timetable.EditAssignment.AssessmentType.setSelectedIndex(0);
+_root.timetable.EditAssignment.AssignmentWorkload.setSelectedIndex(0);
+_root.timetable.EditAssignment.FeedbackType.setSelectedIndex(0);
+_root.timetable.EditAssignment.MarkerType.setSelectedIndex(0);
+AssignmentObjectForWeek = null;
+
+// count the Assignments in this week
+// and put them into the AssignmentInstanceSelect 
+_root.timetable.EditAssignment.AssignmentInstanceSelect.removeAll();
+for (AssignmentsForWeek in _root.WeekOfAssignments)
+{
+	if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK)
+	_root.timetable.EditAssignment.AssignmentInstanceSelect.addItem(_root.timetable.EditAssignment.AssignmentInstanceSelect.length, _root.WeekOfAssignments[AssignmentsForWeek]);
+}
+_root.timetable.EditAssignment.AssignmentInstanceSelect.addItem('new', null);
+//{ASS_ID: -1, ASS_NAME: -1, DUE_WEEK: -1, FEEDBACK: -1, MARKER: -1, WEIGHTING: -1, WHICH_ASS: -1, goal_ids: -1});
+
+_root.timetable.PopulateSubjectInputs(_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(0).data);
+_root.timetable.EditAssignment.AssignmentInstanceSelect.addEventListener("_root.timetable.PopulateSubjectInputs", _root.timetable.EditAssignment.AssignmentInstanceSelect.selectedItem.data);
+
 _root.timetable.EditAssignment._visible = true;
 
 // switch to wait until assessment is set - should be a function
