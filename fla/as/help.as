@@ -36,6 +36,7 @@ helpListener.onMouseUp = function()
 		return;
 	}
 	_root.HelpBox.helpContent.text = '';
+	_root.HelpBox.helpTopic.text = '';
 	//if (Key.isDown(Key.CONTROL))
 	targetnamearray = new Array();
 	for (things in _root)
