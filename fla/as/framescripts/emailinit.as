@@ -1,3 +1,4 @@
+/*
 // no content at the beginning
 cont = "";
 // setup email Array
@@ -12,7 +13,7 @@ var archivfrom=new Array();
 var archivref=new Array();
 var archivcont=new Array();
 var archiv=new Array(archivwhen,archivfrom,archivref,archivcont);
-
+*/
 /*
 // write "welcome" email
 email.emailwhen.push("week 1");

@@ -12,12 +12,10 @@ function SetupMentorCommentsForWeek(mentor_approach_to_learning, mentor_goal_ali
 
 	if (_root.MentorDoneWeeks[_root.CurrentWeekInSemester] == null and AssessmentThisWeek)
 	{
+		_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Mentor', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Mentor</i><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + MentorComments + '\n\nMentor'});
 		_root.MentorDoneWeeks[_root.CurrentWeekInSemester] = 1;
-		email.emailwhen.push(_root.CurrentWeekInSemester);
-		email.emailfrom.push('Mentor');
-		email.emailref.push('Week ' + _root.CurrentWeekInSemester);
-		email.emailcont.push('To ' + _root.UserName + '\n\n' + MentorComments + '\n\nMentor');
 		_root.computer.emailindicator.gotoAndPlay('new');
+		_root.UpDateEmailCounters();
 	}
 }
 	

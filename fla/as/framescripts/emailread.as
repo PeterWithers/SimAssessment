@@ -1,3 +1,7 @@
+_root.email.InBoxGrid._visible = true;
+_root.email.OutBoxGrid._visible = true;
+
+/*
 // function turn on scrollers or turn them off
 function needscrollers() {
     adownScroll._visible = lista.scroll<lista.maxscroll;
@@ -7,7 +11,6 @@ function needscrollers() {
 	cdownScroll._visible = cont.scroll<cont.maxscroll;
     cupScroll._visible = cont.scroll>1;
 }
-
 // check if we need to turn on the scrollers once
 needscrollers();
 
@@ -48,6 +51,7 @@ cupscroll.onPress = function() {
 	// check if the scrollers should still appear
     needscrollers();
 };
+
 
 
 // function for feedback on choosen email
@@ -113,16 +117,12 @@ function printoutlistb() {
 	}
 }
 
-// switch to wait until email pops back - should be a function
-keepstat=_global.stat; _global.stat=0; trace ("switch to stop while email active");
-//_root.time.stop();
-//_root.clock.rotates=0;
-//_root.simmenu.indicator.gotoAndStop(10+stat*10);
 // printout list A and list B
 this.printoutlista();
 this.printoutlistb();
 // check if we need to turn on the scrollers once
 needscrollers();
+*/
 stop();
 
 

@@ -150,33 +150,25 @@ function gererateClassState(attributesFEEDBACK, attributesSEMESTER_RUNNING, attr
 				{
 					_root.StudentDoneWeeks[_root.CurrentWeekInSemester][Math.round(modified_student_workload)][Math.round(modified_feedback)] = 1;
 	
-/*					if (qStudentcomment.description != null and qStudentcomment.description != '')
-					{					
-						_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
-						_root.email.emailfrom.push('Student');
-						_root.email.emailref.push(student_image);
-						_root.email.emailcont.push('To ' + _root.UserName + '\n\n' + qStudentcomment.description + '\n\nStudent');
+					if (qStudentcomment.description != null and qStudentcomment.description != '')
+					{
+						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description + '\n\nStudent'});
 						_root.computer.emailindicator.gotoAndPlay('new');
-					}*/
+					}
 					if (qStudentcomment.description1 != null and qStudentcomment.description1 != '')
 					{
-						_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
-						_root.email.emailfrom.push('Student');
-						_root.email.emailref.push(student_image);
-						_root.email.emailcont.push('To ' + _root.UserName + '\n\n' + qStudentcomment.description2 + '\n\nStudent');
+						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description2 + '\n\nStudent'});
 						_root.computer.emailindicator.gotoAndPlay('new');
 					}
 					if (qStudentcomment.description2 != null and qStudentcomment.description2 != '')
 					{			
-						_root.email.emailwhen.push('week ' + _root.CurrentWeekInSemester);
-						_root.email.emailfrom.push('Student');
-						_root.email.emailref.push(student_image);
-						_root.email.emailcont.push('To ' + _root.UserName + '\n\n' + qStudentcomment.description3 + '\n\nStudent');
+						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description3 + '\n\nStudent'});
 						_root.computer.emailindicator.gotoAndPlay('new');
 					}
 				}
 			}
 		}
+		_root.UpDateEmailCounters();
 	}	
 	else
 	{ 

@@ -7,6 +7,7 @@
 #include "as/report.as"
 #include "as/studentNoHands.as"
 #include "as/feedbackgraph.as"
+#include "as/email.as"
 
 _root.messagepopup.messagetext.text = ''
 function OkMessageBox(messagetext)
@@ -189,6 +190,9 @@ function CloseDialogues()
 	
 	// close 
 	_root.email.gotoAndStop("no mail");
+	_root.email.InBoxGrid._visible = false;
+	_root.email.OutBoxGrid._visible = false;
+
 	
 	// close mentorpopup
 	_root.mentorpopup._visible = false;
