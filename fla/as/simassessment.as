@@ -18,6 +18,14 @@ function OkMessageBox(messagetext)
 	_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
 	_root.messagepopup.ok.onRelease = function() {_root.RemoveMessageBox();}
 }
+function OkMessageBoxOKfunction(messagetext, OKfunction)
+{
+	_root.messagepopup.gotoAndStop('ok');
+	_root.messagepopup._visible = true;
+	_root.messagepopup.messagetext.text = messagetext;
+	_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
+	_root.messagepopup.ok.onRelease = function() {_root.RemoveMessageBox(); OKfunction();}
+}
 function SavingMessageBox(messagetext)
 {
 	_root.messagepopup.gotoAndStop('saving');
@@ -36,25 +44,29 @@ function ErrorMessageBox(messagetext)
 {
 	trace(messagetext);
 	_root.ErrorMessageShowing = true;
-	_root.messagepopup.gotoAndPlay('error');
+	_root.messagepopup.gotoAndStop('error');
 	_root.messagepopup._visible = true;
 	_root.ErrorMessages = _root.ErrorMessages + messagetext + '\n';
 	_root.messagepopup.messagetext.text = _root.ErrorMessages;
 	_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
 	_root.StopSemester();
+	_root.messagepopup.ok.onRelease = function() {
+		_root.ErrorMessageShowing = false;
+		_root.RemoveMessageBox();
+	}
 }
 function UserNameRequestBox()
 {
 	if (_root.ErrorMessageShowing != true)
 	{
-		_root.messagepopup.gotoAndPlay('welcome');
+		_root.messagepopup.gotoAndStop('welcome');
 		_root.messagepopup.UserName.text = 'Please enter your name here';
 		_root.messagepopup.UserName.onSetFocus = function()
 		{
 			_root.messagepopup.UserName.text = '';
 			_root.messagepopup.UserName.onSetFocus = null;
 		}
-		_root.messagepopup.start.onRelease = function()
+		_root.messagepopup.OKWelcome.onRelease = function()
 		{
 			if(_root.messagepopup.UserName.text == '') _root.UserNameRequestBox();
 			else if(_root.messagepopup.UserName.text != 'Please enter your name here')
@@ -71,9 +83,10 @@ function RemoveMessageBox()
 	if (_root.ErrorMessageShowing != true)
 	{
 		_root.messagepopup._visible = false;
-		_root.messagepopup.messagetext = '';
+		_root.messagepopup.messagetext.text = '';		
+		_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
 	}else{
-		_root.messagepopup.gotoAndPlay('error');
+		_root.messagepopup.gotoAndStop('error');
 		_root.messagepopup._visible = true;
 		_root.messagepopup.messagetext.text = _root.ErrorMessages;
 		_root.messagepopup.messagetext.scroll = _root.messagepopup.messagetext.maxscroll;
