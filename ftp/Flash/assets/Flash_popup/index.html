@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+	<title>Flash Popup</title>
+
+<!--SNIP START this goes inside the head tags-->	
+<script language="JavaScript">
+<!--
+function popper(thisUrl,thisWindow,thisWidth,thisHeight)
+  {
+optionString = ('status=no,menubar=no,resizable=no,scrollbars=no,toolbar=no,location=no,width=' + thisWidth + ',height=' + thisHeight + '');						
+mainWin = window.open(thisUrl,thisWindow,optionString);
+mainWin.focus();
+  }
+//-->
+</script>
+<!--SNIP END-->
+
+</head>
+<body bgcolor="#FFFFFF" leftmargin="8" topmargin="8" marginwidth="8" marginheight="8">
+
+
+<!--SNIP START this goes anywhere inside the body tags-->
+<h3><A href="javascript:void popper('FlashWindow.html','FlashWindow',772 ,527)">Launch Flash window</a></h3>
+<!--SNIP END-->
+
+
+<p>
+This page has code for opening a custom window with menus etc turned off.<br> 
+"FlashWindow.html" contains the code for what appears in the new window.
+</p>
+
+<p>
+Cut-n-paste the parts between the inline comments "SNIP-START" and "SNIP END" which you'll see when you view the source code on this page. Paste inside the HEAD tags.
+</p>
+
+
+</body>
+</html>

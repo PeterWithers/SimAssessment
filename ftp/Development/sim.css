@@ -1,0 +1,51 @@
+/* Created using Style Master from Western Civilisation CSS2 { 48 71 454 440 } */
+body {
+background-image: url(images/bgd.gif);
+background-repeat: repeat-y;
+}
+
+#numbers {
+visibility: visible;
+position: absolute;
+left: 8px;
+top: 97px;
+z-index: -1;
+}
+
+.copy {
+color: #ffffff;
+}
+
+.login {
+color: #ffffff;
+font-size: 0.7em;
+line-height: 1em;
+text-align: left;
+font-family: Arial, sans-serif;
+}
+
+.tabpanel {
+color: #ffffff;
+font-size: 0.7em;
+line-height: 1em;
+text-align: left;
+font-family: Verdana, sans-serif;
+padding: 3px;
+}
+
+a:link {
+color: #ffcc00;
+text-decoration: none;
+}
+
+a:visited {
+color: #000000;
+text-decoration: none;
+}
+
+a:hover {
+color: #ffff00;
+text-decoration: none;
+background-color: transparent;
+}
+
