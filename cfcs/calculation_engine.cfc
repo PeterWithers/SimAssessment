@@ -32,7 +32,7 @@
 		<cfloop index="attributescounter" from="1" to="#ArrayLen(get_ass)#">
 			<cfset cur_stateStruct = StructNew()>
 			<cfif attributescounter eq ArrayLen(get_ass) or get_ass[attributescounter].due_week neq get_ass[attributescounter + 1].due_week>
-<!--- look at this!!! --->			<cfset result = StructInsert(CFCresult, "#attributescounter#", cur_stateStruct)>
+			<cfset result = StructInsert(CFCresult, "#attributescounter#", cur_stateStruct)>
 			</cfif>
 		
 			<cfset attributescur_state = attributescounter>
@@ -366,14 +366,18 @@
 
 		<!--- add the tweening values to the return struct --->		
 		<cfset tweeningvalues = StructNew()>
-		<!--- insert rhe variables that you want to decay here --->
+		<!--- insert rhe variables that you want to decay here 
+		
+		* put zero if for variables that you don't want to decay
+		--->
 		<cfset result = StructInsert(tweeningvalues, "student_workload_decay", -0.1)>
-		<cfset result = StructInsert(tweeningvalues, "goal_alignment_decay", -0.5)>
+		<cfset result = StructInsert(tweeningvalues, "goal_alignment_decay", 0.0)>
 		<cfset result = StructInsert(tweeningvalues, "student_emotion_decay", -0.1)>
 		<cfset result = StructInsert(tweeningvalues, "public_confidence_decay", 0)>
 		<cfset result = StructInsert(tweeningvalues, "teacher_workload_decay", 0.1)>
 		<cfset result = StructInsert(tweeningvalues, "feedback_decay", 0.2)>
-		     
+		     	 
+		
 		<cfset result = StructInsert(tweeningvalues, "tween", true)>
 		<cfset result = StructInsert(tweeningvalues, "decay", true)>
 		<cfset result = StructInsert(tweeningvalues, "logdecay", true)>
