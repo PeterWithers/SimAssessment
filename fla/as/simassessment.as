@@ -228,6 +228,7 @@ function ClearPreviousWeeks()
 	_root.computer.emailindicator.gotoAndStop('static');
 	_root.Phone.Light.gotoAndStop('off');
 	_root.UpDateEmailCounters();
+	if (_root.calculation_engine_called == false) _root.Call_calculation_engineService();
 //	_root.GoForwardOneWeek();
 	_root.SetUpClass();
 }
