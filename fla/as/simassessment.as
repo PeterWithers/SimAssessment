@@ -281,8 +281,8 @@ function GraphClick()
 }
 _root.feedbackgraph.onRelease = _root.GraphClick;
 _root.GraphDisplay.ok.onRelease = _root.CloseDialogues;
-_root.GraphDisplay.deletetween.onRelease = _root.GraphDisplay.removetween;
-_root.GraphDisplay.settween.onRelease = _root.GraphDisplay.replacetween;
+_root.GraphDisplay.untween.onRelease = _root.GraphDisplay.settween;
+_root.GraphDisplay.nodecay.onRelease = _root.GraphDisplay.setdecay;
 
 _root.GraphDisplay.hide();
 
