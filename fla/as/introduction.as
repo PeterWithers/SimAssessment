@@ -19,7 +19,12 @@ function IntroductionStart()
 	// just incase the indroduction took longer to load than the cfcs
 //	_root.RemoveMessageBox();
 
-	_root.introduction.SkipButton.onRelease = _root.IntroductionFinish;
+	_root.introduction.SkipButton.onRelease = function() 
+	{
+    	clearInterval(_root.IntroductionIntervalID);
+		_root.CloseDialogues();
+		_root.introduction.gotoAndStop("intro11");
+	}
 	_root.introduction.nextButton.onRelease = _root.IntroductionCallback;
 //	for (things in _root.introduction) trace(things);
 }	
@@ -124,6 +129,13 @@ function IntroductionWizard()
 			_root.EnableControlsFunction();
 			_root.SetUpClass();
 			_root.RemoveMessageBox();
+			_root.calculation_engine_called = false;
+			_root.StopSemester();
+			//	_root.ClearPreviousWeeks();
+			_root.WeekOfAssignments = 1;
+			_root.Presets.setSelectedIndex( 0 );
+			_root.Call_calculation_engineService();
+			_root.timetable.SetupTimetableDisplay();
 		}
 		if (_root.introduction.preset._currentframe > 1) 
 		{
