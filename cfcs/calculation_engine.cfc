@@ -179,6 +179,24 @@
 			
 			<Cfset goal_alignment = goal_alignment + 5>
 			
+			<!---  calculation for goal_value.  --->
+			<cfset goal_value = 0>
+			<cfset goal_value_list = "">
+			<cfif get_ass[attributescounter].goal_ids neq "">
+				<CFQUERY NAME="goal_value_query" DATASOURCE="sim_assess">
+					SELECT value
+					FROM new_level_assignment 
+					WHERE id in (<cfqueryparam value="#get_ass[attributescounter].goal_ids#" cfsqltype="CF_SQL_INTEGER" separator="," list="Yes">)
+				</CFQUERY>
+				<cfoutput query="goal_value_query">
+					<cfset goal_value = goal_value + value * value>				
+				</cfoutput>
+				<cfset goal_value = goal_value / goal_value_query.recordcount>
+				<cfset goal_value = sqr(goal_value)>
+				<cfset goal_value_list = valuelist(goal_value_query.value)>
+			</cfif>
+			<!---  end calculation to calculate goal_value  --->
+			
 			<!--- script below is to calculate all required variables--->
 			<cfscript>
 				//================================================================
@@ -294,14 +312,6 @@
 			<!---
 			end calculation of public confidence
 			 ============================================================================== --->
-			<cfscript>
-			// calculate the accumulated outcomes of all assignments
-			//sessiontotal_level_of_assessment = #sessiontotal_level_of_assessment# + #qLargest_level.value#; this might not be set
-			sessiontotal_spacing_of_assessment = #sessiontotal_spacing_of_assessment# + #spacing_of_ass#;
-			sessiontotal_weighting = #sessiontotal_weighting# + #weighting#;			
-			sessiontotal_progression = #sessiontotal_progression# + #progression#;
-			approach_to_learning = (goal_alignment + student_workload + feedback)/3;			
-			</cfscript>
 					
 			<!--- make sure that all outcomes values are not 0 --->
 			<cfif round(student_workload) eq 0><cfset student_workload = 1></cfif>
@@ -309,8 +319,25 @@
 			<cfif round(feedback) eq 0><cfset feedback = 1></cfif>
 			<cfif round(public_confidence) eq 0><cfset public_confidence = 1></cfif>
 			<cfif round(goal_alignment) eq 0><cfset goal_alignment = 1></cfif>
-			<cfif round(approach_to_learning) eq 0><cfset approach_to_learning = 1></cfif>
 			<!--- ========================================== --->
+			
+			<cfscript>
+				// calculate the accumulated outcomes of all assignments
+				//sessiontotal_level_of_assessment = #sessiontotal_level_of_assessment# + #qLargest_level.value#; this might not be set
+				sessiontotal_spacing_of_assessment = #sessiontotal_spacing_of_assessment# + #spacing_of_ass#;
+				sessiontotal_weighting = #sessiontotal_weighting# + #weighting#;			
+				sessiontotal_progression = #sessiontotal_progression# + #progression#;
+				// 5 and 1 are the lowest student workload while 3 is the highest
+				student_workload_temp = student_workload - 3;
+				student_workload_temp = sqr(student_workload_temp * student_workload_temp);
+				student_workload_temp = student_workload_temp * 2;
+				student_workload_temp = 5 - student_workload_temp;
+				// end 5 and 1 are the lowest student workload while 3 is the highest
+				
+				approach_to_learning = goal_value * student_workload_temp * feedback * 0.04;
+			</cfscript>
+			
+			<cfif round(approach_to_learning) eq 0><cfset approach_to_learning = 1></cfif>
 			
 			<cfscript>
 				result = StructInsert(cur_stateStruct, "sessiontotal_level_of_assessment", sessiontotal_level_of_assessment); 
@@ -324,6 +351,9 @@
 				result = StructInsert(cur_stateStruct, "student_emotion", student_emotion); 
 				result = StructInsert(cur_stateStruct, "goal_alignment", goal_alignment);
 				result = StructInsert(cur_stateStruct, "approach_to_learning", approach_to_learning);	
+				result = StructInsert(cur_stateStruct, "goal_value", goal_value);	
+				result = StructInsert(cur_stateStruct, "goal_value_list", goal_value_list);			
+				result = StructInsert(cur_stateStruct, "student_workload_temp", student_workload_temp);										
 			</cfscript>
 					
 			<!--- additional calculation below --->
