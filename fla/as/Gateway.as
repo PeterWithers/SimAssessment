@@ -58,20 +58,23 @@ function openGateway()
 }
 function Call_calculation_engineService()
 {
-	if (_root.WeekOfAssignments.length != null)
+	if (_root.timetable.CheckSemesterWorkloadPercentOK() or _root.EngineTest == true)
 	{
-		_root.MessageBox('Calling for semester calculations');
-//		trace('calculation_engine_called ' + _root.calculation_engine_called);
-		if (_root.calculation_engine_called != true)
+		if (_root.WeekOfAssignments.length != null)
 		{
-			_root.calculation_engine_returned = false;
-			_root.calculation_engine_called = true;
-			_root.calculation_engineService.calculate(_root.WeekOfAssignments); _root.RequiredCFCResults++;
-			_root.ErrorMessageShowing = false;
+			_root.MessageBox('Calling for semester calculations');
+	//		trace('calculation_engine_called ' + _root.calculation_engine_called);
+			if (_root.calculation_engine_called != true)
+			{
+				_root.calculation_engine_returned = false;
+				_root.calculation_engine_called = true;
+				_root.calculation_engineService.calculate(_root.WeekOfAssignments); _root.RequiredCFCResults++;
+				_root.ErrorMessageShowing = false;
+			}
+		} else {
+			_root.StopSemester();
+			_root.gererateClassState(0, 0, 0, 0);
 		}
-	} else {
-		_root.StopSemester();
-		_root.gererateClassState(0, 0, 0, 0);
 	}
 }
 
@@ -138,13 +141,13 @@ function get_feedback_type_Result(result)
 	_root.timetable.EditAssignment.MarkerType.addItem('Teacher', 'Teacher');
 	_root.timetable.EditAssignment.MarkerType.addItem('Peer', 'Peer');
 	_root.timetable.EditAssignment.MarkerType.addItem('Self', 'Self');
-	// these strings are used in the calculation engine and I dont have time atm to fix this design flaw
+	
 	_root.timetable.EditAssignment.AssignmentWorkload.addItem('Select..', 0);
-	_root.timetable.EditAssignment.AssignmentWorkload.addItem('Less than 20%', 'Less than 20%');
-	_root.timetable.EditAssignment.AssignmentWorkload.addItem('Between 20% and 40%', '20% and 40%');
-	_root.timetable.EditAssignment.AssignmentWorkload.addItem('Between 40% and 60%', '40% and 60%');
-	_root.timetable.EditAssignment.AssignmentWorkload.addItem('Between 60% and 80%', '60% and 80%');
-	_root.timetable.EditAssignment.AssignmentWorkload.addItem('More than 80%', 'More than 80%');
+	_root.timetable.EditAssignment.AssignmentWorkload.addItem(_root.AssignmentWorkloadInfoArray[1].DisplayString, 1);
+	_root.timetable.EditAssignment.AssignmentWorkload.addItem(_root.AssignmentWorkloadInfoArray[2].DisplayString, 2);
+	_root.timetable.EditAssignment.AssignmentWorkload.addItem(_root.AssignmentWorkloadInfoArray[3].DisplayString, 3);
+	_root.timetable.EditAssignment.AssignmentWorkload.addItem(_root.AssignmentWorkloadInfoArray[4].DisplayString, 4);
+	_root.timetable.EditAssignment.AssignmentWorkload.addItem(_root.AssignmentWorkloadInfoArray[5].DisplayString, 5);
 	
 //	for (WeekCounting = 1; WeekCounting < 15; WeekCounting++) _root.timetable.EditAssignment.WeekDue.addItem(WeekCounting, WeekCounting);
 	

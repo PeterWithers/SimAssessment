@@ -9,7 +9,7 @@ function SetWeekTextLable(AssignmentsForWeek)
 	EngineTestTimetableText = ' ' + _root.WeekOfAssignments[AssignmentsForWeek].ass_id + ':' + _root.WeekOfAssignments[AssignmentsForWeek].which_ass;
 	else EngineTestTimetableText = '';
 	set ("WTTfirst" + _root.WeekOfAssignments[AssignmentsForWeek].due_week, _root.WeekOfAssignments[AssignmentsForWeek].ass_name + EngineTestTimetableText);
-	set ("WTTsecond" + _root.WeekOfAssignments[AssignmentsForWeek].due_week, (_root.WeekOfAssignments[AssignmentsForWeek].weighting+"  " + _root.WeekOfAssignments[AssignmentsForWeek].marker + "-marked"));
+	set ("WTTsecond" + _root.WeekOfAssignments[AssignmentsForWeek].due_week, ( _root.AssignmentWorkloadInfoArray[_root.WeekOfAssignments[AssignmentsForWeek].weighting].ShortString + "  " + _root.WeekOfAssignments[AssignmentsForWeek].marker + "-marked"));
 }
 
 function SetupTimetableDisplay()
@@ -64,6 +64,34 @@ function SetupTimetableDisplay()
 	}	
 }
 SetupTimetableDisplay();
+
+_root.timetable.CheckSemesterWorkloadPercentOK = function()
+{
+	SemesterMinPercent = 0;
+	SemesterMaxPercent = 0;
+	for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
+	{
+		SemesterMinPercent += _root.AssignmentWorkloadInfoArray[_root.WeekOfAssignments[AssignmentsForWeek].weighting].MinPercent
+		SemesterMaxPercent += _root.AssignmentWorkloadInfoArray[_root.WeekOfAssignments[AssignmentsForWeek].weighting].MaxPercent
+	}
+//	_root.MessageBox( "SemesterMinPercent: " + SemesterMinPercent + "\nSemesterMaxPercent: " + SemesterMaxPercent );
+	
+	 if ( SemesterMaxPercent < 100 ) _root.OkMessageBox("The total assignment percent is too low");
+	 if ( SemesterMinPercent > 100 ) _root.OkMessageBox("The total assignment percent is too high")
+	if ( SemesterMinPercent < 100 and SemesterMaxPercent > 100 )
+	{
+//		_root.MessageBox("The total assignment percent is OK")
+		return true;
+	} else return false;
+}
+
+// set up an array of objects with all the weighting type data
+_root.AssignmentWorkloadInfoArray = new Array();
+_root.AssignmentWorkloadInfoArray[1] = {DisplayString: 'Less than 20%', ShortString: 'Less than 20%', MinPercent: 0, MaxPercent: 20};
+_root.AssignmentWorkloadInfoArray[2] = {DisplayString: 'Between 20% and 40%', ShortString: '20% and 40%', MinPercent: 20, MaxPercent: 40};
+_root.AssignmentWorkloadInfoArray[3] = {DisplayString: 'Between 40% and 60%', ShortString: '40% and 60%', MinPercent: 40, MaxPercent: 60};
+_root.AssignmentWorkloadInfoArray[4] = {DisplayString: 'Between 60% and 80%', ShortString: '60% and 80%', MinPercent: 60, MaxPercent: 80};
+_root.AssignmentWorkloadInfoArray[5] = {DisplayString: 'More than 80%', ShortString: 'More than 80%', MinPercent: 80, MaxPercent: 100};
 
 trace("start and read in new timetable data");
 stop();

@@ -42,6 +42,7 @@ on(release)
 	}
 
 	SetupTimetableDisplay();
+	_root.timetable.CheckSemesterWorkloadPercentOK()
 }
 
 
