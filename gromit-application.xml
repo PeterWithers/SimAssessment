@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<Timetable>
+	<GatewayUrl>http://gromit.iml.uts.edu.au/flashservices/gateway</GatewayUrl>
+	<GatewayPath>staging/simassessment/flash/demo/cfcs</GatewayPath>
+	<Debug>false</Debug>
+</Timetable>
