@@ -1,4 +1,33 @@
 // no assignmentd decay
+_root.GetSumValue = function (feedback_values_string)
+{
+	if ( isNaN ( feedback_values_string ) )
+	{	
+		feedback_values_array = feedback_values_string.split(',');
+		itemresult = 0;
+		for (sessionvalue in feedback_values_array)
+		{
+			itemresult = itemresult + Number ( feedback_values_array [ sessionvalue ] );
+		}
+	}
+	else
+	{
+		itemresult = new Number(feedback_values_string);
+	}
+//	trace("\nSum ( " + feedback_values_string + " ) = " + itemresult + "");
+	return (itemresult)
+}
+
+_root.GetMultipleAssignmentValue = function ( local_sessionass_week_list_index, local_tweenable )
+{
+//	trace ( "local_tweenable: " + local_tweenable );
+	if ( local_tweenable != "teacher_workload" and local_tweenable != "student_workload") itemresult = _root.GetRMSValue( _root.PreCalculatedStatesForSemester [ local_sessionass_week_list_index] [local_tweenable] );
+	else itemresult = _root.GetSumValue( _root.PreCalculatedStatesForSemester [ local_sessionass_week_list_index] [local_tweenable] );
+
+	if (itemresult > 5) itemresult = 5;
+	if (itemresult < 1) itemresult = 1;
+	return (itemresult);
+}
 
 function tweenweeks()
 {
@@ -31,7 +60,7 @@ function tweenweeks()
 			{
 				tweenable = TweenableList[tweenableindex];
 //				trace ( "tweenableindex: " + tweenableindex);
-				WeeklyStates[weekcount][tweenable] = _root.GetRMSValue(_root.PreCalculatedStatesForSemester[sessionass_week_list_index][tweenable]);
+				WeeklyStates[weekcount][tweenable] = _root.GetMultipleAssignmentValue( sessionass_week_list_index, tweenable );				
 			}
 		}
 		else
@@ -47,7 +76,7 @@ function tweenweeks()
 				if (sessionass_week_list_index != 0)
 				{
 				//	trace ( "tweenable: " + tweenable);
-					lastvalue = _root.GetRMSValue(_root.PreCalculatedStatesForSemester[sessionass_week_list_index][tweenable]);
+					lastvalue = _root.GetMultipleAssignmentValue( sessionass_week_list_index, tweenable );
 					lastassignmetweek = _root.AssessmentWeeksArray[sessionass_week_list_index - 1];
 				}
 				else
@@ -61,7 +90,7 @@ function tweenweeks()
 				{
 //					if ( tweenable == "feedback" ) trace("get next value");
 					//trace ( "tweenable: " + tweenable);
-					nextvalue = _root.GetRMSValue(_root.PreCalculatedStatesForSemester[sessionass_week_list_index + 1][tweenable]);
+					nextvalue = _root.GetMultipleAssignmentValue( sessionass_week_list_index + 1, tweenable );
 					nextassignmentweek = (_root.AssessmentWeeksArray[sessionass_week_list_index]);
 				}
 				else
