@@ -93,23 +93,24 @@
 			<!--- <cfset result = StructInsert(cur_stateStruct, "qAss_workload", qAss_workload)> --->
 
 			<!--- find the weighting value --->
-			<CFIF trim("#get_ass[attributescounter].weighting#") eq "Less than 20">
+			<CFIF trim("#get_ass[attributescounter].weighting#") eq "Less than 20%">
 				<cfset weighting = 1>
 				<cfset weighting_for_student_emotion = 1>
 				<!--- weighting_for_student_emotion is a variable to calculate student emotion.. look below at the student emotion calculation section --->
-			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "Between 20 and 40">
+			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "20% and 40%">
 				<cfset weighting = 2>
 				<cfset weighting_for_student_emotion = 0.5>
-			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "Between 40 and 60">
+			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "40% and 60%">
 				<cfset weighting = 3>
 				<cfset weighting_for_student_emotion = 0>
-			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "Between 60 and 80">
+			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "60% and 80%">
 				<cfset weighting = 4>
 				<cfset weighting_for_student_emotion = -0.5>
 			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "More than 80%">
 				<cfset weighting = 5>	
 				<cfset weighting_for_student_emotion = -1>
 			</CFIF>
+			
 			<!--- Find the goal alignment 
 			
 			- the codes below simply comparing values from one table (new_goal_alignment1) and another table (new_goal_alignment2)
@@ -149,16 +150,33 @@
 					included in the bigger value, to be used in the accumulated variable--->
 					<CFQUERY NAME="qLargest_level" DATASOURCE="sim_assess">
 					SELECT max(value) as value
-					FROM new_level_assignment
-					WHERE id in (#get_ass[attributescounter].goal_ids#)
+					FROM new_level_assignment <!--- this is a bit of a cludge below but this whole segment needs to be rewritten --->
+					WHERE <cfif get_ass[attributescounter].goal_ids neq "">id in (#get_ass[attributescounter].goal_ids#)<cfelse> 1 = 0 </cfif>
 					</CFQUERY>
 					<!--- -------------------------------------------------------------------------- --->   
 					<!--- query below is to find the average value of "level assignments" --->
 					<CFQUERY NAME="qAlign2" DATASOURCE="sim_assess">
 					SELECT AVG(value) as value
-					FROM new_level_assignment
-					WHERE id in (#get_ass[attributescounter].goal_ids#)
+					FROM new_level_assignment <!--- this is a bit of a cludge below but this whole segment needs to be rewritten --->
+					WHERE <cfif get_ass[attributescounter].goal_ids neq "">id in (#get_ass[attributescounter].goal_ids#)<cfelse> 1 = 0 </cfif>
 					</CFQUERY>
+				</cfif>
+				<!--- the script below is to calculate goal alignment --->
+				<cfscript>	
+				if (qAlign2.value lt qAlign1.value)//if task goal is less than subject goal =>i.e. not aligned
+					goal_alignment = goal_alignment - 1;
+				
+				if (goal_alignment lt -4)
+					goal_alignment = -4;
+				</cfscript>
+			</cfloop>
+		
+			<cfif goal_alignment lt 0>
+				<cfset sessionunaligned_assessment = sessionunaligned_assessment + 1>
+			</cfif>
+			
+			<Cfset goal_alignment = goal_alignment + 5>
+			
 			<!--- script below is to calculate all required variables--->
 			<cfscript>
 				//================================================================
@@ -251,26 +269,9 @@
 			<!---
 			end calculation of public confidence
 			 ============================================================================== --->
-				</cfif>
-				<!--- the script below is to calculate goal alignment --->
-				<cfscript>	
-				if (qAlign2.value lt qAlign1.value)//if task goal is less than subject goal =>i.e. not aligned
-					goal_alignment = goal_alignment - 1;
-				
-				if (goal_alignment lt -4)
-					goal_alignment = -4;
-				</cfscript>
-			</cfloop>
-		
-			<cfif goal_alignment lt 0>
-				<cfset sessionunaligned_assessment = sessionunaligned_assessment + 1>
-			</cfif>
-			
-			<Cfset goal_alignment = goal_alignment + 5>
-			
 			<cfscript>
 			// calculate the accumulated outcomes of all assignments
-			sessiontotal_level_of_assessment = #sessiontotal_level_of_assessment# + #qLargest_level.value#;
+			//sessiontotal_level_of_assessment = #sessiontotal_level_of_assessment# + #qLargest_level.value#; this might not be set
 			sessiontotal_spacing_of_assessment = #sessiontotal_spacing_of_assessment# + #spacing_of_ass#;
 			sessiontotal_weighting = #sessiontotal_weighting# + #weighting#;			
 			sessiontotal_progression = #sessiontotal_progression# + #progression#;
