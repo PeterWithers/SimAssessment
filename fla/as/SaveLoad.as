@@ -166,10 +166,23 @@ function SetUpPresets()
 	GoodSetup[1] = {ass_id: 3, ass_name: 'Report', due_week: 8, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 2, goal_ids: '8'};
 	GoodSetup[2] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 13, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 3, goal_ids: '8,14'};
 	
+	MultiSetup = new Array();
+	MultiSetup[0] = {ass_id: 5, ass_name: 'Short answer question', due_week: 4, feedback: 2, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	MultiSetup[1] = {ass_id: 3, ass_name: 'Report', due_week: 8, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 2, goal_ids: '8'};
+	MultiSetup[2] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 8, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 3, goal_ids: '8,14'};
+	MultiSetup[3] = {ass_id: 5, ass_name: 'Short answer question', due_week: 8, feedback: 2, marker: 'Teacher', weighting: 'Less than 20%',  which_ass: 1, goal_ids: '2'};
+	MultiSetup[4] = {ass_id: 3, ass_name: 'Report', due_week: 13, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 2, goal_ids: '8'};
+	MultiSetup[5] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 13, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 3, goal_ids: '8,14'};
+	MultiSetup[6] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 3, goal_ids: '8,14'};
+	MultiSetup[7] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 3, goal_ids: '8,14'};
+	MultiSetup[8] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 3, goal_ids: '8,14'};
+	MultiSetup[9] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 3, goal_ids: '8,14'};
+	MultiSetup[10] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 3, goal_ids: '8,14'};
 	
 	_root.Presets.addItem('Blank Setup', 1);
 	_root.Presets.addItem('Good Setup', GoodSetup);
 	_root.Presets.addItem('Bad Setup', BadSetup);
+	_root.Presets.addItem('Multi per Week', MultiSetup);
 	//Presets.addItem('cfm setup', cfmSetup);
 	//Presets.addItem('Happy Setup', happySetup);
 	//Presets.addItem('error', 1);
