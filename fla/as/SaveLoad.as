@@ -221,9 +221,9 @@ function PresetsOnChangeHandler()
 	_root.Call_calculation_engineService();
 	_root.timetable.SetupTimetableDisplay();
 }
-function SetUpPresets()
+function SetUpPresets(dropdowntopopulate)
 {
-	_root.Presets.removeAll();
+	dropdowntopopulate.removeAll();
 	cfmSetup = new Array();
 	cfmSetup[0] = {ass_id: 7, ass_name: 'Project', due_week: 2, feedback: 1, marker: 'Self', weighting: '40% and 60%', which_ass: 1, goal_ids: '2'};
 	cfmSetup[1] = {ass_id: 12, ass_name: 'Case studies', due_week: 3, feedback: 1, marker: 'Self', weighting: '40% and 60%', which_ass: 2, goal_ids: '2'};
@@ -260,15 +260,15 @@ function SetUpPresets()
 	MultiSetup[9] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 10, goal_ids: '8,14'};
 	MultiSetup[10] = {ass_id: 11, ass_name: 'Reflective journals', due_week: 14, feedback: 2, marker: 'Teacher', weighting: '20% and 40%',  which_ass: 11, goal_ids: '8,14'};
 	
-	_root.Presets.addItem('Blank Setup', 1);
-	_root.Presets.addItem('Good Setup', GoodSetup);
-	_root.Presets.addItem('Bad Setup', BadSetup);
-	_root.Presets.addItem('Multi per Week', MultiSetup);
+	dropdowntopopulate.addItem('Blank Setup', 1);
+	dropdowntopopulate.addItem('Good Setup', GoodSetup);
+	dropdowntopopulate.addItem('Bad Setup', BadSetup);
+	dropdowntopopulate.addItem('Multi per Week', MultiSetup);
 	//Presets.addItem('cfm setup', cfmSetup);
 	//Presets.addItem('Happy Setup', happySetup);
 	//Presets.addItem('error', 1);
 }
-_root.SetUpPresets();
+_root.SetUpPresets(_root.Presets);
 _root.Presets.setChangeHandler('PresetsOnChangeHandler', _root);
 
 
