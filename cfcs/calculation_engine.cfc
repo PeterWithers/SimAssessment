@@ -95,20 +95,20 @@
 			<!--- <cfset result = StructInsert(cur_stateStruct, "qAss_workload", qAss_workload)> --->
 
 			<!--- find the weighting value --->
-			<CFIF trim("#get_ass[attributescounter].weighting#") eq "Less than 20%">
+			<CFIF trim("#get_ass[attributescounter].weighting#") eq 1>
 				<cfset weighting = 1>
 				<cfset weighting_for_student_emotion = 1>
 				<!--- weighting_for_student_emotion is a variable to calculate student emotion.. look below at the student emotion calculation section --->
-			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "20% and 40%">
+			<cfelseif trim("#get_ass[attributescounter].weighting#") eq 2>
 				<cfset weighting = 2>
 				<cfset weighting_for_student_emotion = 0.5>
-			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "40% and 60%">
+			<cfelseif trim("#get_ass[attributescounter].weighting#") eq 3>
 				<cfset weighting = 3>
 				<cfset weighting_for_student_emotion = 0>
-			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "60% and 80%">
+			<cfelseif trim("#get_ass[attributescounter].weighting#") eq 4>
 				<cfset weighting = 4>
 				<cfset weighting_for_student_emotion = -0.5>
-			<cfelseif trim("#get_ass[attributescounter].weighting#") eq "More than 80%">
+			<cfelseif trim("#get_ass[attributescounter].weighting#") eq 5>
 				<cfset weighting = 5>	
 				<cfset weighting_for_student_emotion = -1>
 			</CFIF>
