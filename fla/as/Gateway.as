@@ -1,5 +1,5 @@
 #include "NetServices.as"
-#include "NetDebug.as"
+// #include "NetDebug.as"
 
 function InitSemester()
 {
