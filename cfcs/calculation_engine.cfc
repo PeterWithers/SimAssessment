@@ -242,11 +242,14 @@
 				//==============================================================================
 				//==============================================================================	
 				//new calculation for feedback.
+				
+				// the following has been made linear as discussed in the meeting 20 sept 2004
+/*
 				penalty_factor = 0.5;
 				penalty = (get_ass[attributescounter].which_ass * penalty_factor) - 4;
 				avg_assessment_time = 14 / (ArrayLen(get_ass) + 1);
 				assessment_time_factor = spacing_of_ass - avg_assessment_time - penalty;
-				feedback = assessment_time_factor + qNewFeedback.feedback_value;
+				feedback = assessment_time_factor + qNewFeedback.feedback_value * 2;
 				
 				if (feedback gt 10)
 					feedback = 10;
@@ -254,6 +257,9 @@
 					feedback = -10;
 
 				feedback = (feedback + 10) / 4;
+*/				
+				feedback = qNewFeedback.feedback_value; 
+				// get_ass[attributescounter].feedback
 				//end calculation for feedback
 				//==============================================================================
 				//==============================================================================
