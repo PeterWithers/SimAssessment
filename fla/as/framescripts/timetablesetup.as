@@ -3,15 +3,43 @@ trace(this);
 
 function AssignmentInstanceDataIntoSelectData()
 {
+	// check that the select boxes are populated
+	if (_root.timetable.EditAssignment.AssessmentType.getSelectedIndex() == 0)	
+	{
+		_root.OkMessageBox('Assessment type must be chosen');
+		return(0);
+	}
+	if (_root.timetable.EditAssignment.AssignmentWorkload.getSelectedIndex() == 0)	
+	{
+		_root.OkMessageBox('Assignment workload must be chosen');
+		return(0);
+	}
+	if (_root.timetable.EditAssignment.FeedbackType.getSelectedIndex() == 0)	
+	{
+		_root.OkMessageBox('Feedback type must be chosen');
+		return(0);
+	}
+	if (_root.timetable.EditAssignment.MarkerType.getSelectedIndex() == 0)	
+	{
+		_root.OkMessageBox('Marker type must be chosen');
+		return(0);
+	}
 	// find the selected goal ids
 	SelectedGoalIds = new Array();
 	for (CheckBoxItem in _root.timetable.EditAssignment.SubjectOutlineGoals)
 	{
-//		trace('CheckBoxItem: ' + CheckBoxItem + ' ' + _root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].DataObject.id);
-		if (_root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].getValue())
+		if (_root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].selected)
 			SelectedGoalIds.push(_root.timetable.EditAssignment.SubjectOutlineGoals[CheckBoxItem].DataObject.id);
 	}
 	trace('SelectedGoalIds: ' + SelectedGoalIds);
+	
+	// check that goals are chosen
+	if (SelectedGoalIds.length < 1)	
+	{
+		_root.OkMessageBox('Goals must be chosen');
+		return(0);
+	}
+	
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(_root.timetable.LastSelectedAssignmentInstanceIndex).data = 
 	{
 		ASS_ID: _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ASS_ID, 
@@ -23,44 +51,47 @@ function AssignmentInstanceDataIntoSelectData()
 		WHICH_ASS: '?', 
 		goal_ids: SelectedGoalIds.toString()
 	};
-	/*
-	trace(
+	
+	/*trace(
 	'AssignmentsByWeek['+_global.weechoo+'] = { ASS_ID: ' + _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ASS_ID +
 	', ASS_NAME: ' + _root.timetable.EditAssignment.AssessmentType.getSelectedItem().data.ass_name + 
 	', DUE_WEEK: ' + _global.weechoo + ' , FEEDBACK: ' + _root.timetable.EditAssignment.FeedbackType.getSelectedItem().data.feedback_id + ' , ' +
 	'MARKER: ' + _root.timetable.EditAssignment.MarkerType.getSelectedItem().data + ' , ' +
 	'WEIGHTING: ' + _root.timetable.EditAssignment.AssignmentWorkload.getSelectedItem().data + ', ' + 
-	' WHICH_ASS: ?, goal_ids: ' + SelectedGoalIds.toString() + '	};');
-	*/
+	' WHICH_ASS: ?, goal_ids: ' + SelectedGoalIds.toString() + '	};');*/
 	
 	// store the last selection;
 	_root.timetable.LastSelectedAssignmentInstanceIndex =_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedIndex();
+	return(1);
 }
 
 function UpdateSelectAddingNewItem()
 {
-	 for (AssignmentInstanceCounter = 0; AssignmentInstanceCounter < _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength(); AssignmentInstanceCounter++)
+	trace('UpdateSelectAddingNewItem');
+	// these names are also set in the delete script
+	for (AssignmentInstanceCounter = 0; AssignmentInstanceCounter < _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength(); AssignmentInstanceCounter++)
  		_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).label = (AssignmentInstanceCounter + 1) + ' of ' + _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength();
+	// if none then provide a blank
+	if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() == 0) _root.timetable.EditAssignment.AssignmentInstanceSelect.addItem('1 of 1', null);
 	_root.timetable.EditAssignment.AssignmentInstanceSelect.addItem('new', null);
-	//{ASS_ID: -1, ASS_NAME: -1, DUE_WEEK: -1, FEEDBACK: -1, MARKER: -1, WEIGHTING: -1, WHICH_ASS: -1, goal_ids: -1});
 }
 	
 function AssignmentInstanceSelectChange()
 {
 	trace('AssignmentInstanceSelectChange()');
 	// save the current settings
-	_root.timetable.AssignmentInstanceDataIntoSelectData();
-	
-	if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().label == 'new') _root.timetable.UpdateSelectAddingNewItem();
-	// clear and load the selections settings
-	_root.timetable.PopulateSubjectInputs(_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().data);
+	if (_root.timetable.AssignmentInstanceDataIntoSelectData())
+	{
+		if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().label == 'new') _root.timetable.UpdateSelectAddingNewItem();
+		// clear and load the selections settings
+		_root.timetable.PopulateSubjectInputs(_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedItem().data);
+	}else
+		if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedIndex() != _root.timetable.LastSelectedAssignmentInstanceIndex)
+			_root.timetable.EditAssignment.AssignmentInstanceSelect.setSelectedIndex(_root.timetable.LastSelectedAssignmentInstanceIndex);
 }
 
 function PopulateSubjectInputs(AssignmentObjectForWeek)
-{
-//	trace('AssignmentObjectForWeek: ' + AssignmentObjectForWeek);
-//	trace('AssignmentObjectForWeek: ' + AssignmentObjectForWeek.MARKER);
-	
+{	
 	// clear previous settings
 	_root.timetable.EditAssignment.AssessmentType.setSelectedIndex(0);
 	_root.timetable.EditAssignment.AssignmentWorkload.setSelectedIndex(0);
@@ -103,15 +134,6 @@ function PopulateSubjectInputs(AssignmentObjectForWeek)
 		_root.timetable.EditAssignment.SubjectOutlineGoals['CheckBox' + AssignmentObjectForWeekArray[GoalIdCounter]].selected  = true;
 	}
 }
-
-/*function ClearSubjectInputs()
-{
-// clear previous settings
-_root.timetable.EditAssignment.AssessmentType.setSelectedIndex(0);
-_root.timetable.EditAssignment.AssignmentWorkload.setSelectedIndex(0);
-_root.timetable.EditAssignment.FeedbackType.setSelectedIndex(0);
-_root.timetable.EditAssignment.MarkerType.setSelectedIndex(0);
-}*/
 AssignmentObjectForWeek = null;
 
 // count the Assignments in this week
@@ -131,41 +153,6 @@ _root.timetable.LastSelectedAssignmentInstanceIndex =_root.timetable.EditAssignm
 
 _root.timetable.EditAssignment.AssignmentInstanceSelect.setChangeHandler('AssignmentInstanceSelectChange', _root.timetable);
 _root.timetable.EditAssignment._visible = true;
-
-// switch to wait until assessment is set - should be a function
-keepstat=_global.stat; _global.stat=0; trace ("switch to stop while changing assessment");
-//_root.time.stop();
-//_root.clock.rotates=0;
-//_root.simmenu.indicator.gotoAndStop(10+stat*10);
-
-// set values on screen
-var i=_global.weechoo;
-var inputweek=_global.weechoo;
-var inputworth=WWorth[i];
-// retrieve WValues and set Screen display choices right
-for (x=0;x<=7;x++) {
-	if (WAssess[i]==AssessmentType[x]) {
-		WAssessButton.gotoAndStop((x+1)*10);
-		set (WDue[i], inputweek);
-	}
-}
-for (x=0;x<=3;x++) {
-	if (WMark[i]==Marker[x]) {
-		WMarkButton.gotoAndStop((x+1)*10);
-	}
-}
-for (x=0;x<=5;x++) {
-	if (WType[i]==FeedbackType[x]) {
-		WTypeButton.gotoAndStop((x+1)*10);
-	}
-}
-
-/*
-// debug
-for (i=0;i<=14;i++) {
-	trace(WDue[i]+"/"+WAssess[i]+"/"+WWorth[i]+"/"+WType[i]+"/"+WMark[i])
-}
-trace("");*/
 
 stop();
 

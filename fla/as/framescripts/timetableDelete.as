@@ -1,44 +1,42 @@
 on(release) 
 {
-	_root.timetable.EditAssignment._visible = false;
-	
-	// put the AssignmentsForWeek into and array by week
-	AssignmentsByWeek = new Array();
-	for (AssignmentsForWeek in _root.WeekOfAssignments)
+	for (AssignmentInstanceCounter = _root.timetable.EditAssignment.AssignmentInstanceSelect.getSelectedIndex(); AssignmentInstanceCounter < _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1; AssignmentInstanceCounter++)
+ 		_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter).data = _root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(AssignmentInstanceCounter + 1).data;
+	_root.timetable.EditAssignment.AssignmentInstanceSelect.removeItemAt(_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1);
+	_root.timetable.EditAssignment.AssignmentInstanceSelect.removeItemAt(_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 1);
+	if (_root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() > 0)
 	{
-		AssignmentsByWeek[_root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK] = _root.WeekOfAssignments[AssignmentsForWeek];
-	}
-	// modify the relevant week
-	AssignmentsByWeek[_global.weechoo] = null;
-	// put the assignments back into AssignmentsForWeek by week order
-	_root.WeekOfAssignments = new Array();
-	for (WeekCounter=1; WeekCounter<=14; WeekCounter++) 
-	{
-		if (AssignmentsByWeek[WeekCounter] != null)_root.WeekOfAssignments.push(AssignmentsByWeek[WeekCounter]);
-	}
+		_root.timetable.UpdateSelectAddingNewItem();
+		if (_root.timetable.LastSelectedAssignmentInstanceIndex < _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 2)
+		{
+			NextSelectedAssignmentInstanceIndex = _root.timetable.LastSelectedAssignmentInstanceIndex
+		}
+		else
+		{
+			NextSelectedAssignmentInstanceIndex = _root.timetable.EditAssignment.AssignmentInstanceSelect.getLength() - 2;
+		}
+		// clear and load the selections settings
+		_root.timetable.PopulateSubjectInputs(_root.timetable.EditAssignment.AssignmentInstanceSelect.getItemAt(NextSelectedAssignmentInstanceIndex).data);
+		// set the selection
+		_root.timetable.EditAssignment.AssignmentInstanceSelect.setSelectedIndex(NextSelectedAssignmentInstanceIndex);
+	}else{	
+		_root.CloseDialogues();
+		_root.calculation_engine_called = false;
 	
-	SetupTimetableDisplay();
-/*	var i=_global.weechoo;
-	set ("WTTfirst"+i,"");
-	set ("WTTsecond"+i,"");
-	WAssess[i]=0;
-	WWorth[i]=0;
-	WDue[i]=0;
-	WMark[i]=0;
-	WType[i]=0;
-	
-	// switch back
-	_global.stat=keepstat; trace ("switch back");
-	if (keepstat==1) {
-		_root.time.play();
-		_root.clock.rotates=5;
-	} else {
-		_root.time.stop();
-		_root.clock.rotates=0;
+		WeekOfAssignmentsUpdated = new Array();
+		for (AssignmentsForWeek = 0; AssignmentsForWeek < _root.WeekOfAssignments.length; AssignmentsForWeek++)
+		{
+			trace('AssignmentsForWeek: ' + AssignmentsForWeek);
+			trace('DUE_WEEK: ' + _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK); 
+			if (_global.weechoo == _root.WeekOfAssignments[AssignmentsForWeek].DUE_WEEK)
+				trace('one to remove');
+			else
+				WeekOfAssignmentsUpdated[WeekOfAssignmentsUpdated.length] = _root.WeekOfAssignments[AssignmentsForWeek];
+		}
+//		WeekOfAssignmentsUpdated.sortOn('DUE_WEEK');
+		_root.WeekOfAssignments = WeekOfAssignmentsUpdated;
+		SetupTimetableDisplay();
 	}
-	_root.simmenu.indicator.gotoAndStop(10+stat*10);
-*/
-	gotoAndStop("start");
 }
 
 
