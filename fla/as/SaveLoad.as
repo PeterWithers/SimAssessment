@@ -316,6 +316,7 @@ function SetUpPresets(dropdowntopopulate)
 	//Presets.addItem('Happy Setup', happySetup);
 	//Presets.addItem('error', 1);
 }
+//_root.createTextField("PlaceToPutFocus", 1, -100, -100, 1, 1);
 _root.SetUpPresets(_root.Presets);
 _root.Presets.setChangeHandler('PresetsOnChangeHandler', _root);
 
