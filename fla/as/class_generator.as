@@ -142,6 +142,17 @@ function gererateClassState(current_weeks_feedback, attributesSEMESTER_RUNNING, 
 			
 			if (personal_feedback == 0) personal_feedback = 1;
 			else if (personal_feedback > 5) personal_feedback = 5;
+			
+			if (Key.isDown(Key.CONTROL) and Key.isDown(Key.ALT))
+			{
+				_root.StudentsInClassroom[class_counter].createTextField("DebugText", 1, 35, 20, 55, 65);
+				_root.StudentsInClassroom[class_counter].DebugText.border = true;
+				_root.StudentsInClassroom[class_counter].DebugText.multiline = true;
+				_root.StudentsInClassroom[class_counter].DebugText.wordWrap = true;
+				_root.StudentsInClassroom[class_counter].DebugText.text =  "FdBk:" + personal_feedback + "\nWkLd:" + personal_workload + "\nType:" + _root.StudentsInClassroom[class_counter].type + "\nEmot:" + personal_emotion;
+			} else {
+				_root.StudentsInClassroom[class_counter].DebugText._visible = false;
+			}
 				
 	//		<!--- find the appropriate comment for student --->
 			qStudentcomment = _root.StudentCommentsArray[personal_workload][personal_feedback];
@@ -172,7 +183,6 @@ function gererateClassState(current_weeks_feedback, attributesSEMESTER_RUNNING, 
 			
 			trace('updating states of students');
 			_root.StudentsInClassroom[class_counter].gotoAndStop(student_image);
-			_root.StudentsInClassroom[class_counter].feedback = qStudentcomment.description;
 			
 			if(AssessmentThisWeek)
 			{
@@ -189,18 +199,21 @@ function gererateClassState(current_weeks_feedback, attributesSEMESTER_RUNNING, 
 					{
 						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description + '\n\nStudent'});
 						_root.computer.emailindicator.gotoAndPlay('new');
+						_root.StudentsInClassroom[class_counter].feedback = qStudentcomment.description;
 						_root.StudentHandUp(_root.StudentsInClassroom[class_counter].student);
 					}
-					if (qStudentcomment.description1 != null and qStudentcomment.description1 != '' and _root.StudentsInClassroom[class_counter].type == 2)
+					if (qStudentcomment.description2 != null and qStudentcomment.description2 != '' and _root.StudentsInClassroom[class_counter].type == 2)
 					{
 						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description2 + '\n\nStudent'});
 						_root.computer.emailindicator.gotoAndPlay('new');			
+						_root.StudentsInClassroom[class_counter].feedback = qStudentcomment.description2;
 						_root.StudentHandUp(_root.StudentsInClassroom[class_counter].student);
 					}
-					if (qStudentcomment.description2 != null and qStudentcomment.description2 != '' and _root.StudentsInClassroom[class_counter].type == 3)
+					if (qStudentcomment.description3 != null and qStudentcomment.description3 != '' and _root.StudentsInClassroom[class_counter].type == 3)
 					{			
 						_root.email.InBoxGrid.addItem({Arrival: _root.email.InBoxGrid.length, From:'Student', Date:'week ' + _root.CurrentWeekInSemester, emailcont:'<i>from:&nbsp;Student</i><br><b>'+student_image+'</b><br><b>Week ' + _root.CurrentWeekInSemester+'</b><br><br>To ' + _root.UserName + '\n\n' + qStudentcomment.description3 + '\n\nStudent'});
 						_root.computer.emailindicator.gotoAndPlay('new');						
+						_root.StudentsInClassroom[class_counter].feedback = qStudentcomment.description3;
 						_root.StudentHandUp(_root.StudentsInClassroom[class_counter].student);
 					}
 				}
