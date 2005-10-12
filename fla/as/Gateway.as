@@ -31,7 +31,9 @@ function InitSemester()
 		_root.RecalculateExistingWeeks();
 		if (_root.EngineTest == true) _root.GraphDisplay.show();
 //	deselect the preset dropdown which responds to up and down keys causing the semester to reload <eek>.
-//		focusManager.setFocus(_root.PlaceToPutFocus);
+		_root.createTextField("PlaceToPutFocus", 1, -100, -100, 1, 1);		
+		focusManager.setFocus(_root.PlaceToPutFocus);
+		_root.PlaceToPutFocus.removeTextField();
 	}
 }
 
