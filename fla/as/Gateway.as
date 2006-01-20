@@ -10,6 +10,8 @@ import mx.remoting.debug.NetDebug;
 // NetDebug.initialize();
 
 var calculation_engineService:Service;
+var usersfunctionsService:Service;
+var resourcesService:Service;
 
 function InitSemester()
 {
@@ -47,12 +49,12 @@ function openGateway()
 		isGatewayOpen = true;
 		_root.MessageBox('Opening Gateway');
 
-		var usersfunctionsService:Service = new Service(_root.xmlGatewayUrl, new Log(Log.DEBUG), _root.xmlGatewayPath + "/usersfunctions", null, null);
+		usersfunctionsService = new Service(_root.xmlGatewayUrl, new Log(Log.DEBUG), _root.xmlGatewayPath + "/usersfunctions", null, null);
 		var mentorService:Service = new Service(_root.xmlGatewayUrl, new Log(Log.DEBUG), _root.xmlGatewayPath + "/mentor", null, null);
 		var studentService:Service = new Service(_root.xmlGatewayUrl, new Log(Log.DEBUG), _root.xmlGatewayPath + "/student", null, null);
 		var commentsService:Service = new Service(_root.xmlGatewayUrl, new Log(Log.DEBUG), _root.xmlGatewayPath + "/comments", null, null);
-		var resourcesService:Service = new Service(_root.xmlGatewayUrl, new Log(Log.DEBUG), _root.xmlGatewayPath + "/resources", null, null);
-		calculation_engineService = new Service(_root.xmlGatewayUrl, new Log(Log.DEBUG), _root.xmlGatewayPath + "/calculation_engine", null, null);;
+		resourcesService = new Service(_root.xmlGatewayUrl, new Log(Log.DEBUG), _root.xmlGatewayPath + "/resources", null, null);
+		calculation_engineService = new Service(_root.xmlGatewayUrl, new Log(Log.DEBUG), _root.xmlGatewayPath + "/calculation_engine", null, null);
 		
 		_root.RequiredCFCResults = 0;
 //		resourcesService.get_subjects(); _root.RequiredCFCResults++;
@@ -80,7 +82,7 @@ function Call_calculation_engineService()
 			{
 				_root.calculation_engine_returned = false;
 				_root.calculation_engine_called = true;
-				calculation_engineService.calculate(_root.WeekOfAssignments).responder = new RelayResponder(this, "calculate_Result", "calculate_Status"); _root.RequiredCFCResults++;
+				_root.calculation_engineService.calculate(_root.WeekOfAssignments).responder = new RelayResponder(this, "calculate_Result", "calculate_Status"); _root.RequiredCFCResults++;
 				_root.ErrorMessageShowing = false;
 			}
 		} else {
@@ -279,3 +281,119 @@ function get_goal_alignment_grid_Result(ResultE:ResultEvent)
 //	value
 	_root.InitSemester();
 }
+
+function GetHelp(HelpString)
+{
+	resourcesService.get_help(HelpString).responder = new RelayResponder(this, "get_help_Result", "get_help_Status");
+}
+
+function get_help_Result(ResultE:ResultEvent)
+{
+	_root.HelpBox.helpTopic.text = '';
+	_root.HelpBox.helpContent.text = '';
+	if (ResultE.result.items.length > 0)
+		for (helplist = 0; helplist < ResultE.result.items.length; helplist++)	
+		{
+			_root.HelpBox.helpTopic.text = _root.HelpBox.helpTopic.text + ResultE.result.items[helplist].topic + ' ';
+			_root.HelpBox.helpContent.htmlText = _root.HelpBox.helpContent.htmlText + ResultE.result.items[helplist].helptext + '<br><br>';
+		}
+	else _root.HelpBox.helpContent.text = 'No help is associated with this item';
+}
+
+function get_help_Status(ResultE:ResultEvent)
+{
+	_root.ErrorMessageBox('get_help\n' + ResultE.result.description);
+}
+
+function call_load_timetable()
+{
+	usersfunctionsService.load_timetable({userid: _root.userid}).responder = new RelayResponder(this, "load_timetable_Result", "load_timetable_Status");
+}
+
+function load_timetable_Status(ResultE:ResultEvent)
+{
+	_root.ErrorMessageBox('load_timetable\n' + ResultE.result.description);
+}
+
+function load_timetable_Result(ResultE:ResultEvent)
+{
+	trace('get_subjects_Result(result)');
+//	Presets.addItem(ResultE.result.items[0].timetablelabel, ResultE.result.items);	
+	LoadedSetups = new Array();
+	for (resultrow = 0; resultrow < ResultE.result.items.length; resultrow++) 
+	{
+		if (LoadedSetups[ResultE.result.items[resultrow].timetablelabel] == null) LoadedSetups[ResultE.result.items[resultrow].timetablelabel] = new Array();
+		LoadedSetups[ResultE.result.items[resultrow].timetablelabel][LoadedSetups[ResultE.result.items[resultrow].timetablelabel].length] = ResultE.result.items[resultrow];
+	}
+	_root.SetUpPresets();
+	for (LoadedNames in LoadedSetups)Presets.addItem(LoadedNames, LoadedSetups[LoadedNames]);
+	_root.RemoveMessageBox();
+}
+
+function call_register_user()
+{
+	_root.usersfunctionsService.register_user({LoginName: _root.messagepopup.LoginName.text, Password: _root.messagepopup.Password.text, UserName: _root.UserName}).responder = new RelayResponder(this, "register_user_Result", "register_user_Status");
+}
+
+function register_user_Status(ResultE:ResultEvent)
+{
+	_root.ErrorMessageBox('register_user\n' + ResultE.result.description);
+}
+
+function register_user_Result(ResultE:ResultEvent)
+{
+	trace('register_user_Result(result)');
+	if (ResultE.result > 0)
+	{
+		_root.userid = ResultE.result;
+		_root.RemoveMessageBox();
+		_root.logedin = true;
+		_root.GetUserLoginCallBackFunction();
+	} else {
+		_root.OkMessageBoxOKfunction('This login name is taken please use another.\n Your display name will remain the same.', _root.messagepopup.registerbox);
+	}
+}
+
+function call_login_user()
+{
+	_root.usersfunctionsService.login_user({LoginName: _root.messagepopup.LoginName.text, Password: _root.messagepopup.Password.text}).responder = new RelayResponder(this, "login_user_Result", "login_user_Status");
+}
+
+function login_user_Status(ResultE:ResultEvent)
+{
+	_root.ErrorMessageBox('login_user\n' + ResultE.result.description);
+}
+
+function login_user_Result(ResultE:ResultEvent)
+{
+	trace('login_user_Result(result)');
+	if (ResultE.result != -1)
+	{
+		_root.RemoveMessageBox();
+		_root.logedin = true;
+		
+		_root.userid = ResultE.result.items[0].userid;
+	//	_root.LoginName = ResultE.result.items[0].LoginName;	
+	//	_root.Password = ResultE.result.items[0].Password;
+		_root.UserName = ResultE.result.items[0].UserName;
+		
+		_root.GetUserLoginCallBackFunction();
+	} else _root.OkMessageBoxOKfunction('Incorrect login', _root.messagepopup.loginbox);
+}
+
+function call_save_timetable()
+{
+	_root.usersfunctionsService.save_timetable({timetabletosave: _root.WeekOfAssignments, timetablelabel: _root.messagepopup.UserText.text, userid: _root.userid}).responder = new RelayResponder(this, "save_timetable_Result", "save_timetable_Status");
+}
+
+function save_timetable_Status(ResultE:ResultEvent)
+{
+	_root.ErrorMessageBox('save_timetable\n' + ResultE.result.description);
+}
+function save_timetable_Result(ResultE:ResultEvent)
+{
+	trace('save_timetable_Result(result)');
+	Presets.addItem(ResultE.result.items[0].timetablelabel, ResultE.result.items);
+	_root.RemoveMessageBox();
+}
+

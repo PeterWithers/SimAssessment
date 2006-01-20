@@ -5,7 +5,7 @@ function GetUserTextBox()
 	_root.messagepopup.save.onRelease = function() 
 	{
 		_root.RemoveMessageBox();
-		_root.usersfunctionsService.save_timetable({timetabletosave: _root.WeekOfAssignments, timetablelabel: _root.messagepopup.UserText.text, userid: _root.userid});
+		_root.call_save_timetable();
 		_root.SavingMessageBox(_root.messagepopup.UserText.text);
 	}
 	_root.messagepopup.cancel.onRelease = function() 
@@ -35,7 +35,7 @@ _root.messagepopup.loginbox = function()
 	_root.messagepopup.gotoAndStop('Login');
 	_root.messagepopup.login.onRelease = function() 
 	{
-		_root.usersfunctionsService.login_user({LoginName: _root.messagepopup.LoginName.text, Password: _root.messagepopup.Password.text});
+    	_root.call_login_user();
 		_root.SavingMessageBox('loging in user name');
 	}
 	_root.messagepopup.cancel.onRelease = function() 
@@ -82,7 +82,7 @@ _root.messagepopup.registerbox = function()
 			return;
 		}
 		if (_root.UserName == null) _root.UserName = _root.messagepopup.LoginName.text;
-		_root.usersfunctionsService.register_user({LoginName: _root.messagepopup.LoginName.text, Password: _root.messagepopup.Password.text, UserName: _root.UserName});
+		_root.call_register_user();
 		_root.SavingMessageBox('Registering user name');
 	}
 	_root.messagepopup.cancel.onRelease = function() 
@@ -118,54 +118,6 @@ SaveButton.onRelease = function()
 	else
 		_root.OkMessageBox('Nothing to save');
 }
-function save_timetable_Status(result)
-{
-	_root.ErrorMessageBox('save_timetable\n' + result.description);
-}
-function save_timetable_Result(result)
-{
-	trace('save_timetable_Result(result)');
-	Presets.addItem(result.items[0].timetablelabel, result.items);
-	_root.RemoveMessageBox();
-}
-
-function login_user_Status(result)
-{
-	_root.ErrorMessageBox('login_user\n' + result.description);
-}
-function login_user_Result(result)
-{
-	trace('register_user_Result(result)');
-	if (result != -1)
-	{
-		_root.RemoveMessageBox();
-		_root.logedin = true;
-		
-		_root.userid = result.items[0].userid;
-	//	_root.LoginName = result.items[0].LoginName;	
-	//	_root.Password = result.items[0].Password;
-		_root.UserName = result.items[0].UserName;
-		
-		_root.GetUserLoginCallBackFunction();
-	} else _root.OkMessageBoxOKfunction('Incorrect login', _root.messagepopup.loginbox);
-}
-function register_user_Status(result)
-{
-	_root.ErrorMessageBox('register_user\n' + result.description);
-}
-function register_user_Result(result)
-{
-	trace('register_user_Result(result)');
-	if (result > 0)
-	{
-		_root.userid = result;
-		_root.RemoveMessageBox();
-		_root.logedin = true;
-		_root.GetUserLoginCallBackFunction();
-	} else {
-		_root.OkMessageBoxOKfunction('This login name is taken please use another.\n Your display name will remain the same.', _root.messagepopup.registerbox);
-	}
-}
 
 LoadButton.onRelease = function()
 {
@@ -176,32 +128,16 @@ LoadButton.onRelease = function()
 		_root.GetUserLogin(_root.LoadButton.onRelease);
 		return;
 	}
-	usersfunctionsService.load_timetable({userid: _root.userid});
+	_root.call_load_timetable();
 	_root.MessageBox('Loading saved setups');
 //	usersfunctionsService.create_timetableconfig_table();
 }
-function load_timetable_Status(result)
-{
-	_root.ErrorMessageBox('load_timetable\n' + result.description);
-}
-function load_timetable_Result(result)
-{
-	trace('get_subjects_Result(result)');
-//	Presets.addItem(result.items[0].timetablelabel, result.items);	
-	LoadedSetups = new Array();
-	for (resultrow = 0; resultrow < result.items.length; resultrow++) 
-	{
-		if (LoadedSetups[result.items[resultrow].timetablelabel] == null) LoadedSetups[result.items[resultrow].timetablelabel] = new Array();
-		LoadedSetups[result.items[resultrow].timetablelabel][LoadedSetups[result.items[resultrow].timetablelabel].length] = result.items[resultrow];
-	}
-	_root.SetUpPresets();
-	for (LoadedNames in LoadedSetups)Presets.addItem(LoadedNames, LoadedSetups[LoadedNames]);
-	_root.RemoveMessageBox();
-}
+
+/*
 SetUpTablesButton.onRelease = function()
 {
 	trace('SetUpTablesButton.onRelease');
-	usersfunctionsService.create_timetableconfig_table();
+	usersfunctionsService.create_timetableconfig_table().responder = new RelayResponder(this, "SetUpTablesButton_Result", "SetUpTablesButton_Status");
 }
 function SetUpTablesButton_Status(result)
 {
@@ -211,7 +147,7 @@ function SetUpTablesButton_Result(result)
 {
 	_root.ErrorMessageBox('set up went ok');
 }
-
+*/
 function PresetsOnChangeHandler()
 {
 	_root.calculation_engine_called = false;

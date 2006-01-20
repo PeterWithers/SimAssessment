@@ -1,4 +1,4 @@
-function startHelp()
+﻿function startHelp()
 {
 	trace('startHelp()');	
 	if (_root.DisableControls == true) return;
@@ -53,7 +53,7 @@ helpListener.onMouseUp = function()
 	if (targetnamearray.length > 0)
 	{
 		trace('help targets: ' + targetnamearray.toString());
-		_root.resourcesService.get_help(targetnamearray.toString());
+		_root.GetHelp(targetnamearray.toString());
 	}
 	else _root.HelpBox.helpContent.text = 'No help is associated with this item';
 	
@@ -74,20 +74,3 @@ _root.HelpBox.closebutton.onRelease = function()
 	if (_root.PreHelpDisableControlsState == false) _root.EnableControlsFunction();
 }
 
-function get_help_Result(result)
-{
-	_root.HelpBox.helpTopic.text = '';
-	_root.HelpBox.helpContent.text = '';
-	if (result.items.length > 0)
-		for (helplist = 0; helplist < result.items.length; helplist++)	
-		{
-			_root.HelpBox.helpTopic.text = _root.HelpBox.helpTopic.text + result.items[helplist].topic + ' ';
-			_root.HelpBox.helpContent.htmlText = _root.HelpBox.helpContent.htmlText + result.items[helplist].helptext + '<br><br>';
-		}
-	else _root.HelpBox.helpContent.text = 'No help is associated with this item';
-}
-
-function get_help_Status(result)
-{
-	_root.ErrorMessageBox('get_help\n' + result.description);
-}
